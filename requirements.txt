@@ -1,0 +1,2 @@
+pyNxt
+Requests>=2.18.4
