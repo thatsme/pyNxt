@@ -1,4 +1,0 @@
-pyNxt
-requests>=2.18.4
-httpretty>=0.8.14
-sure>=1.1.4
