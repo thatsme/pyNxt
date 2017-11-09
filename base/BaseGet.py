@@ -11,10 +11,11 @@ class BaseGet(object):
         self.dataDict = []
         self.response = None
         self.requestType = None
+        self.data = {"requestType": self.requestType, "account": self.account}
+
 
     def run(self):
-        data = {"requestType": self.requestType, "account": self.account}
-        self.response = requests.get(self.url, params=data, headers=self.headers)
+        self.response = requests.get(self.url, params=self.data, headers=self.headers)
         self.dataDict = json.loads(self.response.text)
         #print(self.response)
         #print(self.response.text)
@@ -22,3 +23,6 @@ class BaseGet(object):
 
     def getData(self):
         return self.dataDict
+
+    def auth(self, autObject):
+        pass
