@@ -16,10 +16,9 @@ class BaseGet(object):
         data = {"requestType": self.requestType, "account": self.account}
         self.response = requests.get(self.url, params=data, headers=self.headers)
         self.dataDict = json.loads(self.response.text)
-        print(self.response)
-        print(self.response.text)
-
-        print(self.dataDict)
+        #print(self.response)
+        #print(self.response.text)
+        #print(self.dataDict)
 
     def getData(self):
         return self.dataDict
