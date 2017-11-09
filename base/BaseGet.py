@@ -14,6 +14,9 @@ class BaseGet(object):
         self.data = {"requestType": self.requestType, "account": self.account}
 
 
+    def param(self):
+        pass
+
     def run(self):
         self.response = requests.get(self.url, params=self.data, headers=self.headers)
         self.dataDict = json.loads(self.response.text)
