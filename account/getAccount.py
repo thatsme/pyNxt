@@ -6,7 +6,6 @@ class GetAccount(Parent):
     def __init__(self):
 
         super(GetAccount, self).__init__(rt = "getAccount")
-        #self.requestType = "getAccount"
 
     def run(self):
         super(GetAccount, self).run()               # calls 'BaseGet.run()'
