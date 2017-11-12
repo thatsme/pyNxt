@@ -3,14 +3,14 @@ import json
 
 class BaseGet(object):
 
-    def __init__(self):
+    def __init__(self, rt):
 
         self.account = "NXT-XWQY-C2MJ-JPL8-F4BW2"
         self.url = "http://localhost:6876/nxt"
         self.headers = {"Accept": "application/json"}
         self.dataDict = []
         self.response = None
-        self.requestType = None
+        self.requestType = rt
         self.data = {"requestType": self.requestType, "account": self.account}
 
 
@@ -20,9 +20,11 @@ class BaseGet(object):
     def run(self):
         self.response = requests.get(self.url, params=self.data, headers=self.headers)
         self.dataDict = json.loads(self.response.text)
-        #print(self.response)
-        #print(self.response.text)
-        #print(self.dataDict)
+        print(self.url)
+        print(self.data)
+        print(self.response)
+        print(self.response.text)
+        print(self.dataDict)
 
     def getData(self, key=None):
         if key:
