@@ -20,11 +20,6 @@ class BaseGet(object):
     def run(self):
         self.response = requests.get(self.url, params=self.data, headers=self.headers)
         self.dataDict = json.loads(self.response.text)
-        print(self.url)
-        print(self.data)
-        print(self.response)
-        print(self.response.text)
-        print(self.dataDict)
 
     def getData(self, key=None):
         if key:
