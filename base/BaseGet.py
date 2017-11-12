@@ -24,8 +24,11 @@ class BaseGet(object):
         #print(self.response.text)
         #print(self.dataDict)
 
-    def getData(self):
-        return self.dataDict
+    def getData(self, key=None):
+        if key:
+            return self.dataDict[key]
+        else:
+            return self.dataDict
 
     def auth(self, autObject):
         pass
