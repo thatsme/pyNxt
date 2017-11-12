@@ -5,13 +5,13 @@ class GetAccount(Parent):
 
     def __init__(self):
 
-        super(GetAccount, self).__init__()
-        self.requestType = "getAccount"
+        super(GetAccount, self).__init__(rt = "getAccount")
+        #self.requestType = "getAccount"
 
     def run(self):
         super(GetAccount, self).run()               # calls 'BaseGet.run()'
 
-    def getData(self):
-        return super(GetAccount, self).getData()    # calls 'BaseGet.getData()'
+    def getData(self, key=None):
+        return super(GetAccount, self).getData(key)    # calls 'BaseGet.getData()'
 
 
