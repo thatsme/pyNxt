@@ -3,7 +3,7 @@ class Phasing(object):
 
     def __init__(self, phased=None, phasingFinishHeight = None, phasingVotingModel = None, phasingQuorum = None, \
                     phasingMinBalance = None, phasingHolding=None, phasingMinBalanceModel=None, phasingWhitelisted=None, \
-                    phasingLinkedFullHash=None, phasingHashedSecret=None, phasingHashedSecretAlgorithm=None)
+                    phasingLinkedFullHash=None, phasingHashedSecret=None, phasingHashedSecretAlgorithm=None):
 
         self.phasing = {}
         self.phasing["phased"] = phased
@@ -13,17 +13,16 @@ class Phasing(object):
         self.phasing["phasingMinBalance"] = phasingMinBalance
         self.phasing["phasingHolding"] = phasingHolding
         self.phasing["phasingMinBalanceModel"] = phasingMinBalanceModel
-        if len(phasingWhitelisted) == 1 or not phasingWhitelisted:
+        if not phasingWhitelisted or len(phasingWhitelisted) == 1:
             self.phasing["phasingWhitelisted"] = phasingWhitelisted                 # 3 elements in api
         else:
             pass
-        if len(phasingLinkedFullHash) == 1 or not phasingLinkedFullHash:
+        if not phasingLinkedFullHash or len(phasingLinkedFullHash) == 1:
             self.phasing["phasingLinkedFullHash"] = phasingLinkedFullHash           # 3 elements in api
         else:
             pass
         self.phasing["phasingHashedSecret"] = phasingHashedSecret
         self.phasing["phasingHashedSecretAlgorithm"] = phasingHashedSecretAlgorithm
-
 
         self._buildDict()
 
