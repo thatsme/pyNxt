@@ -3,7 +3,7 @@ import json
 
 class BasePost(object):
 
-    def __init__(self, rt, data):
+    def __init__(self, rt, data, phasing = None):
 
         self.account = "NXT-XWQY-C2MJ-JPL8-F4BW2"
         self.url = "http://localhost:6876/nxt"
@@ -13,13 +13,20 @@ class BasePost(object):
         self.requestType = rt
         # self.data = {"requestType": self.requestType, "account": self.account}
         self.data = data
+        self.phasing = phasing
+
         # print(self.data)
         self._mergeRequestType()
+        self._mergePhasingParams()
 
     def _mergeRequestType(self):
         if self.requestType:
             if "requestType" not in self.data:
                 self.data["requestType"] = self.requestType
+
+    def _mergePhasingParams(self):
+        if self.phasing:
+            self.data = {**self.data, **self.phasing}
 
     def run(self):
         self.response = requests.post(self.url, data=self.data, headers=self.headers)
