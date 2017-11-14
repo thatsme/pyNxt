@@ -18,7 +18,7 @@ class BasePost(object):
 
     def _mergeRequestType(self):
         if self.requestType:
-            if not self.data["requestType"]:
+            if "requestType" not in self.data:
                 self.data["requestType"] = self.requestType
 
     def run(self):
