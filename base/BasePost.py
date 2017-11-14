@@ -13,10 +13,13 @@ class BasePost(object):
         self.requestType = rt
         # self.data = {"requestType": self.requestType, "account": self.account}
         self.data = data
+        # print(self.data)
+        self._mergeRequestType()
 
-        print(self.data)
-    def param(self):
-        pass
+    def _mergeRequestType(self):
+        if self.requestType:
+            if not self.data["requestType"]:
+                self.data["requestType"] = self.requestType
 
     def run(self):
         self.response = requests.post(self.url, data=self.data, headers=self.headers)
