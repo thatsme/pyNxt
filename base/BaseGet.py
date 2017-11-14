@@ -27,5 +27,8 @@ class BaseGet(object):
         else:
             return self.dataDict
 
-    def auth(self, autObject):
+    def getRequestType(self):
+        return self.requestType
+
+    def auth(self, authObject):
         pass
