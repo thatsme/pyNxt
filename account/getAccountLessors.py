@@ -1,10 +1,11 @@
 from base.BaseGet import BaseGet as Parent
 
-class GetAccountPhasedTransactionCount(Parent):
+class GetAccountLessors(Parent):
 
-    def __init__(self, account=None, requireBlock=None, requireLastBlock=None):
+    def __init__(self, account=None, height=None, requireBlock=None, requireLastBlock=None):
 
         self.account = account
+        self.height = height
         self.requireBlock = requireBlock
         self.requireLastBlock = requireLastBlock
 
@@ -13,15 +14,17 @@ class GetAccountPhasedTransactionCount(Parent):
 
         ## Create data dictionary
         self.data["account"] = self.account
+        if self.height:
+            self.data["height"] = self.height
         if self.requireBlock:
             self.data["requireBlock"] = self.requireBlock
         if self.requireLastBlock:
             self.data["requireLastBlock"] = self.requireLastBlock
 
-        super(GetAccountPhasedTransactionCount, self).__init__(rt = "getAccountPhasedTransactionCount", data=self.data)
+        super(GetAccountLessors, self).__init__(rt = "getAccountLessors", data=self.data)
 
     def run(self):
-        super(GetAccountPhasedTransactionCount, self).run()                     # calls 'BaseGet.run()'
+        super(GetAccountLessors, self).run()                         # calls 'BaseGet.run()'
 
     def getData(self, key=None):
-        return super(GetAccountPhasedTransactionCount, self).getData(key)       # calls 'BaseGet.getData()'
+        return super(GetAccountLessors, self).getData(key)           # calls 'BaseGet.getData()'

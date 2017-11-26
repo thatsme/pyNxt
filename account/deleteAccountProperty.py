@@ -6,8 +6,6 @@ class DeleteAccountProperty(Parent):
             DeleteAccountProperty take a default 5 parameter as explained in NXT API Documentation ( is deadLine requested or not ? )
 
             Class is working with  post method, and create a transaction, for more info about transactions please refer to
-            https://nxtwiki.org/wiki/The_Nxt_API#Create_Transaction_Request
-
 
             https://nxtwiki.org/wiki/The_Nxt_API#Delete_Account_Property
 
