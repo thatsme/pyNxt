@@ -53,12 +53,12 @@ class SendMoney(Parent):
             self.data["secretPhrase"] = self.secretPhrase
         self.data["feeNQT"] = self.feeNQT
         self.data["deadline"] = self.deadline
-        self.data["message"] = self.message
+        #self.data["message"] = self.message
         super(SendMoney, self).__init__(rt = "sendMoney", data=self.data, phasing=self.phasing, message=self.message)
 
     def run(self):
-        super(SendMoney, self).run()               # calls 'BasePost.run()'
+        super(SendMoney, self).run()                    # calls 'BasePost.run()'
 
     def getData(self, key=None):
-        return super(SendMoney, self).getData(key)    # calls 'BasePost.getData()'
+        return super(SendMoney, self).getData(key)      # calls 'BasePost.getData()'
 

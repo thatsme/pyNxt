@@ -1,14 +1,10 @@
 from base.BaseGet import BaseGet as Parent
 
-class GetUnconfirmedTransactionIds(Parent):
+class GetVoterPhasedTransactions(Parent):
 
-    ## Multiaccount parameters (3)
-    def __init__(self, account=None, firstIndex=None, lastIndex=None, requireBlock=None, requireLastBlock=None):
+    def __init__(self, account=None, firstIndex=None, lastIndex=None, requireBlock=None, requireLastBlock=None ):
 
-        self.accounts = [None]*3
-        for a in account[:3]:
-            self.accounts.append(a)
-
+        self.account = account
         self.firstIndex = firstIndex
         self.lastIndex = lastIndex
         self.requireBlock = requireBlock
@@ -18,8 +14,7 @@ class GetUnconfirmedTransactionIds(Parent):
         self.data = {}
 
         ## Create data dictionary
-        for a in self.accounts:
-            self.data["account"] = a
+        self.data["account"] = account
 
         if self.firstIndex:
             self.data["firstIndex"] = self.firstIndex
@@ -30,10 +25,10 @@ class GetUnconfirmedTransactionIds(Parent):
         if self.requireLastBlock:
             self.data["requireLastBlock"] = self.requireLastBlock
 
-        super(GetUnconfirmedTransactionIds, self).__init__(rt = "getUnconfirmedTransactionIds", data=self.data)
+        super(GetVoterPhasedTransactions, self).__init__(rt = "getVoterPhasedTransactions", data=self.data)
 
     def run(self):
-        super(GetUnconfirmedTransactionIds, self).run()               # calls 'BaseGet.run()'
+        super(GetVoterPhasedTransactions, self).run()                     # calls 'BaseGet.run()'
 
     def getData(self, key=None):
-        return super(GetUnconfirmedTransactionIds, self).getData(key)    # calls 'BaseGet.getData()'
+        return super(GetVoterPhasedTransactions, self).getData(key)       # calls 'BaseGet.getData()'
