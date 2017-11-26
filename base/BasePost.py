@@ -21,6 +21,9 @@ class BasePost(object):
         self._mergePhasingParams()
         self._mergeMessageParams()
 
+        self.errorCode = None
+        self.errorDescription = None
+
     def _mergeRequestType(self):
         if self.requestType:
             if "requestType" not in self.data:
@@ -37,12 +40,23 @@ class BasePost(object):
     def run(self):
         self.response = requests.post(self.url, data=self.data, headers=self.headers)
         self.dataDict = json.loads(self.response.text)
+        if "errorCode" in self.dataDict:
+            self.errorCode = self.dataDict["errorCode"]
+            self.errorDescription = self.dataDict["errorDescription"]
 
     def getData(self, key=None):
-        if key:
+        if key in self.dataDict:
             return self.dataDict[key]
         else:
             return self.dataDict
+
+    def getKeysValues(self):
+        for key, value in self.dataDict.items():
+            print(key, value)
+
+    def getKeys(self):
+        for key in self.dataDict.items():
+            print(key)
 
     def getRequestType(self):
         if self.requestType:
@@ -52,6 +66,12 @@ class BasePost(object):
                 return self.data["requestType"]
             else:
                 return None
+
+    def getErrorCode(self):
+        return self.errorCode
+
+    def getErrorDescription(self):
+        return self.errorDescription
 
     def auth(self, authObject):
         pass
