@@ -1,8 +1,52 @@
+# -*- coding: utf-8 -*-
 from base.BaseGet import BaseGet as Parent
 
 class GetAccountCurrencies(Parent):
 
     def __init__(self, account=None, currency=None, height=None, includeCurrencyInfo=False, requireBlock=None, requireLastBlock=None):
+        """
+            GetAccountCurrencies take a default 1 parameter as explained in NXT API Documentation
+            Class is working with GET method
+
+            https://nxtwiki.org/wiki/The_Nxt_API#Get_Account_Currencies
+
+            REQUEST
+            account : is the id of account (S) (R)
+            currency : is a currency ID filter (S) (O)
+            height : is the blockchain height at which the response applies (N) (O) (default is the current height)
+            includeCurrencyInfo : is true if several currency information properties is to be included (B) (O)
+            requireBlock : is the block ID of a block that must be present in the blockchain during execution (O)
+            requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (O)
+
+            RESPONSE
+            accountCurrencies : is an array (A)  of currency objects with the following fields:
+            > code (S) is the currency code
+            > unconfirmedUnits (S) is the amount of unconfirmed currency units (in QNT)
+            > decimals (N) is the number of currency decimal places
+            > name (S) is the currency name
+            > currency (S) is the currency ID
+            > units (S) is the amount of currency (in QNT)
+            > issuanceHeight (N) is the blockchain height of issuance for a reservable currency
+            > type (N) is the currency type bitmask (refer to Get Currency)
+            > issuerAccountRS (S) is the Reed-Solomon address of the issuer account
+            > issuerAccount (S) is the issuer account ID
+            lastBlock : is the last block ID on the blockchain (S) (applies if requireBlock is provided but not requireLastBlock)
+            requestProcessingTime : is the API request processing time (N) (in millisec)
+
+            Legenda :
+                ° the parameter are interchangable on
+                * if you use the secretPhrase , the transaction is immediately broadcasted to network
+                ** if you use the publicKey, you create an unsigned Transaction, and you need to sign and broardcast
+                *** for buying
+                (R) Required
+                (O) Optional
+                (N) Number
+                (S) String
+                (B) Boolean
+                (A) Array
+                >   Array Element
+
+        """
 
         self.account = account
         self.currency = currency

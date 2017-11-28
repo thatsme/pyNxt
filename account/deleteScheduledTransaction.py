@@ -1,4 +1,4 @@
-
+# -*- coding: utf-8 -*-
 from base.BasePost import BasePost as Parent
 
 class DeleteScheduledTransaction(Parent):
