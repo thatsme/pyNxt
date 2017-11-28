@@ -8,9 +8,29 @@ class GetAliasCount(Parent):
 
             https://nxtwiki.org/wiki/The_Nxt_API#Get_Alias_Count
 
+            REQUEST
             account : is the account
-            requireBlock :
-            requireLastBlock :
+            requireBlock : is the block ID of a block that must be present in the blockchain during execution (S) (O)
+            requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (S) (O)
+
+            RESPONSE
+            numberOfAliases : is the number of aliases owned by the account (N)
+            lastBlock : is the last block ID on the blockchain (applies if requireBlock is provided but not requireLastBlock)
+            RequestProcessingTime (N) is the API request processing time (in millisec) (S)
+
+            Legenda :
+                ° the parameter are interchangeable on
+                * if you use the secretPhrase , the transaction is immediately broadcasted to network
+                ** if you use the publicKey, you create an unsigned Transaction, and you need to sign and broardcast
+                *** for buying
+                (R) Required
+                (O) Optional
+                (N) Number
+                (S) String
+                (B) Boolean
+                (A) Array
+                (O) Object
+                >   Array Element
 
         """
 

@@ -4,20 +4,56 @@ from base.BasePost import BasePost as Parent
 class DeleteAlias(Parent):
     def __init__(self, alias = None, aliasName=None, secretPhrase=None,  publicKey = None, feeNQT = None, deadline = 0, referencedTransactionFullHash = None, broadcast=False, phasing = None, message=None, recipientPublicKey=None, ecBlockId=None, ecBlockHeight=None ):
         """
-            DeleteAlias take a default 5 parameter as explained in NXT API Documentation ( is deadLine requested or not ? )
+            Delete an alias given an alias ID or name.
 
-            Class is working with  post method, and create a transaction, for more info about transactions please refer to
+            DeleteAlias take a default 5 parameter as explained in NXT API Documentation
+
+            Class is working with POST method only, and create a transaction, for more info about transactions please refer to
+            https://nxtwiki.org/wiki/The_Nxt_API#Create_Transaction_Request
+
 
             https://nxtwiki.org/wiki/The_Nxt_API#Delete_Alias
 
-            property : is the name of the property ( required )
-            recipient : is the account where a property should be removed (optional)
-            setter : is the account who did set the property (optional)
-            * secretPhrase : secret Phrase of account where we want remove a property ( required or at lease ** )
+            ° alias : is the code of alias (S)
+            ° aliasName : is the name of alias (S)
+            * secretPhrase : secret Phrase of account where we want remove a property ( required or at least ** )
             ** publicKey : publicKey of account where we want remove a property ( does not get in broadcast ) ( required or at least *)
             feeNQT : fee for sending transaction if 0 minimum is set ( 100000000 NQT )
             deadLine : is the deadline (in minutes) for the transaction to be confirmed, 32767 minutes maximum ( if 0, 60 )
+            referencedTransactionFullHash : creates a chained transaction, meaning that the current transaction
+                                        cannot be confirmed unless the referenced transaction is also confirmed (O)
+            broadcast : is set to false to prevent broadcasting the transaction to the network (B) (O)
+            phasing : check base/Phasing.py Class
+            message : check base/Message.py Class
+            recipientPublicKey : is the public key of the recipient account (O)
+                                (only applicable if recipient provided; enhances security of a new account)
+            ecBlockId :
+            ecBlockHeight :
 
+            RESPONSE
+            signatureHash : is a SHA-256 hash of the transaction signature (S)
+            unsignedTransactionBytes : are the unsigned transaction bytes (S)
+            transactionJSON : is a transaction object (O)  (refer to Get Transaction for details)
+            broadcasted : is true if the transaction was broadcast, false otherwise (B)
+            requestProcessingTime : is the API request processing time (in millisec)  (N)
+            transactionBytes :  are the signed transaction bytes (S)
+            fullHash : is the full hash of the signed transaction (S)
+            transaction : is the ID of the newly created transaction (S)
+            requestProcessingTime : is the API request processing time (N) (in millisec)
+
+            Legenda :
+                ° the parameter are interchangeable on
+                * if you use the secretPhrase , the transaction is immediately broadcasted to network
+                ** if you use the publicKey, you create an unsigned Transaction, and you need to sign and broardcast
+                *** for buying
+                (R) Required
+                (O) Optional
+                (N) Number
+                (S) String
+                (B) Boolean
+                (A) Array
+                (O) Object
+                >   Array Element
         """
 
         # Required parameters
