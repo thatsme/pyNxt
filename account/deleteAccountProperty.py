@@ -4,19 +4,45 @@ from base.BasePost import BasePost as Parent
 class DeleteAccountProperty(Parent):
     def __init__(self, recipient = None, property=None, setter=None, secretPhrase=None,  publicKey = None, feeNQT = None, deadline = 0, referencedTransactionFullHash = None, broadcast=False, phasing = None, message=None ):
         """
-            DeleteAccountProperty take a default 5 parameter as explained in NXT API Documentation ( is deadLine requested or not ? )
+            DeleteAccountProperty take a default 5 parameter as explained in NXT API Documentation
 
-            Class is working with  post method, and create a transaction, for more info about transactions please refer to
+            Class is working with POST method only, and create a transaction, for more info about transactions please refer to
 
             https://nxtwiki.org/wiki/The_Nxt_API#Delete_Account_Property
 
-            property : is the name of the property ( required )
-            recipient : is the account where a property should be removed (optional)
-            setter : is the account who did set the property (optional)
-            * secretPhrase : secret Phrase of account where we want remove a property ( required or at lease ** )
+            REQUEST
+            property : is the name of the property (S) (R)
+            recipient : is the account where a property should be removed (S) (O)
+            setter : is the account who did set the property (S) (O)
+            * secretPhrase : secret Phrase of account where we want remove a property ( required or at least ** )
             ** publicKey : publicKey of account where we want remove a property ( does not get in broadcast ) ( required or at least *)
             feeNQT : fee for sending transaction if 0 minimum is set ( 100000000 NQT )
             deadLine : is the deadline (in minutes) for the transaction to be confirmed, 32767 minutes maximum ( if 0, 60 )
+
+            RESPONSE (Create transaction response)
+            signatureHash : is a SHA-256 hash of the transaction signature (S)
+            unsignedTransactionBytes : are the unsigned transaction bytes (S)
+            transactionJSON : is a transaction object (refer to Get Transaction for details) (O)
+            broadcasted : is true if the transaction was broadcast, false otherwise (B)
+            requestProcessingTime : is the API request processing time (in millisec) (N)
+            transactionBytes : are the signed transaction bytes (S)
+            fullHash : is the full hash of the signed transaction (S)
+            transaction : is the ID of the newly created transaction (S)
+
+            Legenda
+                ° the parameter are interchangeable on
+                * if you use the secretPhrase , the transaction is immediately broadcasted to network
+                ** if you use the publicKey, you create an unsigned Transaction, and you need to sign and broardcast
+                *** for buying
+                (R) Required
+                (O) Optional
+                (N) Number
+                (S) String
+                (B) Boolean
+                (A) Array
+                (O) Object
+                >   Array Element
+
 
         """
 

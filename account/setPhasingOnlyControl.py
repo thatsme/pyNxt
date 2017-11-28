@@ -1,22 +1,29 @@
 # -*- coding: utf-8 -*-
 from base.BasePost import BasePost as Parent
 
-class SendMoney(Parent):
-    def __init__(self, recipient = None, amountNQT=0, publicKey = None, secretPhrase=None, feeNQT = None, deadline = 0, referencedTransactionFullHash = None, broadcast=True, phasing = None, message=None ):
+
+class SetPhasingOnlyControl(Parent):
+    def __init__(self, controlVotingModel=0, controlQuorum=0, controlWhiteListed=None, controlMinBalance=None, controlMinBalanceModel=None, controlHolding=None, controlMaxFee=None, controlMinDuration=None, controlMaxDuration=None, publicKey=None, secretPhrase=None, feeNQT=None, deadline=0, referencedTransactionFullHash=None, broadcast=True, phasing=None, message=None):
         """
-            Send NXT to an account. POST only.
+            Sets (or removes) phasing control for a specific account.
+            SetPhasingOnlyControl take a default 5 parameter as explained in NXT API Documentation
 
-            SendMoney take a default 5 parameter as explained in NXT API Documentation
-
-            Class is working with  post method, and create a transaction, for more info about transactions please refer to
+            Class is working with POST method only, and create a transaction, for more info about transactions please refer to
             https://nxtwiki.org/wiki/The_Nxt_API#Create_Transaction_Request
 
-
-            https://nxtwiki.org/wiki/The_Nxt_API#Send_Money
+            https://nxtwiki.org/wiki/The_Nxt_API#Set_Phasing_Only_Control
 
             REQUEST
-            recipient : account id of recipient (R)
-            amountNQT : is the amount in NQT to put in transaction (N)
+            controlVotingModel : is the voting model or -1 to remove phasing control (R)
+            controlQuorum : is the expected quorum (N) (O)
+            controlWhitelisted : is the whitelisted accounts (R) (O) (multiple values)
+            controlMinBalance : is the expected minimum balance (N) (O)
+            controlMinBalanceModel : is the expected minimum balance model (O)
+            controlHolding : is the holding ID (S) (O)
+            controlMaxFee : is the maximum allowed accumulated total fees for not yet finished phased transactions (N) (O)
+            controlMinDuration : is the minimum duration in block height (N) (O)
+            controlMaxDuration : is the maximum phasing duration in block height (N) (O)
+            recipientPublicKey is the public key of the lessee (recipient) account (optional, enhances security of a new account)
             * publicKey : publicKey of sender account ( does not get in broadcast )
             ** secretPhrase : secret Phrase of sender account
             feeNQT : fee for sending transaction (R) if 0 minimum is set ( 100000000 NQT )
@@ -55,8 +62,19 @@ class SendMoney(Parent):
         """
 
         # Required parameters
-        self.recipient = recipient
-        self.amountNQT = amountNQT
+        self.controlVotingModel = controlVotingModel
+        self.controlQuorum = controlQuorum
+        self.controlMinBalance = controlMinBalance
+        self.controlMinBalanceModel = controlMinBalanceModel
+        self.controlHolding = controlHolding
+        self.controlMaxFee = controlMaxFee
+        self.controlMinDuration = controlMinDuration
+        self.controlMaxDuration = controlMaxDuration
+
+        self.cvl = [None] * 3
+        for a in controlWhiteListed[:3]:
+            self.cvl.append(a)
+
         self.publicKey = publicKey
         self.secretPhrase = secretPhrase
         self.referencedTransactionFullHash = referencedTransactionFullHash
@@ -79,9 +97,30 @@ class SendMoney(Parent):
         self.data = {}
 
         ## Create data dictionary
-        
-        self.data["recipient"] = self.recipient
-        self.data["amountNQT"] = self.amountNQT
+
+        self.data["controlVotingModel"] = self.controlVotingModel
+
+        if self.controlQuorum:
+            self.data["controlQuorum"] = self.controlQuorum
+
+        if self.controlMinBalance:
+            self.data["controlMinBalance"] = self.controlMinBalance
+
+        if controlMinBalanceModel:
+            self.data["controlMinBalanceModel"] = self.controlMinBalanceModel
+
+        if controlHolding:
+            self.data["controlHolding"] = self.controlHolding
+
+        if controlMaxFee:
+            self.data["controlMaxFee"] = self.controlMaxFee
+
+        if controlMinDuration:
+            self.data["controlMinDuration"] = self.controlMinDuration
+
+        if controlMaxDuration:
+            self.data["controlMaxDuration"] = self.controlMaxDuration
+
         if publicKey:
             self.data["publicKey"] = self.publicKey
         if secretPhrase:
@@ -92,12 +131,11 @@ class SendMoney(Parent):
         self.data["deadline"] = self.deadline
         self.data["broadcast"] = self.broadcast
 
-        #self.data["message"] = self.message
-        super(SendMoney, self).__init__(rt = "sendMoney", data=self.data, phasing=self.phasing, message=self.message)
+        super(SetPhasingOnlyControl, self).__init__(rt="setPhasingOnlyControl", data=self.data, phasing=self.phasing, message=self.message)
 
     def run(self):
-        super(SendMoney, self).run()                    # calls 'BasePost.run()'
+        super(SetPhasingOnlyControl, self).run()                         # calls 'BasePost.run()'
 
     def getData(self, key=None):
-        return super(SendMoney, self).getData(key)      # calls 'BasePost.getData()'
+        return super(SetPhasingOnlyControl, self).getData(key)           # calls 'BasePost.getData()'
 

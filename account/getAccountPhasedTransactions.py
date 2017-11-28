@@ -53,7 +53,7 @@ class GetAccountPhasedTransactions(Parent):
             requestProcessingTime : is the API request processing time (in millisec) (N)
 
             Legenda :
-                ° the parameter are interchangable on
+                ° the parameter are interchangeable on
                 * if you use the secretPhrase , the transaction is immediately broadcasted to network
                 ** if you use the publicKey, you create an unsigned Transaction, and you need to sign and broardcast
                 *** for buying
@@ -63,6 +63,7 @@ class GetAccountPhasedTransactions(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
+                (O) Object
                 >   Array Element
 
         """

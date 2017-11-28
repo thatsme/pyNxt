@@ -1,25 +1,25 @@
 # -*- coding: utf-8 -*-
 from base.BaseGet import BaseGet as Parent
 
-class GetAccountPublicKey(Parent):
+class GetAllPhasingOnlyControl(Parent):
 
-    def __init__(self, account=None, requireBlock=None, requireLastBlock=None):
+    def __init__(self, account=None ):
         """
-            Get the public key associated with an account ID.
+            Retrieve all accounts subject to phasing control with their respective restrictions.
 
-            GetAccountPublicKey take a default 1 parameter as explained in NXT API Documentation
+            GetAllPhasingOnlyControl take a default 1 parameter as explained in NXT API Documentation
             Class is working with GET method
 
-            https://nxtwiki.org/wiki/The_Nxt_API#Get_Account_Public_Key
+            https://nxtwiki.org/wiki/The_Nxt_API#Get_All_Phasing_Only_Control
 
             REQUEST
-            account : is the account ID (S)
+            firstIndex : is a zero-based index to the first block ID to retrieve (N) (O)
+            lastIndex : is a zero-based index to the last block ID to retrieve (N) (O)
             requireBlock : is the block ID of a block that must be present in the blockchain during execution (O)
             requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (O)
 
             RESPONSE
-            publicKey (S) is the 32-byte public key associated with the account, returned as a hex string
-            lastBlock : is the last block ID on the blockchain (S) (applies if requireBlock is provided but not requireLastBlock)
+            phasingOnlyControls :is an array (A) with phasing only controls objects (Refer to Get Phasing Only Control for details)
             requestProcessingTime : is the API request processing time (N) (in millisec)
 
             Legenda :
@@ -35,27 +35,20 @@ class GetAccountPublicKey(Parent):
                 (A) Array
                 (O) Object
                 >   Array Element
-
         """
 
         self.account = account
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
 
         # Initialize dictionary
         self.data = {}
 
         ## Create data dictionary
-        self.data["account"] = self.account
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
+        self.data["account"] = account
 
-        super(GetAccountPublicKey, self).__init__(rt = "getAccountPublicKey", data=self.data)
+        super(GetAllPhasingOnlyControl, self).__init__(rt = "getAllPhasingOnlyControl", data=self.data)
 
     def run(self):
-        super(GetAccountPublicKey, self).run()                  # calls 'BaseGet.run()'
+        super(GetAllPhasingOnlyControl, self).run()                     # calls 'BaseGet.run()'
 
     def getData(self, key=None):
-        return super(GetAccountPublicKey, self).getData(key)    # calls 'BaseGet.getData()'
+        return super(GetAllPhasingOnlyControl, self).getData(key)       # calls 'BaseGet.getData()'

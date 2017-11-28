@@ -6,11 +6,27 @@ class DeleteScheduledTransaction(Parent):
         """
             DeleteScheduledTransaction take a default 1 parameter as explained in NXT API Documentation
 
-            Class is working with  post method, and create a transaction, for more info about transactions please refer to
+            Class is working with POST method only, and create a transaction, for more info about transactions please refer to
             https://nxtwiki.org/wiki/The_Nxt_API#Delete_Scheduled_Transaction
 
+            REQUEST
+            transaction : is the name of the transaction (S) (R)
 
-            transaction : is the name of the transaction ( required )
+            RESPONSE
+
+            Legenda
+                ° the parameter are interchangeable on
+                * if you use the secretPhrase , the transaction is immediately broadcasted to network
+                ** if you use the publicKey, you create an unsigned Transaction, and you need to sign and broardcast
+                *** for buying
+                (R) Required
+                (O) Optional
+                (N) Number
+                (S) String
+                (B) Boolean
+                (A) Array
+                (O) Object
+                >   Array Element
 
         """
 

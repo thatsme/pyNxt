@@ -1,22 +1,24 @@
 # -*- coding: utf-8 -*-
 from base.BasePost import BasePost as Parent
 
-class SendMoney(Parent):
-    def __init__(self, recipient = None, amountNQT=0, publicKey = None, secretPhrase=None, feeNQT = None, deadline = 0, referencedTransactionFullHash = None, broadcast=True, phasing = None, message=None ):
+
+class LeaseBalance(Parent):
+    def __init__(self, recipient=None, period=0, publicKey=None, secretPhrase=None, feeNQT=None, deadline=0, referencedTransactionFullHash=None, broadcast=True, phasing=None, message=None):
         """
-            Send NXT to an account. POST only.
+            Lease the entire guaranteed balance of NXT to another account, after 1440 confirmations
 
-            SendMoney take a default 5 parameter as explained in NXT API Documentation
+            LeaseBalance take a default 5 parameter as explained in NXT API Documentation
 
-            Class is working with  post method, and create a transaction, for more info about transactions please refer to
+            Class is working with POST method only, and create a transaction, for more info about transactions please refer to
             https://nxtwiki.org/wiki/The_Nxt_API#Create_Transaction_Request
 
 
-            https://nxtwiki.org/wiki/The_Nxt_API#Send_Money
+            https://nxtwiki.org/wiki/The_Nxt_API#Lease_Balance
 
             REQUEST
             recipient : account id of recipient (R)
-            amountNQT : is the amount in NQT to put in transaction (N)
+            period is the lease period (in number of blocks, 1440 minimum)
+            recipientPublicKey is the public key of the lessee (recipient) account (optional, enhances security of a new account)
             * publicKey : publicKey of sender account ( does not get in broadcast )
             ** secretPhrase : secret Phrase of sender account
             feeNQT : fee for sending transaction (R) if 0 minimum is set ( 100000000 NQT )
@@ -56,7 +58,7 @@ class SendMoney(Parent):
 
         # Required parameters
         self.recipient = recipient
-        self.amountNQT = amountNQT
+        self.period = period
         self.publicKey = publicKey
         self.secretPhrase = secretPhrase
         self.referencedTransactionFullHash = referencedTransactionFullHash
@@ -79,9 +81,9 @@ class SendMoney(Parent):
         self.data = {}
 
         ## Create data dictionary
-        
+
         self.data["recipient"] = self.recipient
-        self.data["amountNQT"] = self.amountNQT
+        self.data["period"] = self.period
         if publicKey:
             self.data["publicKey"] = self.publicKey
         if secretPhrase:
@@ -92,12 +94,11 @@ class SendMoney(Parent):
         self.data["deadline"] = self.deadline
         self.data["broadcast"] = self.broadcast
 
-        #self.data["message"] = self.message
-        super(SendMoney, self).__init__(rt = "sendMoney", data=self.data, phasing=self.phasing, message=self.message)
+        super(LeaseBalance, self).__init__(rt="leaseBalance", data=self.data, phasing=self.phasing, message=self.message)
 
     def run(self):
-        super(SendMoney, self).run()                    # calls 'BasePost.run()'
+        super(LeaseBalance, self).run()                         # calls 'BasePost.run()'
 
     def getData(self, key=None):
-        return super(SendMoney, self).getData(key)      # calls 'BasePost.getData()'
+        return super(LeaseBalance, self).getData(key)           # calls 'BasePost.getData()'
 
