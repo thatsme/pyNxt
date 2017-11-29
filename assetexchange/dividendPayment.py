@@ -1,21 +1,23 @@
 # -*- coding: utf-8 -*-
 from base.BasePost import BasePost as Parent
 
-class CancelAskOrder(Parent):
-    def __init__(self, order = None, secretPhrase=None,  publicKey = None, feeNQT = None, deadline = 0, referencedTransactionFullHash = None, broadcast=False, phasing = None, message=None ):
+class DividendPayment(Parent):
+    def __init__(self, asset = None, height=0, amountNQTPerQNT=0, secretPhrase=None,  publicKey = None, feeNQT = None, deadline = 0, referencedTransactionFullHash = None, broadcast=False, phasing = None, message=None ):
         """
-            Cancel an existing asset order.
+            Pay dividend to all shareholders of an asset.
 
-            CancelAskOrder take a default 5 parameter as explained in NXT API Documentation
+            DividendPayment take a default 5 parameter as explained in NXT API Documentation
 
             Class is working with POST method only, and create a transaction, for more info about transactions please refer to
             https://nxtwiki.org/wiki/The_Nxt_API#Create_Transaction_Request
 
 
-            https://nxtwiki.org/wiki/The_Nxt_API#Cancel_Ask_Order
+            https://nxtwiki.org/wiki/The_Nxt_API#Dividend_Payment
 
             REQUEST
-            order : is the order ID of the order being canceled (S) (R)
+            asset : is the asset ID (S) (R)
+            height ; is the blockchain height at which asset holders shares will be counted (N) (must be less than 1440 blocks in the past)
+            amountNQTPerQNT : is dividend amount (in NQT per QNT of the asset) (N) (R)
             * secretPhrase : secret Phrase of account where we want remove a property ( required or at least ** )
             ** publicKey : publicKey of account where we want remove a property ( does not get in broadcast ) ( required or at least *)
             feeNQT : fee for sending transaction if 0 minimum is set ( 100000000 NQT )
@@ -55,7 +57,9 @@ class CancelAskOrder(Parent):
         """
 
         # Required parameters
-        self.order = order
+        self.asset = asset
+        self.height = height
+        self.amountNQTPerQNT = amountNQTPerQNT
         self.publicKey = publicKey
         self.secretPhrase = secretPhrase
         if feeNQT == 0:
@@ -80,7 +84,9 @@ class CancelAskOrder(Parent):
 
         ## Create data dictionary
 
-        self.data["order"] = self.order
+        self.data["asset"] = self.asset
+        self.height = height
+        self.data["amountNQTPerQNT"] = self.amountNQTPerQNT
         if publicKey:
             self.data["publicKey"] = self.publicKey
         if secretPhrase:
@@ -92,10 +98,10 @@ class CancelAskOrder(Parent):
         if self.broadcast:
             self.data["broadcast"] = self.broadcast
 
-        super(CancelAskOrder, self).__init__(rt="cancelAskOrder", data=self.data, phasing=self.phasing, message=self.message)
+        super(DividendPayment, self).__init__(rt="dividendPayment", data=self.data, phasing=self.phasing, message=self.message)
 
     def run(self):
-        super(CancelAskOrder, self).run()                # calls 'BasePost.run()'
+        super(DividendPayment, self).run()                # calls 'BasePost.run()'
 
     def getData(self, key=None):
-        return super(CancelAskOrder, self).getData(key)  # calls 'BasePost.getData()'
+        return super(DividendPayment, self).getData(key)  # calls 'BasePost.getData()'
