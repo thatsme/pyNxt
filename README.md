@@ -7,6 +7,7 @@ development version, not completed and usable yet.
 
 # Synopsis
 This is a simple python wrapper around NXT Blockchain Api ( rest )  
+Reference : https://nxtwiki.org/wiki/Main_Page
 
 # Code Example
 tbd
