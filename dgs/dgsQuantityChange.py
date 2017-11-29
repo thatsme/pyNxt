@@ -2,24 +2,24 @@
 from base.BasePost import BasePost as Parent
 
 
-class DgsPriceChange(Parent):
-    def __init__(self, goods=None, priceNQT=0, secretPhrase=None,
+class DgsQuantityChange(Parent):
+    def __init__(self, goods=None, deltaQuantity=0, secretPhrase=None,
                  publicKey=None, feeNQT=None, deadline=0, referencedTransactionFullHash=None, broadcast=False,
                  phasing=None, message=None):
         """
-            Change the price of a listed product.
+            Change the quantity of a listed product.
 
-            DgsPriceChange take a default 5 parameter as explained in NXT API Documentation
+            DgsQuantityChange take a default 5 parameter as explained in NXT API Documentation
 
             Class is working with POST method only, and create a transaction, for more info about transactions please refer to
             https://nxtwiki.org/wiki/The_Nxt_API#Create_Transaction_Request
 
 
-            https://nxtwiki.org/wiki/The_Nxt_API#Dgs_Price_Change
+            https://nxtwiki.org/wiki/The_Nxt_API#Dgs_Quantity_Change
 
             REQUEST
-            goods is the goods ID of the product
-            priceNQT : is the new price (in NQT) of the product (N)
+            goods : is the goods ID of the product
+            deltaQuantity : is the change in the quantity of the product for sale (use negative numbers for a decrease in quantity)
             * secretPhrase : secret Phrase of account where we want remove a property ( required or at least ** )
             ** publicKey : publicKey of account where we want remove a property ( does not get in broadcast ) ( required or at least *)
             feeNQT : fee for sending transaction if 0 minimum is set ( 100000000 NQT )
@@ -39,9 +39,6 @@ class DgsPriceChange(Parent):
             transactionBytes : are the signed transaction bytes (S)
             fullHash : is the full hash of the signed transaction (S)
             transaction : is the ID of the newly created transaction (S)
-
-            Note : The transaction ID is also the goods ID.
-
 
             Legenda
                 ° the parameter are interchangeable on
@@ -63,7 +60,7 @@ class DgsPriceChange(Parent):
 
         # Required parameters
         self.goods = goods
-        self.priceNQT = priceNQT
+        self.deltaQuantity = deltaQuantity
         self.publicKey = publicKey
         self.secretPhrase = secretPhrase
         if feeNQT == 0:
@@ -89,7 +86,8 @@ class DgsPriceChange(Parent):
         ## Create data dictionary
 
         self.data["goods"] = self.goods
-        self.data["priceNQT"] = self.priceNQT
+        self.data["deltaQuantity"] = self.deltaQuantity
+
         if publicKey:
             self.data["publicKey"] = self.publicKey
         if secretPhrase:
@@ -101,10 +99,10 @@ class DgsPriceChange(Parent):
         if self.broadcast:
             self.data["broadcast"] = self.broadcast
 
-        super(DgsPriceChange, self).__init__(rt="dgsPriceChange", data=self.data, phasing=self.phasing, message=self.message)
+        super(DgsQuantityChange, self).__init__(rt="dgsQuantityChange", data=self.data, phasing=self.phasing, message=self.message)
 
     def run(self):
-        super(DgsPriceChange, self).run()                           # calls 'BasePost.run()'
+        super(DgsQuantityChange, self).run()                           # calls 'BasePost.run()'
 
     def getData(self, key=None):
-        return super(DgsPriceChange, self).getData(key)             # calls 'BasePost.getData()'
+        return super(DgsQuantityChange, self).getData(key)             # calls 'BasePost.getData()'
