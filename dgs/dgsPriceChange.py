@@ -1,25 +1,25 @@
 # -*- coding: utf-8 -*-
 from base.BasePost import BasePost as Parent
 
-class DgsListing(Parent):
-    def __init__(self, name = None, description=None, tags=None, quantity=0, priceNQT=0, secretPhrase=None,  publicKey = None, feeNQT = None, deadline = 0, referencedTransactionFullHash = None, broadcast=False, phasing = None, message=None ):
-        """
-            List a product in the DGS by creating a listing transaction.
 
-            DgsListing take a default 5 parameter as explained in NXT API Documentation
+class DgsPriceChange(Parent):
+    def __init__(self, goods=None, priceNQT=0, secretPhrase=None,
+                 publicKey=None, feeNQT=None, deadline=0, referencedTransactionFullHash=None, broadcast=False,
+                 phasing=None, message=None):
+        """
+            Change the price of a listed product.
+
+            DgsPriceChange take a default 5 parameter as explained in NXT API Documentation
 
             Class is working with POST method only, and create a transaction, for more info about transactions please refer to
             https://nxtwiki.org/wiki/The_Nxt_API#Create_Transaction_Request
 
 
-            https://nxtwiki.org/wiki/The_Nxt_API#Dgs_Listing
+            https://nxtwiki.org/wiki/The_Nxt_API#Dgs_Price_Change
 
             REQUEST
-            name : is the name of the product up to 100 characters in length (S)
-            description : is a description of the product up to 1000 characters in length (S)
-            tags : are up to three comma separated keywords describing the product up to 100 characters in length (S) (O)
-            quantity : is the quantity of the product for sale (N)
-            priceNQT : is the price (in NQT) of the product (N)
+            goods is the goods ID of the product
+            priceNQT : is the new price (in NQT) of the product (N)
             * secretPhrase : secret Phrase of account where we want remove a property ( required or at least ** )
             ** publicKey : publicKey of account where we want remove a property ( does not get in broadcast ) ( required or at least *)
             feeNQT : fee for sending transaction if 0 minimum is set ( 100000000 NQT )
@@ -62,10 +62,7 @@ class DgsListing(Parent):
         """
 
         # Required parameters
-        self.name = name
-        self.description = description
-        self.tags = tags
-        self.quantity = quantity
+        self.goods = goods
         self.priceNQT = priceNQT
         self.publicKey = publicKey
         self.secretPhrase = secretPhrase
@@ -91,12 +88,8 @@ class DgsListing(Parent):
 
         ## Create data dictionary
 
-        self.data["name"] = self.name
-        self.data["description"] = self.description
-        self.data["tags"] = self.tags
-        self.data["quantity"] = self.quantity
+        self.data["goods"] = self.goods
         self.data["priceNQT"] = self.priceNQT
-
         if publicKey:
             self.data["publicKey"] = self.publicKey
         if secretPhrase:
@@ -108,10 +101,10 @@ class DgsListing(Parent):
         if self.broadcast:
             self.data["broadcast"] = self.broadcast
 
-        super(DgsListing, self).__init__(rt="dgsListing", data=self.data, phasing=self.phasing, message=self.message)
+        super(DgsPriceChange, self).__init__(rt="dgsPriceChange", data=self.data, phasing=self.phasing, message=self.message)
 
     def run(self):
-        super(DgsListing, self).run()                               # calls 'BasePost.run()'
+        super(DgsPriceChange, self).run()  # calls 'BasePost.run()'
 
     def getData(self, key=None):
-        return super(DgsListing, self).getData(key)                 # calls 'BasePost.getData()'
+        return super(DgsPriceChange, self).getData(key)  # calls 'BasePost.getData()'
