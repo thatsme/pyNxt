@@ -1,6 +1,6 @@
-import base.Long10 as Long10
-import base.Mul as mul
-import base.Sqr as sqr
+from base.Long10 import Long10 as Long10
+from base.Mul import Mul as mul
+from base.Sqr import Sqr as sqr
 
 class Recip(object):
 
