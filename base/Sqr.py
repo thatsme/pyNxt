@@ -10,42 +10,54 @@ class Sqr(object):
         :param x2:
         :param x:
         """
-        x_0 = x._0, x_1 = x._1, x_2 = x._2, x_3 = x._3, x_4 = x._4,x_5 = x._5, x_6 = x._6, x_7 = x._7, x_8 = x._8, x_9 = x._9
+        self.x_0 = x._0
+        self.x_1 = x._1
+        self.x_2 = x._2
+        self.x_3 = x._3
+        self.x_4 = x._4
+        self.x_5 = x._5
+        self.x_6 = x._6
+        self.x_7 = x._7
+        self.x_8 = x._8
+        self.x_9 = x._9
 
-        t = 0
+        self.x2 = x2
+        self.t = 0
+        self.run()
+        
+    def run(self):
+        self.t = (self.x_4 * self.x_4) + 2 * ((self.x_0 * self.x_8) + (self.x_2 * self.x_6)) + 38 * (self.x_9 * self.x_9) + 4 * ((self.x_1 * self.x_7) + (self.x_3 * self.x_5))
+        self.x2._8 = (self.t & ((1 << 26) - 1))
 
-        t = (x_4 * x_4) + 2 * ((x_0 * x_8) + (x_2 * x_6)) + 38 * (x_9 * x_9) + 4 * ((x_1 * x_7) + (x_3 * x_5))
-        x2._8 = (t & ((1 << 26) - 1))
+        self.t = (self.t >> 26) + 2 * ((self.x_0 * self.x_9) + (self.x_1 * self.x_8) + (self.x_2 * self.x_7) + (self.x_3 * self.x_6) + (self.x_4 * self.x_5))
+        self.x2._9 = (self.t & ((1 << 25) - 1))
 
-        t = (t >> 26) + 2 * ((x_0 * x_9) + (x_1 * x_8) + (x_2 * x_7) + (x_3 * x_6) + (x_4 * x_5))
-        x2._9 = (t & ((1 << 25) - 1))
+        self.t = 19 * (self.t >> 25) + (self.x_0 * self.x_0) + 38 * ((self.x_2 * self.x_8) + (self.x_4 * self.x_6) + (self.x_5 * self.x_5)) + 76 * ((self.x_1 * self.x_9) + (self.x_3 * self.x_7))
+        self.x2._0 = (self.t & ((1 << 26) - 1))
 
-        t = 19 * (t >> 25) + (x_0 * x_0) + 38 * ((x_2 * x_8) + (x_4 * x_6) + (x_5 * x_5)) + 76 * ((x_1 * x_9) + (x_3 * x_7))
-        x2._0 = (t & ((1 << 26) - 1))
+        self.t = (self.t >> 26) + 2 * (self.x_0 * self.x_1) + 38 * ((self.x_2 * self.x_9) + (self.x_3 * self.x_8) + (self.x_4 * self.x_7) + (self.x_5 * self.x_6))
+        self.x2._1 = (self.t & ((1 << 25) - 1))
 
-        t = (t >> 26) + 2 * (x_0 * x_1) + 38 * ((x_2 * x_9) + (x_3 * x_8) + (x_4 * x_7) + (x_5 * x_6))
-        x2._1 = (t & ((1 << 25) - 1))
+        self.t = (self.t >> 25) + 19 * (self.x_6 * self.x_6) + 2 * ((self.x_0 * self.x_2) + (self.x_1 * self.x_1)) + 38 * (self.x_4 * self.x_8) + 76 * ((self.x_3 * self.x_9) + (self.x_5 * self.x_7))
+        self.x2._2 = (self.t & ((1 << 26) - 1))
 
-        t = (t >> 25) + 19 * (x_6 * x_6) + 2 * ((x_0 * x_2) + (x_1 * x_1)) + 38 * (x_4 * x_8) + 76 * ((x_3 * x_9) + (x_5 * x_7))
-        x2._2 = (t & ((1 << 26) - 1))
+        self.t = (self.t >> 26) + 2 * ((self.x_0 * self.x_3) + (self.x_1 * self.x_2)) + 38 * ((self.x_4 * self.x_9) + (self.x_5 * self.x_8) + (self.x_6 * self.x_7))
+        self.x2._3 = (self.t & ((1 << 25) - 1))
 
-        t = (t >> 26) + 2 * ((x_0 * x_3) + (x_1 * x_2)) + 38 * ((x_4 * x_9) + (x_5 * x_8) + (x_6 * x_7))
-        x2._3 = (t & ((1 << 25) - 1))
+        self.t = (self.t >> 25) + (self.x_2 * self.x_2) + 2 * (self.x_0 * self.x_4) + 38 * ((self.x_6 * self.x_8) + (self.x_7 * self.x_7)) + 4 * (self.x_1 * self.x_3) + 76 * (self.x_5 * self.x_9)
+        self.x2._4 = (self.t & ((1 << 26) - 1))
 
-        t = (t >> 25) + (x_2 * x_2) + 2 * (x_0 * x_4) + 38 * ((x_6 * x_8) + (x_7 * x_7)) + 4 * (x_1 * x_3) + 76 * (x_5 * x_9)
-        x2._4 = (t & ((1 << 26) - 1))
+        self.t = (self.t >> 26) + 2 * ((self.x_0 * self.x_5) + (self.x_1 * self.x_4) + (self.x_2 * self.x_3)) + 38 * ((self.x_6 * self.x_9) + (self.x_7 * self.x_8))
+        self.x2._5 = (self.t & ((1 << 25) - 1))
 
-        t = (t >> 26) + 2 * ((x_0 * x_5) + (x_1 * x_4) + (x_2 * x_3)) + 38 * ((x_6 * x_9) + (x_7 * x_8))
-        x2._5 = (t & ((1 << 25) - 1))
+        self.t = (self.t >> 25) + 19 * (self.x_8 * self.x_8) + 2 * ((self.x_0 * self.x_6) + (self.x_2 * self.x_4) + (self.x_3 * self.x_3)) + 4 * (self.x_1 * self.x_5) + 76 * (self.x_7 * self.x_9)
+        self.x2._6 = (self.t & ((1 << 26) - 1))
 
-        t = (t >> 25) + 19 * (x_8 * x_8) + 2 * ((x_0 * x_6) + (x_2 * x_4) + (x_3 * x_3)) + 4 * (x_1 * x_5) + 76 * (x_7 * x_9)
-        x2._6 = (t & ((1 << 26) - 1))
+        self.t = (self.t >> 26) + 2 * ((self.x_0 * self.x_7) + (self.x_1 * self.x_6) + (self.x_2 * self.x_5) + (self.x_3 * self.x_4)) + 38 * (self.x_8 * self.x_9)
+        self.x2._7 = (self.t & ((1 << 25) - 1))
 
-        t = (t >> 26) + 2 * ((x_0 * x_7) + (x_1 * x_6) + (x_2 * x_5) + (x_3 * x_4)) + 38 * (x_8 * x_9)
-        x2._7 = (t & ((1 << 25) - 1))
+        self.t = (self.t >> 25) + self.x2._8
+        self.x2._8 = (self.t & ((1 << 26) - 1))
+        self.x2._9 += (self.t >> 26)
 
-        t = (t >> 25) + x2._8
-        x2._8 = (t & ((1 << 26) - 1))
-        x2._9 += (t >> 26)
-
-        return x2;
+        return self.x2

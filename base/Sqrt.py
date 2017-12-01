@@ -1,8 +1,8 @@
 from base.Long10 import Long10
-import base.Add as add
-import base.Recip as recip
-import base.Sqr as sqr
-import base.Mul as mul
+from base.Add import Add as add
+from base.Recip import Recip as recip
+from base.Sqr import Sqr as sqr
+from base.Mul import Mul as mul
 
 class Sqrt(object):
 
