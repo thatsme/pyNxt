@@ -1,5 +1,4 @@
-
-
+# -*- coding: utf-8 -*-
 class Message(object):
 
     def __init__(self, message=None, messageIsText = None, messageIsPrunable = None, messageToEncrypt = None, \

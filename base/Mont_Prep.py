@@ -1,5 +1,5 @@
-import base.Add as add
-import base.Sub as sub
+from base.Add import Add as add
+from base.Sub import Sub as sub
 
 
 class Mont_Prep(object):

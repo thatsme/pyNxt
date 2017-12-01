@@ -15,6 +15,8 @@ class Long10(object):
         self.v8 = i8
         self.v9 = i9
 
+    def printAll(self):
+        print(self.v0,self.v1,self.v2,self.v3,self.v4,self.v5,self.v6,self.v7,self.v8,self.v9)
     @property
     def _0(self):
         return self.v0

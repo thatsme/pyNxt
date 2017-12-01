@@ -1,7 +1,7 @@
-import base.Mul as mul
-import base.Add as add
-import base.Sub as sub
-import base.Sqr as sqr
+from base.Mul import Mul as mul
+from base.Add import Add as add
+from base.Sub import Sub as sub
+from base.Sqr import Sqr as sqr
 
 class Mont_Add(object):
 
@@ -24,11 +24,11 @@ class Mont_Add(object):
         :param dx: Long10
         """
 
-        mul(ax, t2, t3);
-        mul(az, t1, t4);
-        add(t1, ax, az);
-        sub(t2, ax, az);
-        sqr(ax, t1);
-        sqr(t1, t2);
-        mul(az, t1, dx);
+        mul(ax, t2, t3)
+        mul(az, t1, t4)
+        add(t1, ax, az)
+        sub(t2, ax, az)
+        sqr(ax, t1)
+        sqr(t1, t2)
+        mul(az, t1, dx)
 
