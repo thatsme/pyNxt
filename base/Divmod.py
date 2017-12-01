@@ -1,0 +1,36 @@
+import base.Mula_Small as mula_small
+
+class Divmod(object):
+
+    def __init__(self, q,  r,  n, d,  t):
+        """
+
+        :param q: bite[]
+        :param r: bite[]
+        :param n: int
+        :param d:bite[]
+        :param t: int
+        """
+
+        rn = 0;
+        dt = ((d[t - 1] & 0xFF) << 8)
+
+        if (t > 1):
+            dt |= (d[t-2] & 0xFF)
+
+
+        for u in range(n,t,1):
+            z = (rn << 16) | ((r[u] & 0xFF) << 8)
+            if (u > 0):
+                z |= (r[u-1] & 0xFF)
+
+            z /= dt;
+            rn += mula_small(r, r, u-t+1, d, t, -z)
+            q[u-t+1] = ((z + rn) & 0xFF);             # rn is 0 or -1 (underflow)
+            mula_small(r, r, u-t+1, d, t, -rn);
+            rn = (r[u] & 0xFF);
+            r[u] = 0;
+
+
+        r[t - 1] = rn
+
