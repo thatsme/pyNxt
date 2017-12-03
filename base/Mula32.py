@@ -12,25 +12,22 @@ class Mula32(object):
         :param z: int
         :return:
         """
-        self.n = 31
-        self.w = 0
-        self.i = 0
-        self.p = p
-        self.x = x
-        self.y = y
-        self.t = t
-        self.z = z
+        n = 31
+        w = 0
+        i = 0
+        zy = None
+
         self.value = 0
 
-        for self.i in range(self.t):
-            zy = self.z * (self.y[self.i] & 0xFF)
-            self.w += mula_small(self.p, self.p, self.i, self.x, self.n, zy).value + (self.p[self.i+self.n] & 0xFF) + zy * (self.x[self.n] & 0xFF)
-            self.p[self.i+self.n] = self.w
-            self.w >>= 8
+        for i in range(t):
+            zy = z * (y[i] & 0xFF)
+            w += mula_small(p, p, i, x, n, zy).value + (p[i+n] & 0xFF) + zy * (x[n] & 0xFF)
+            p[i+n] = w
+            w >>= 8
 
-        self.p[self.i + self.n] = (self.w + (self.p[self.i + self.n] & 0xFF))
+        p[i + n] = (w + (p[i + n] & 0xFF))
 
-        self.value = self.w >> 8
+        self.value = w >> 8
 
         print("Mula32 w", self.value)
 
