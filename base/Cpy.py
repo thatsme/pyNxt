@@ -1,4 +1,4 @@
-import base.Long10 as Long10
+from base.Long10 import Long10 as Long10
 
 class Cpy(object):
 

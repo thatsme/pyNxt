@@ -1,8 +1,7 @@
 
+class Cpy32(object):
 
-class Cpy32(object)
-
-    def __init__(self,d,s):
+    def __init__(self, d, s):
         """
 
         :param d: byte[]
@@ -12,5 +11,3 @@ class Cpy32(object)
         i = 0
         for i in range(32):
             d[i] = s[i]
-
-
