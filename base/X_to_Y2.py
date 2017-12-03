@@ -19,6 +19,9 @@ class X_to_Y2(object):
         sqr(t, x)
         mul_small(y2, x, 486662)
         add(t, t, y2)
+        print("before",t._0)
         t._0 += t._0
+        print("after",t._0)
+
         mul(y2, t, x)
 
