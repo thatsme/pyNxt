@@ -20,16 +20,20 @@ class Mula32(object):
         self.y = y
         self.t = t
         self.z = z
+        self.value = 0
 
-    def run(self):
         for self.i in range(self.t):
             zy = self.z * (self.y[self.i] & 0xFF)
-            self.w += mula_small(self.p, self.p, self.i, self.x, self.n, zy) + (self.p[self.i+self.n] & 0xFF) + zy * (self.x[self.n] & 0xFF)
+            self.w += mula_small(self.p, self.p, self.i, self.x, self.n, zy).value + (self.p[self.i+self.n] & 0xFF) + zy * (self.x[self.n] & 0xFF)
             self.p[self.i+self.n] = self.w
             self.w >>= 8
 
         self.p[self.i + self.n] = (self.w + (self.p[self.i + self.n] & 0xFF))
 
-        print("Mula32 w", self.w)
+        self.value = self.w >> 8
 
-        return self.w >> 8
+        print("Mula32 w", self.value)
+
+    def __getattribute__(self, name):
+        if(name=="value"):
+            return object.__getattribute__(self, name)
