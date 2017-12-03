@@ -8,8 +8,7 @@ class Is_Negative(object):
         :param x: Long10
         """
         self.x = x
-        self.run()
+        self.value = (is_overflow(self.x).value or (1 if (self.x._9 < 0) else 0) ^ (self.x._0 & 1))
 
-    def run(self):
-        return (is_overflow(self.x) or (1 if (self.x._9 < 0) else 0) ^ (self.x._0 & 1))
-
+    def __getattribute__(self, name):
+        return object.__getattribute__(self, name)
