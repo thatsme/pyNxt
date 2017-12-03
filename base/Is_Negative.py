@@ -11,4 +11,5 @@ class Is_Negative(object):
         self.value = (is_overflow(self.x).value or (1 if (self.x._9 < 0) else 0) ^ (self.x._0 & 1))
 
     def __getattribute__(self, name):
-        return object.__getattribute__(self, name)
+        if(name=="value"):
+            return object.__getattribute__(self, name)
