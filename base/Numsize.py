@@ -9,12 +9,18 @@ class Numsize(object):
         :param x: bite[]
         :param n: int
         """
+        self.x = x
+        self.n = n
+
+        self.run()
+
+    def run(self):
 
         while True:
-            if n is not 0 and x[n] is 0:
-                --n
+            if self.n is not 0 and self.x[self.n] is 0:
+                --self.n
             else:
-                return n+1
+                return self.n+1
 
         """
         while (n - - != 0 & & x[n] == 0)
