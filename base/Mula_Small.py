@@ -13,17 +13,11 @@ class Mula_Small(object):
         :param n: int
         :param z: int
         """
-        self.p = p
-        self.q = q
-        self.m = m
-        self.x = x
-        self.n = n
-        self.z = z
         self.value = 0
         v = 0
-        for i in range(self.n):
-            v+= (self.q[i+self.m] & 0xFF) + (self.z * (self.x[i] & 0xFF))
-            self.p[i+self.m] = v
+        for i in range(n):
+            v+= (q[i+m] & 0xFF) + (z * (x[i] & 0xFF))
+            p[i+m] = v
             v >>= 8
 
         # print("Mula_small, v", v)
