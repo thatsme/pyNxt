@@ -3,8 +3,13 @@ from base.Long10 import Long10
 class Is_Overflow(object):
 
     def __init__(self, x):
-        P25 = 33554431
-        P26 = 67108863
+        self.P25 = 33554431
+        self.P26 = 67108863
+        self.x = x
 
-        if isinstance(x, Long10):
-            return (((x._0 > P26-19)) && ((x._1 & x._3 & x._5 & x._7 & x._9) == P25) && ((x._2 & x._4 & x._6 & x._8) == P26)) || (x._9 > P25)
+        self.run()
+
+    def run(self):
+        if isinstance(self.x, Long10):
+            print("isInstance of Long10")
+            return (((self.x._0 > self.P26-19)) and ((self.x._1 & self.x._3 & self.x._5 & self.x._7 & self.x._9) == self.P25) and ((self.x._2 & self.x._4 & self.x._6 & self.x._8) == self.P26)) or (self.x._9 > self.P25)

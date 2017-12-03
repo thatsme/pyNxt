@@ -1,6 +1,6 @@
 import base.IsOverflow as is_overflow
 
-class Is_Negative(object)
+class Is_Negative(object):
 
     def __init__(self, x):
         """
@@ -8,5 +8,5 @@ class Is_Negative(object)
         :param x: Long10
         """
 
-        return (int)(((is_overflow(x) || (x._9 < 0))?1:0) ^ (x._0 & 1));
+        return (is_overflow(x) or (1 if (x._9 < 0) else 0) ^ (x._0 & 1))
 
