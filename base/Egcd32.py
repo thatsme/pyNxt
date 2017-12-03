@@ -13,37 +13,47 @@ class Egcd32(object):
         :param b: bite[]
         """
 
-        an, bn = 32
-        qn, i = 0
+        self.an = 32
+        self.bn = 32
+        self.qn, self.i = 0
+        self.x = x
+        self.y = y
+        self.a = a
+        self.b = b
 
+        self.run()
+
+    def run(self):
+        i = 0
         for i in range(32):
-            x[i] = y[i] = 0;
+            self.x[i] = self.y[i] = 0;
 
 
-        x[0] = 1
-        an = numsize(a, 32);
+        self.x[0] = 1
+        self.an = numsize(self.a, 32);
 
-        if an is 0:
-            return y;               #division by zero * /
+        if self.an is 0:
+            return self.y;               #division by zero * /
 
         temp = bytes([0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00])
         while (True):
-            qn = bn - an + 1
-            divmod(temp, b, bn, a, an)
-            bn = numsize(b, bn)
-            if bn == 0:
-                return x
+            print("gira ....")
+            self.qn = self.bn - self.an + 1
+            divmod(temp, self.b, self.bn, self.a, self.an)
+            self.bn = numsize(self.b, self.bn)
+            if self.bn == 0:
+                return self.x
 
-            mula32(y, x, temp, qn, -1)
+            mula32(self.y, self.x, temp, self.qn, -1)
 
-            qn = an - bn + 1
-            divmod(temp, a, an, b, bn)
-            an = numsize(a, an)
+            self.qn = self.an - self.bn + 1
+            divmod(temp, self.a, self.an, self.b, self.bn)
+            an = numsize(self.a, self.an)
 
-            if an == 0:
-                return y
+            if self.an == 0:
+                return self.y
 
-            mula32(x, y, temp, qn, -1)
+            mula32(self.x, self.y, temp, self.qn, -1)
 
 
 

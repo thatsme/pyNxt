@@ -100,11 +100,11 @@ class Curve25519(object):
         return tx, ty
 
     def _clamp(self, secret):
-        #a = ord(secret[0])
-        a = secret[0]
+        a = ord(secret[0])
+        #a = secret[0]
         a &= 248
-        #b = ord(secret[31])
-        b = secret[31]
+        b = ord(secret[31])
+        #b = secret[31]
         b &= 127
         b |= 64
         return bytes(chr(a),'utf-8') + secret[1:-1] + bytes(chr(b),'utf-8')

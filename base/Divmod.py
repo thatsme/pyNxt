@@ -19,7 +19,8 @@ class Divmod(object):
             dt |= (d[t-2] & 0xFF)
 
 
-        for u in range(n,t,1):
+        for u in range(n, t, 1):
+            print("gira divmod ...")
             z = (rn << 16) | ((r[u] & 0xFF) << 8)
             if (u > 0):
                 z |= (r[u-1] & 0xFF)
