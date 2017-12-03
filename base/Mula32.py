@@ -2,7 +2,7 @@ import base.Mula_Small as mula_small
 
 class Mula32(object):
 
-    def __ini__(self, p, x, y, t, z):
+    def __init__(self, p, x, y, t, z):
         """
 
         :param p: bite[]
