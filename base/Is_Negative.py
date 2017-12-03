@@ -1,4 +1,4 @@
-import base.IsOverflow as is_overflow
+from base.IsOverflow import Is_Overflow as is_overflow
 
 class Is_Negative(object):
 
