@@ -1,6 +1,6 @@
-import base.Mula32 as mula32
-import base.Numsize as numsize
-import base.Divmod as divmod
+from base.Mula32 import Mula32 as mula32
+from base.Numsize import Numsize as numsize
+from base.Divmod import Divmod as divmod
 
 class Egcd32(object):
 
@@ -15,7 +15,8 @@ class Egcd32(object):
 
         self.an = 32
         self.bn = 32
-        self.qn, self.i = 0
+        self.qn = 0
+        self.i = 0
         self.x = x
         self.y = y
         self.a = a
