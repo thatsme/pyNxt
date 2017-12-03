@@ -21,40 +21,44 @@ class Egcd32(object):
         self.y = y
         self.a = a
         self.b = b
+        self.value = None
 
-        self.run()
-
-    def run(self):
         i = 0
         for i in range(32):
             self.x[i] = self.y[i] = 0;
 
 
         self.x[0] = 1
-        self.an = numsize(self.a, 32);
+        self.an = numsize(self.a, 32).value
 
         if self.an is 0:
-            return self.y;               #division by zero * /
+            self.value = self.y               #division by zero * /
+        else:
+            temp = bytes([0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00])
+            while (True):
+                # print("gira ....")
+                self.qn = self.bn - self.an + 1
+                divmod(temp, self.b, self.bn, self.a, self.an)
+                self.bn = numsize(self.b, self.bn).value
+                if self.bn == 0:
+                    self.value = self.x
+                    break
+                    #return self.x
 
-        temp = bytes([0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00])
-        while (True):
-            print("gira ....")
-            self.qn = self.bn - self.an + 1
-            divmod(temp, self.b, self.bn, self.a, self.an)
-            self.bn = numsize(self.b, self.bn)
-            if self.bn == 0:
-                return self.x
+                mula32(self.y, self.x, temp, self.qn, -1)
 
-            mula32(self.y, self.x, temp, self.qn, -1)
+                self.qn = self.an - self.bn + 1
+                divmod(temp, self.a, self.an, self.b, self.bn)
+                self.an = numsize(self.a, self.an).value
 
-            self.qn = self.an - self.bn + 1
-            divmod(temp, self.a, self.an, self.b, self.bn)
-            an = numsize(self.a, self.an)
+                if self.an == 0:
+                    self.value = self.y
+                    break
+                    #return self.y
 
-            if self.an == 0:
-                return self.y
+                mula32(self.x, self.y, temp, self.qn, -1)
 
-            mula32(self.x, self.y, temp, self.qn, -1)
-
-
+    def __getattribute__(self, name):
+        if(name=="value"):
+            return object.__getattribute__(self, name)
 
