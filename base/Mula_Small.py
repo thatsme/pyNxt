@@ -19,15 +19,17 @@ class Mula_Small(object):
         self.x = x
         self.n = n
         self.z = z
+
         self.run()
 
     def run(self):
         v = 0
         for i in range(self.n):
-            v+= (self.q[self.i+self.m] & 0xFF)+self.z * (self.x[self.i] & 0xFF)
-            self.p[self.i+self.m]=v
+            v+= (self.q[i+self.m] & 0xFF) + (self.z * (self.x[i] & 0xFF))
+            self.p[i+self.m] = v
             v >>= 8
 
+        print("Mula_small, v", v)
         return v
 
 

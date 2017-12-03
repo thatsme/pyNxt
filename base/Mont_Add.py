@@ -5,7 +5,7 @@ from base.Sqr import Sqr as sqr
 
 class Mont_Add(object):
 
-    def __init__(self, t1, t2, t3, t4,ax, az, dx):
+    def __init__(self, t1, t2, t3, t4, ax, az, dx):
 
         """
         A = P + Q   where
@@ -23,7 +23,7 @@ class Mont_Add(object):
         :param az: Long10
         :param dx: Long10
         """
-
+        #print("Mont_Add")
         mul(ax, t2, t3)
         mul(az, t1, t4)
         add(t1, ax, az)

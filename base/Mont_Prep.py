@@ -15,8 +15,8 @@ class Mont_Prep(object):
         :param ax: Long10
         :param az: Long10
         """
-
-        add(t1, ax, az);
-        sub(t2, ax, az);
+        #print("Mont_Prep")
+        add(t1, ax, az)
+        sub(t2, ax, az)
 
 

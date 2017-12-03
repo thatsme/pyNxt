@@ -21,7 +21,7 @@ class Mont_Dbl(object):
         :param bx: Long10
         :param bz: Long10
         """
-
+        #print("Mont_Dbl")
         sqr(t1, t3)
         sqr(t2, t4)
         mul(bx, t1, t2)
