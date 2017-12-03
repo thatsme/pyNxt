@@ -7,6 +7,9 @@ class Is_Negative(object):
 
         :param x: Long10
         """
+        self.x = x
+        self.run()
 
-        return (is_overflow(x) or (1 if (x._9 < 0) else 0) ^ (x._0 & 1))
+    def run(self):
+        return (is_overflow(self.x) or (1 if (self.x._9 < 0) else 0) ^ (self.x._0 & 1))
 
