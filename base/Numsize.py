@@ -10,17 +10,19 @@ class Numsize(object):
         :param n: int
         """
         self.x = x
-        self.n = n
-
-        self.run()
-
-    def run(self):
+        self.n = n-1
+        self.value = 0
 
         while True:
-            if self.n is not 0 and self.x[self.n] is 0:
+            if self.n != 0 and self.x[self.n] == 0:
                 --self.n
             else:
-                return self.n+1
+                self.value = self.n+1
+                break
+
+    def __getattribute__(self, name):
+        if(name=="value"):
+            return object.__getattribute__(self, name)
 
         """
         while (n - - != 0 & & x[n] == 0)
