@@ -1,8 +1,7 @@
-import base.Sqr as sqr
-import base.Mul_Small as mul_small
-import base.Add as add
-import base.Mul as mul
-
+from base.Sqr import Sqr as sqr
+from base.Mul_Small import Mul_Small as mul_small
+from base.Add import Add as add
+from base.Mul import Mul as mul
 
 class X_to_Y2(object):
 
@@ -19,9 +18,8 @@ class X_to_Y2(object):
         sqr(t, x)
         mul_small(y2, x, 486662)
         add(t, t, y2)
-        print("before",t._0)
-        t._0 += t._0
-        print("after",t._0)
-
+        #print("before",t._0)
+        t._0 = t._0 + 1
+        #print("after",t._0)
         mul(y2, t, x)
 
