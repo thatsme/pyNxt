@@ -1,4 +1,4 @@
-import base.Mula_Small as mula_small
+from base.Mula_Small import Mula_Small as mula_small
 
 class Divmod(object):
 
