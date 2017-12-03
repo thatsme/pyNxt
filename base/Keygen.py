@@ -11,6 +11,9 @@ class Keygen(object):
         :param s: byte[]
         :param k: byte[]
         """
+        k1 = bytearray(k,"utf-8")
+        #P1 = bytearray(P,"utf-8")
 
-        clamp(k);
-        core(P, s, k, None);
+        clamp(k1);
+
+        core(P, s, k1, None);
