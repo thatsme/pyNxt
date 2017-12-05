@@ -17,12 +17,28 @@ class Long10(object):
         return "({0},{1},{2},{3},{4},{5},{6},{7},{8},{9})".format(self.v0,self.v1,self.v2,self.v3,self.v4,self.v5,self.v6,self.v7,self.v8,self.v9)
 
     def __add__(self, other):
-        self.x +=  other.x
-        self.y += other.y
+        self.v0 +=  other.v0
+        self.v1 += other.v1
+        self.v2 += other.v2
+        self.v3 += other.v3
+        self.v4 += other.v4
+        self.v5 += other.v5
+        self.v6 += other.v6
+        self.v7 += other.v7
+        self.v8 += other.v8
+        self.v9 += other.v9
 
     def __sub__(self, other):
-        self.x -=  other.x
-        self.y -= other.y
+        self.v0 -=  other.v0
+        self.v1 -= other.v1
+        self.v2 -= other.v2
+        self.v3 -= other.v3
+        self.v4 -= other.v4
+        self.v5 -= other.v5
+        self.v6 -= other.v6
+        self.v7 -= other.v7
+        self.v8 -= other.v8
+        self.v9 -= other.v9
 
 
     @property
