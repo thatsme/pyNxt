@@ -16,6 +16,15 @@ class Long10(object):
     def __str__(self):
         return "({0},{1},{2},{3},{4},{5},{6},{7},{8},{9})".format(self.v0,self.v1,self.v2,self.v3,self.v4,self.v5,self.v6,self.v7,self.v8,self.v9)
 
+    def __add__(self, other):
+        self.x +=  other.x
+        self.y += other.y
+
+    def __sub__(self, other):
+        self.x -=  other.x
+        self.y -= other.y
+
+
     @property
     def _0(self):
         return self.v0
