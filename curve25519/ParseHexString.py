@@ -33,17 +33,16 @@ class ParseHexString(object):
         else:
 
             self.hex = hex
-            self.barray = None
+            self.listOfByte = None
 
         self.run()
 
     def run(self):
 
         if len(self.hex)&0x01 == 1:
-            print("E dispari testina .. ")
             return None
 
-        bytes = []
+        lbytes = []
         for i in range(0, len(self.hex), 2):
             op1, op2 = self.hex[i:i + 2]
             oop1 = ord(op1)
@@ -55,9 +54,10 @@ class ParseHexString(object):
             if (char1 < 0 or char2 < 0 or char1 > 15 or char2 > 15):
                 print("Invalid hex number ",op1,op2)
 
-            bytes.append(((char1 << 4) + char2))
+            lbytes.append(((char1 << 4) + char2))
 
-        self.barray = bytes
+        #self.listOfByte = lbytes
+        self.listOfByte = [(xi + 128) % 256 - 128 for xi in lbytes]
 
     def getData(self):
-        return self.barray
+        return self.listOfByte

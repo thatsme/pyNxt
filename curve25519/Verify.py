@@ -21,18 +21,19 @@ class Verify(object):
     def __init__(self,Y, v,  h,  P):
         """
 
-        :param Y:  list[]
+        :param Y:   list[]
         :param v:   list[]
         :param h:   list[]
-        :param P:  list[]
+        :param P:   list[]
+
         """
 
         BASE_2Y = Long10(39999547, 18689728, 59995525, 1648697, 57546132,24010086, 19059592, 5425144, 63499247, 16420658)
 
         # Y = v abs(P) + h G
-        d = [] * 32
-        p = Long10(Long10(), Long10())
-        s = Long10(Long10(), Long10())
+        d  = [] * 32
+        p  = Long10(Long10(), Long10())
+        s  = Long10(Long10(), Long10())
         yx = Long10(Long10(), Long10(), Long10())
         yz = Long10(Long10(), Long10(), Long10())
         t1 = Long10(Long10(), Long10(), Long10())
@@ -41,10 +42,10 @@ class Verify(object):
         vi = 0
         hi = 0
         di = 0
-        nvh=0
-        i = None
-        j = None
-        k = None
+        nvh= 0
+        i  = None
+        j  = None
+        k  = None
 
         # set p[0] to G and p[1] to P
 
@@ -52,32 +53,33 @@ class Verify(object):
         unpack(p[1], P)
 
         # set s[0] to P+G and s[1] to P-G
-
+        #
         # s[0] = (Py^2 + Gy^2 - 2 Py Gy)/(Px - Gx)^2 - Px - Gx - 486662
         # s[1] = (Py^2 + Gy^2 + 2 Py Gy)/(Px - Gx)^2 - Px - Gx - 486662
 
-        x_to_y2(t1[0], t2[0], p[1])	                # t2[0] = Py^2
-        sqrt(t1[0], t2[0])	                        # t1[0] = Py or -Py
-        j = is_negative(t1[0])		                #      ... check which
-        t2[0]._0 += 39420360		                # t2[0] = Py^2 + Gy^2
-        mul(t2[1], BASE_2Y, t1[0])                  # t2[1] = 2 Py Gy or -2 Py Gy
-        sub(t1[j], t2[0], t2[1])	                # t1[0] = Py^2 + Gy^2 - 2 Py Gy
-        add(t1[1-j], t2[0], t2[1])                  # t1[1] = Py^2 + Gy^2 + 2 Py Gy
-        cpy(t2[0], p[1])		                    # t2[0] = Px
-        t2[0]._0 -= 9;			                    # t2[0] = Px - Gx
-        sqr(t2[1], t2[0])		                    # t2[1] = (Px - Gx)^2
-        recip(t2[0], t2[1], 0)	                    # t2[0] = 1/(Px - Gx)^2
-        mul(s[0], t1[0], t2[0])	                    # s[0] = t1[0]/(Px - Gx)^2
-        sub(s[0], s[0], p[1])	                    # s[0] = t1[0]/(Px - Gx)^2 - Px
-        s[0]._0 -= 9 + 486662		                # s[0] = X(P+G)
-        mul(s[1], t1[1], t2[0])	                    # s[1] = t1[1]/(Px - Gx)^2
-        sub(s[1], s[1], p[1])	                    # s[1] = t1[1]/(Px - Gx)^2 - Px
-        s[1]._0 -= 9 + 486662		                # s[1] = X(P-G)
-        mul_small(s[0], s[0], 1)	                # reduce s[0]
-        mul_small(s[1], s[1], 1)	                # reduce s[1]
+        x_to_y2(t1[0], t2[0], p[1])	                    # t2[0] = Py^2
+        sqrt(t1[0], t2[0])	                            # t1[0] = Py or -Py
+        j = is_negative(t1[0])		                    #      ... check which
+        t2[0]._0 += 39420360		                    # t2[0] = Py^2 + Gy^2
+        mul(t2[1], BASE_2Y, t1[0])                      # t2[1] = 2 Py Gy or -2 Py Gy
+        sub(t1[j], t2[0], t2[1])	                    # t1[0] = Py^2 + Gy^2 - 2 Py Gy
+        add(t1[1-j], t2[0], t2[1])                      # t1[1] = Py^2 + Gy^2 + 2 Py Gy
+        cpy(t2[0], p[1])		                        # t2[0] = Px
+        t2[0]._0 -= 9;			                        # t2[0] = Px - Gx
+        sqr(t2[1], t2[0])		                        # t2[1] = (Px - Gx)^2
+        recip(t2[0], t2[1], 0)	                        # t2[0] = 1/(Px - Gx)^2
+        mul(s[0], t1[0], t2[0])	                        # s[0]  = t1[0]/(Px - Gx)^2
+        sub(s[0], s[0], p[1])	                        # s[0]  = t1[0]/(Px - Gx)^2 - Px
+        s[0]._0 -= 9 + 486662		                    # s[0]  = X(P+G)
+        mul(s[1], t1[1], t2[0])	                        # s[1]  = t1[1]/(Px - Gx)^2
+        sub(s[1], s[1], p[1])	                        # s[1]  = t1[1]/(Px - Gx)^2 - Px
+        s[1]._0 -= 9 + 486662		                    # s[1]  = X(P-G)
+        mul_small(s[0], s[0], 1)	                    # reduce s[0]
+        mul_small(s[1], s[1], 1)	                    # reduce s[1]
 
 
         # prepare the chain
+        #
         for i in range(32):
             vi = (vi >> 8) ^ (v[i] & 0xFF) ^ ((v[i] & 0xFF) << 1)
             hi = (hi >> 8) ^ (h[i] & 0xFF) ^ ((h[i] & 0xFF) << 1)
@@ -97,6 +99,7 @@ class Verify(object):
         di = ((nvh & (di & 0x80) << 1) ^ vi) >> 8
 
         # initialize state
+        #
         set(yx[0], 1)
         cpy(yx[1], p[di])
         cpy(yx[2], s[0])
@@ -115,6 +118,8 @@ class Verify(object):
         hi = 0
 
         # and go for it!
+        # start last element of 32 list object backward and stop at 0
+        #
         for i in range(31, -1, -1):
             vi = (vi << 8) | (v[i] & 0xFF)
             hi = (hi << 8) | (h[i] & 0xFF)

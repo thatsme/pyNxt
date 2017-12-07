@@ -2,7 +2,7 @@ from curve25519.Mul import Mul as mul
 from curve25519.Add import Add as add
 from curve25519.Sub import Sub as sub
 from curve25519.Sqr import Sqr as sqr
-import curve25519.Long10 as Long10
+from curve25519.Long10 import Long10 as Long10
 
 class Mont_Add(object):
 
@@ -25,7 +25,7 @@ class Mont_Add(object):
         :param dx: Long10
         """
         #print("Mont_Add")
-        if isinstance(t1, Long10) and isinstance(t2, Long10) and isinstance(t3, Long10) and isinstance(t4, Long10) and isinstance(bx, Long10) and isinstance(bz, Long10) and isinstance(dx, Long10):
+        if isinstance(t1, Long10) and isinstance(t2, Long10) and isinstance(t3, Long10) and isinstance(t4, Long10) and isinstance(ax, Long10) and isinstance(az, Long10) and isinstance(dx, Long10):
 
             mul(ax, t2, t3)
             mul(az, t1, t4)

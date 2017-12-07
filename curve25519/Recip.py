@@ -25,9 +25,7 @@ class Recip(object):
         i = 0
 
         """/ *the chain for x ^ (2 ^ 255 - 21) is straight from djb's implementation */ """
-        temp = t1
         sqr(t1, x)                          # 2 == 2 * 1
-        #print(temp == t1)
         sqr(t2, t1)                         # 4 == 2 * 2
         sqr(t0, t2)                         # 8 == 2 * 4
         mul(t2, t0, x)                      # 9 == 8 + 1
@@ -44,7 +42,7 @@ class Recip(object):
         sqr(t1, t2)                         # 2 ^ 11 - 2 ^ 1 * /
         sqr(t3, t1)                         # 2 ^ 12 - 2 ^ 2 * /
 
-        for i in range(5):
+        for i in range(1, 5 , 1):
             sqr(t1, t3)
             sqr(t3, t1)
                                             # t3 * / / * 2 ^ 20  - 2 ^ 10
@@ -53,14 +51,14 @@ class Recip(object):
         sqr(t3, t1)                         # 2 ^ 21 - 2 ^ 1
         sqr(t4, t3)                         # 2 ^ 22 - 2 ^ 2
 
-        for i in range(10):
+        for i in range(1, 10, 1):
             sqr(t3, t4)
             sqr(t4, t3)
                                             # t4 * / / * 2 ^ 40  - 2 ^ 20
 
         mul(t3, t4, t1)                     # 2 ^ 40 - 2 ^ 0
 
-        for i in range(5):
+        for i in range(0, 5, 1):
             sqr(t1, t3)
             sqr(t3, t1)
                                             # t3 * / / * 2 ^ 50  - 2 ^ 10
@@ -69,7 +67,7 @@ class Recip(object):
         sqr(t2, t1)                         # 2 ^ 51 - 2 ^ 1
         sqr(t3, t2)                         # 2 ^ 52 - 2 ^ 2
 
-        for i in range(25):
+        for i in range(1, 25, 1):
             sqr(t2, t3)
             sqr(t3, t2)
                                             # t3 * / / * 2 ^ 100 - 2 ^ 50
@@ -78,14 +76,14 @@ class Recip(object):
         sqr(t3, t2)                         # 2 ^ 101 - 2 ^ 1
         sqr(t4, t3)                         # 2 ^ 102 - 2 ^ 2
 
-        for i in range(50):
+        for i in range(1, 50, 1):
             sqr(t3, t4)
             sqr(t4, t3)
                                             # t4 * / / * 2 ^ 200 - 2 ^ 100
 
         mul(t3, t4, t2)                     # 2 ^ 200 - 2 ^ 0
 
-        for i in range(25):
+        for i in range(0, 25, 1):
             sqr(t4, t3)
             sqr(t3, t4)
                                             # t3 * / / * 2 ^ 250 - 2 ^ 50

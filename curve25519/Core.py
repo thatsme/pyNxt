@@ -39,7 +39,6 @@ class Core(object):
         bit0 = None
         bit1 = None
 
-        BASE_2Y = Long10(39999547, 18689728, 59995525, 1648697, 57546132,24010086, 19059592, 5425144, 63499247, 16420658)
         BASE_R2Y = Long10(5744, 8160848, 4790893, 13779497, 35730846,12541209, 49101323, 30047407, 40071253, 6226132)
 
         ORDER_TIMES_8 = [] * 32
@@ -150,7 +149,6 @@ class Core(object):
 
         #range(10, 0, -1)
         for i in range(31, -1, -1):
-            print("ma cazzo i ", i)
             if (i == 0):
                 i=0
             for j in range(7,-1,-1):
@@ -163,7 +161,7 @@ class Core(object):
                 az = z[bit0]
                 bx = x[bit1]
                 bz = z[bit1]
-                print(ax.printAll())
+                print(ax)
                 # a' = a + b	*/
                 # b' = 2 b	*/
                 mont_prep(t1, t2, ax, az)

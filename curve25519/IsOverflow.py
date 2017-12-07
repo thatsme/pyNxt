@@ -1,4 +1,4 @@
-from curve25519.Long10 import Long10
+from curve25519.Long10 import Long10 as Long10
 
 class Is_Overflow(object):
 

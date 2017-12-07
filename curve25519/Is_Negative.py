@@ -1,5 +1,5 @@
 from curve25519.IsOverflow import Is_Overflow as is_overflow
-from curve25519.Long10 import Long10
+from curve25519.Long10 import Long10 as Long10
 
 class Is_Negative(object):
 

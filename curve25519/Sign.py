@@ -19,7 +19,7 @@ class Sign(object):
         self.x = x
         self.x = x
 
-        ORDER = bytearray()
+        ORDER = [] * 32
         ORDER.append(bytes(237))
         ORDER.append(bytes(211))
         ORDER.append(bytes(245))
@@ -53,23 +53,15 @@ class Sign(object):
         ORDER.append(bytes(0))
         ORDER.append(bytes(16))
 
-        self.h1 = bytearray()
-        self.x1 = bytearray()
-        self.tmp3 = bytearray()
+        self.h1 = [0] * 32
+        self.x1 = [0] * 32
+        self.tmp3 = [0] * 32
 
-        for i in range(32):
-            self.h1.append(0x00)
-            self.x1.append(0x00)
-            self.tmp3.append(0x00)
-
-        self.tmp1 = bytearray()
-        self.tmp2 = bytearray()
-
-        for i in range(64):
-            self.tmp1.append(0x00)
-            self.tmp2.append(0x00)
+        self.tmp1 = [0] * 64
+        self.tmp2 = [0] * 64
 
     def run(self):
+        
         cpy32(self.h1, self.h)
         cpy32(self.x1, self.x)
 

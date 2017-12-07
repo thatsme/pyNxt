@@ -3,7 +3,7 @@ from curve25519.Mul import Mul as mul
 from curve25519.Sub import Sub as sub
 from curve25519.Mul_Small import Mul_Small as mul_small
 from curve25519.Add import Add as add
-import curve25519.Long10 as Long10
+from curve25519.Long10 import Long10 as Long10
 
 class Mont_Dbl(object):
 

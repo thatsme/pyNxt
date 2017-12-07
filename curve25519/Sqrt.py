@@ -1,4 +1,4 @@
-from curve25519.Long10 import Long10
+from curve25519.Long10 import Long10 as Long10
 from curve25519.Add import Add as add
 from curve25519.Recip import Recip as recip
 from curve25519.Sqr import Sqr as sqr
