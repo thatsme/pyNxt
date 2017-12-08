@@ -26,15 +26,15 @@ class ApproveTransaction(Parent):
             :param message : message object ( check base/message.py ) (O) (WP)
 
             RESPONSE
-            signatureHash : is a SHA-256 hash of the transaction signature (S)
-            unsignedTransactionBytes : are the unsigned transaction bytes (S)
-            transactionJSON : is a transaction object (O)  (refer to Get Transaction for details)
-            broadcasted : is true if the transaction was broadcast, false otherwise (B)
-            requestProcessingTime : is the API request processing time (in millisec)  (N)
-            transactionBytes :  are the signed transaction bytes (S)
-            fullHash : is the full hash of the signed transaction (S)
-            transaction : is the ID of the newly created transaction (S)
-            requestProcessingTime : is the API request processing time (N) (in millisec)
+            :return signatureHash : is a SHA-256 hash of the transaction signature (S)
+            :return unsignedTransactionBytes : are the unsigned transaction bytes (S)
+            :return transactionJSON : is a transaction object (O)  (refer to Get Transaction for details)
+            :return broadcasted : is true if the transaction was broadcast, false otherwise (B)
+            :return requestProcessingTime : is the API request processing time (in millisec)  (N)
+            :return transactionBytes :  are the signed transaction bytes (S)
+            :return fullHash : is the full hash of the signed transaction (S)
+            :return transaction : is the ID of the newly created transaction (S)
+            :return requestProcessingTime : is the API request processing time (N) (in millisec)
 
             Legenda
                 ° the parameter are interchangeable on
