@@ -80,7 +80,7 @@ class GetCurrencyPhasedTransactions(Parent):
         """
 
         # Required parameters
-        self.asset = asset
+        self.currency = currency
         self.account = account
         self.withoutWitelist = withoutWitelist
         self.firstIndex = firstIndex
@@ -92,7 +92,7 @@ class GetCurrencyPhasedTransactions(Parent):
         self.data = {}
 
         ## Create data dictionary
-        self.data["asset"] = self.asset
+        self.data["currency"] = self.currency
         self.data["accounts"] = self.account
 
         if self.withoutWitelist:
