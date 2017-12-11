@@ -23,10 +23,11 @@ class Mula32(object):
         for i in range(t):
             zy = z * (y[i] & 0xFF)
             w += mula_small(p, p, i, x, n, zy).value + (p[i+n] & 0xFF) + zy * (x[n] & 0xFF)
+            ## print("w, and packl_ctypes w ", w, packl_ctypes(w).value, type(w), type(packl_ctypes(w).value))
             p[i+n] = packl_ctypes(w).value
             w >>= 8
 
-        p[i + n] = packl_ctypes((w + (p[i + n] & 0xFF)))
+        p[i + n] = packl_ctypes((w + (p[i + n] & 0xFF))).value
 
         self.value = w >> 8
 
