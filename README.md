@@ -20,6 +20,9 @@ Get Account API
     print(myGa.getData("name"))
     print(myGa.getData())
 
+Get PublicKey ( offline )
+
+
 # Motivation
 
 
