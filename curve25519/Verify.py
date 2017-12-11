@@ -93,7 +93,7 @@ class Verify(object):
             di ^= nvh & (di & 0x20) << 1
             di ^= nvh & (di & 0x40) << 1
             #d[i] = (byte)di
-            d[i] = packl_ctypes(di)
+            d[i] = packl_ctypes(di).value
 
 
         di = ((nvh & (di & 0x80) << 1) ^ vi) >> 8
