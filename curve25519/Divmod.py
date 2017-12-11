@@ -23,23 +23,29 @@ class Divmod(object):
         if (t > 1):
             dt |= (d[(t2)] & 0xFF)
 
-        n -= 1
+        #n -= 1
         # while (n-- >= t) {
-        for u in range(n, t, -1):
+        for u in range(n-1, t-1, -1):
+            #uu = u-1
+            uu = u
             #print("gira divmod ...",u)
-            z = int((rn << 16) | ((r[u] & 0xFF) << 8))
+            z = int((rn << 16) | ((r[uu] & 0xFF) << 8))
             if (u > 0):
-                z |= (r[u-1] & 0xFF)
+                z |= (r[uu-1] & 0xFF)
 
-            z /= dt
+            try:
+                z /= dt
+            except:
+                z = 0
+
             z = int(z)
 
-            rn += mula_small(r, r, u-t+1, d, t, -z).value
+            rn += mula_small(r, r, uu-t+1, d, t, -z).value
 
-            q[u-t+1] = packl_ctypes(((z + rn) & 0xFF))             # rn is 0 or -1 (underflow)
-            mula_small(r, r, u-t+1, d, t, -rn)
-            rn = (r[u] & 0xFF)
-            r[u] = 0
+            q[uu-t+1] = packl_ctypes(((z + rn) & 0xFF)).value             # rn is 0 or -1 (underflow)
+            mula_small(r, r, uu-t+1, d, t, -rn)
+            rn = (r[uu] & 0xFF)
+            r[uu] = 0
 
         r[t - 1] = packl_ctypes(rn).value
 
