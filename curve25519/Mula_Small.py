@@ -1,8 +1,9 @@
 from curve25519.Packl_ctypes import Packl_ctypes as packl_ctypes
+from curve25519.ToHexString import ToHexString as ToHexString
 
 class Mula_Small(object):
 
-    def __init__(self, p, q, m,  x, n, z):
+    def __init__(self, p, q, m,  x, n, z, MDEBUG=False):
 
         """
 
@@ -20,6 +21,9 @@ class Mula_Small(object):
 
             ## Magari dobbiamo paccarlo ???
             p[i+m] = packl_ctypes(v).value
+            if MDEBUG:
+                print(i, "               |_|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|_|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-")
+                print(i, " msma --> (p) ", ToHexString(p).getString())
             v >>= 8
 
         # print("Mula_small, v", v)
