@@ -203,8 +203,9 @@ class Core(object):
             #    temp3.append(0x00)
 
             cpy32(temp1, ORDER)
-            cpy32(s, egcd32(temp2, temp3, s, temp1).value)
-            if (s[31] & 0x80) != 0:
+            vediamo = egcd32(temp2, temp3, s, temp1).value
+            cpy32(s, vediamo)
+            if s[31] & 0x80 != 0:
                 mula_small(s, s, 0, ORDER, 32, 1)
 
         else:
