@@ -8,6 +8,9 @@ class Is_Negative(object):
 
         :param x: Long10
         """
+        self.value = None
+        self.isinoverflow = None
+
         if isinstance(self.x, Long10):
             self.isinoverflow = is_overflow(x).value
             #print("Is_negative before ", x._0)
