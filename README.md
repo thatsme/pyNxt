@@ -21,6 +21,22 @@ Get Account API
     print(myGa.getData())
 
 Get PublicKey ( offline )
+    
+    from curve25519.Keygen import Keygen as ki
+    from hashlib import sha256
+    from curve25519.ToHexString import ToHexString
+    from curve25519.ParseHexString import ParseHexString as ParseHexString
+
+    sP = "this is a sample of secret pass phrase for test purpose"
+    P = [0] * 32
+    s = [0] * 32
+
+    secret = sha256(sP.encode('utf-8')).hexdigest()
+    hsecret = ParseHexString(secret).getData()
+
+    pk = ki(P, s, hsecret).publicKey
+
+    print("Public Key ", ToHexString(pk).getString())
 
 
 # Motivation
