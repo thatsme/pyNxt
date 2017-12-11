@@ -42,72 +42,72 @@ class Core(object):
         BASE_R2Y = Long10(5744, 8160848, 4790893, 13779497, 35730846,12541209, 49101323, 30047407, 40071253, 6226132)
 
         ORDER_TIMES_8 = [] * 32
-        ORDER_TIMES_8.append(104)
-        ORDER_TIMES_8.append(159)
-        ORDER_TIMES_8.append(174)
-        ORDER_TIMES_8.append(231)
-        ORDER_TIMES_8.append(210)
-        ORDER_TIMES_8.append(24)
-        ORDER_TIMES_8.append(147)
-        ORDER_TIMES_8.append(192)
-        ORDER_TIMES_8.append(178)
-        ORDER_TIMES_8.append(230)
-        ORDER_TIMES_8.append(188)
-        ORDER_TIMES_8.append(23)
-        ORDER_TIMES_8.append(245)
-        ORDER_TIMES_8.append(206)
-        ORDER_TIMES_8.append(247)
-        ORDER_TIMES_8.append(166)
-        ORDER_TIMES_8.append(0)
-        ORDER_TIMES_8.append(0)
-        ORDER_TIMES_8.append(0)
-        ORDER_TIMES_8.append(0)
-        ORDER_TIMES_8.append(0)
-        ORDER_TIMES_8.append(0)
-        ORDER_TIMES_8.append(0)
-        ORDER_TIMES_8.append(0)
-        ORDER_TIMES_8.append(0)
-        ORDER_TIMES_8.append(0)
-        ORDER_TIMES_8.append(0)
-        ORDER_TIMES_8.append(0)
-        ORDER_TIMES_8.append(0)
-        ORDER_TIMES_8.append(0)
-        ORDER_TIMES_8.append(0)
-        ORDER_TIMES_8.append(128)
+        ORDER_TIMES_8.append(packl_ctypes(104).value)
+        ORDER_TIMES_8.append(packl_ctypes(159).value)
+        ORDER_TIMES_8.append(packl_ctypes(174).value)
+        ORDER_TIMES_8.append(packl_ctypes(231).value)
+        ORDER_TIMES_8.append(packl_ctypes(210).value)
+        ORDER_TIMES_8.append(packl_ctypes(24).value)
+        ORDER_TIMES_8.append(packl_ctypes(147).value)
+        ORDER_TIMES_8.append(packl_ctypes(192).value)
+        ORDER_TIMES_8.append(packl_ctypes(178).value)
+        ORDER_TIMES_8.append(packl_ctypes(230).value)
+        ORDER_TIMES_8.append(packl_ctypes(188).value)
+        ORDER_TIMES_8.append(packl_ctypes(23).value)
+        ORDER_TIMES_8.append(packl_ctypes(245).value)
+        ORDER_TIMES_8.append(packl_ctypes(206).value)
+        ORDER_TIMES_8.append(packl_ctypes(247).value)
+        ORDER_TIMES_8.append(packl_ctypes(166).value)
+        ORDER_TIMES_8.append(packl_ctypes(0).value)
+        ORDER_TIMES_8.append(packl_ctypes(0).value)
+        ORDER_TIMES_8.append(packl_ctypes(0).value)
+        ORDER_TIMES_8.append(packl_ctypes(0).value)
+        ORDER_TIMES_8.append(packl_ctypes(0).value)
+        ORDER_TIMES_8.append(packl_ctypes(0).value)
+        ORDER_TIMES_8.append(packl_ctypes(0).value)
+        ORDER_TIMES_8.append(packl_ctypes(0).value)
+        ORDER_TIMES_8.append(packl_ctypes(0).value)
+        ORDER_TIMES_8.append(packl_ctypes(0).value)
+        ORDER_TIMES_8.append(packl_ctypes(0).value)
+        ORDER_TIMES_8.append(packl_ctypes(0).value)
+        ORDER_TIMES_8.append(packl_ctypes(0).value)
+        ORDER_TIMES_8.append(packl_ctypes(0).value)
+        ORDER_TIMES_8.append(packl_ctypes(0).value)
+        ORDER_TIMES_8.append(packl_ctypes(128).value)
 
         ORDER = [] * 32
-        ORDER.append(237)
-        ORDER.append(211)
-        ORDER.append(245)
-        ORDER.append(92)
-        ORDER.append(26)
-        ORDER.append(99)
-        ORDER.append(18)
-        ORDER.append(88)
-        ORDER.append(214)
-        ORDER.append(156)
-        ORDER.append(247)
-        ORDER.append(162)
-        ORDER.append(222)
-        ORDER.append(249)
-        ORDER.append(222)
-        ORDER.append(20)
-        ORDER.append(0)
-        ORDER.append(0)
-        ORDER.append(0)
-        ORDER.append(0)
-        ORDER.append(0)
-        ORDER.append(0)
-        ORDER.append(0)
-        ORDER.append(0)
-        ORDER.append(0)
-        ORDER.append(0)
-        ORDER.append(0)
-        ORDER.append(0)
-        ORDER.append(0)
-        ORDER.append(0)
-        ORDER.append(0)
-        ORDER.append(16)
+        ORDER.append(packl_ctypes(237).value)
+        ORDER.append(packl_ctypes(211).value)
+        ORDER.append(packl_ctypes(245).value)
+        ORDER.append(packl_ctypes(92).value)
+        ORDER.append(packl_ctypes(26).value)
+        ORDER.append(packl_ctypes(99).value)
+        ORDER.append(packl_ctypes(18).value)
+        ORDER.append(packl_ctypes(88).value)
+        ORDER.append(packl_ctypes(214).value)
+        ORDER.append(packl_ctypes(156).value)
+        ORDER.append(packl_ctypes(247).value)
+        ORDER.append(packl_ctypes(162).value)
+        ORDER.append(packl_ctypes(222).value)
+        ORDER.append(packl_ctypes(249).value)
+        ORDER.append(packl_ctypes(222).value)
+        ORDER.append(packl_ctypes(20).value)
+        ORDER.append(packl_ctypes(0).value)
+        ORDER.append(packl_ctypes(0).value)
+        ORDER.append(packl_ctypes(0).value)
+        ORDER.append(packl_ctypes(0).value)
+        ORDER.append(packl_ctypes(0).value)
+        ORDER.append(packl_ctypes(0).value)
+        ORDER.append(packl_ctypes(0).value)
+        ORDER.append(packl_ctypes(0).value)
+        ORDER.append(packl_ctypes(0).value)
+        ORDER.append(packl_ctypes(0).value)
+        ORDER.append(packl_ctypes(0).value)
+        ORDER.append(packl_ctypes(0).value)
+        ORDER.append(packl_ctypes(0).value)
+        ORDER.append(packl_ctypes(0).value)
+        ORDER.append(packl_ctypes(0).value)
+        ORDER.append(packl_ctypes(16).value)
 
         #print("ORDER ", ToHexString(ORDER).getString())
 
@@ -131,21 +131,12 @@ class Core(object):
             mset(dx, 9)
 
         # 0G = point-at-infinity
-        print("Prima x[0]",x[0]._0)
-        print("Prima z[0]",z[0]._0)
         mset(x[0], 1)
         mset(z[0], 0)
-        print("Dopo x[0]",x[0]._0)
-        print("Dopo z[0]",z[0]._0)
 
         # 1G = G
         cpy(x[1], dx)
-        print("Prima z[1]",z[1]._0)
         mset(z[1], 1)
-        print("Dopo z[1]",z[1]._0)
-
-        #print("dx._0",dx._0)
-        #print("x[1]._0",x[1]._0)
 
         #range(10, 0, -1)
         for i in range(31, -1, -1):
@@ -154,14 +145,11 @@ class Core(object):
             for j in range(7,-1,-1):
                 # swap arguments depending on bit * /
                 bit1 = int((k[i] & 0xFF) >> j & 1)
-                #print("bit1 ", bit1, k[i], j, (k[i] & 0xFF), ((k[i] & 0xFF) >> j))
                 bit0 = int(~(k[i] & 0xFF) >> j & 1)
-                print("bit0 ", bit0, k[i], ~(k[i] & 0xFF))
                 ax = x[bit0]
                 az = z[bit0]
                 bx = x[bit1]
                 bz = z[bit1]
-                print(ax)
                 # a' = a + b	*/
                 # b' = 2 b	*/
                 mont_prep(t1, t2, ax, az)
@@ -175,7 +163,7 @@ class Core(object):
         mul(dx, x[0], t1)
         pack(dx, Px)
 
-        if not ListIsEmpty(s):
+        if s is not None:
             x_to_y2(t2, t1, dx)                     # t1 = Py ^ 2
             recip(t3, z[1], 0)                      # where Q=P+G...
             mul(t2, x[1], t3)                       # t2 = Qx
@@ -185,9 +173,7 @@ class Core(object):
             sqr(t3, dx)                             # t3 = (Px - Gx) ^ 2
             mul(dx, t2, t3)                         # dx = t2 (Px - Gx) ^ 2
             sub(dx, dx, t1)                         # dx = t2 (Px - Gx) ^ 2 - Py ^ 2
-            print("prima assegnazione ",dx._0 )
             dx._0 -= 39420360                       # dx = t2 (Px - Gx) ^ 2 - Py ^ 2 - Gy ^ 2
-            print("dopo assegnazione ", dx._0)
             mul(t1, dx, BASE_R2Y)                   # t1 = -Py
             if is_negative(t1).value != 0:          # sign is 1, so just copy
                 cpy32(s, k)
@@ -216,8 +202,7 @@ class Core(object):
             #    temp2.append(0x00)
             #    temp3.append(0x00)
 
-            cpy32(temp1, ORDER);
-            print("temp1-->", temp1)
+            cpy32(temp1, ORDER)
             cpy32(s, egcd32(temp2, temp3, s, temp1).value)
             if (s[31] & 0x80) != 0:
                 mula_small(s, s, 0, ORDER, 32, 1)
