@@ -18,8 +18,9 @@ class Keygen(object):
         self.debug = True
 
         self.publicKey = P
-        print()
+        self.s = None
         if self.debug:
+            print()
             print("Python Keygen secret key before clamp ", ToHexString(k).getString())
         clamp(k)
         if self.debug:
@@ -27,6 +28,8 @@ class Keygen(object):
             print()
 
         core(P, s, k, None)
+
+        self.s = s
 
         if self.debug:
             print("Python Keygen Public key after core   ", ToHexString(P).getString())
