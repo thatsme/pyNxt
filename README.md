@@ -38,6 +38,17 @@ Get PublicKey ( offline )
 
     print("Public Key ", ToHexString(pk).getString())
 
+Signing unsignedTransactionBytes ( offline ) 
+
+    import transactions.signTransactionOffline as sto
+    sP = "this is a sample of secret pass phrase for test purpose"
+    unsignedTransactionBytes = "011aa3e9910701006282332ff83fb3ce267157e5a7d04921f0b7f719aad5bf2117561c2ca7850d19def20e27502271d0000000000000000000e1f505000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000004c11700c89063d23db6c15e010574657374310676616c756531"
+
+    stt = sto.SignTransactionOffline(sP, unsignedTransactionBytes)
+
+    stt.run()
+
+    print("Signature ", stt.getSignature())
 
 # Motivation
 
