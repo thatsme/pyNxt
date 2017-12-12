@@ -1,12 +1,10 @@
-import codecs
 from curve25519.Sign import Sign as sign
 from curve25519.Keygen import Keygen as ki
-#import drop.Curve25519 as curve
-from hashlib import sha256
 from curve25519.ToHexString import ToHexString
 from curve25519.ParseHexString import ParseHexString as ParseHexString
+from hashlib import sha256
 import struct
-from copy import deepcopy
+import codecs
 
 class SignTransactionOffline(object):
 
@@ -43,7 +41,6 @@ class SignTransactionOffline(object):
         #####
         self.keygen = ki(self.P, self.s_1, self.sct)
         self.pk_1 = self.keygen.publicKey
-        #self.s_1 = self.keygen.s
         ####
 
         if self.MDEBUG:
@@ -56,8 +53,6 @@ class SignTransactionOffline(object):
         if self.MDEBUG:
             print("self.m bytes ", self.m_bytes)
             print("len of self.m bytes ", len(self.m_bytes))
-
-        # Digest of self.s in self.x
 
         self.hash_x.update(self.m_bytes)
         self.hash_x.update(self.listToBytes(self.s_1))
@@ -78,7 +73,6 @@ class SignTransactionOffline(object):
             print("xx list ", self.x_list)
             print("len of xx list ", len(self.x_list))
 
-        # Digest of self.Y in self.h
         Y_bytes = self.listToBytes(Y_list)
 
         self.hash_h.update(self.m_bytes)
@@ -103,13 +97,12 @@ class SignTransactionOffline(object):
     def getSignature(self):
         self.signature = self.v_list+self.h_list
         return codecs.encode(self.listToBytes(self.signature),'hex_codec')
-        #return self.signature
 
     def getSigningKey(self):
-        return codecs.encode(self.signing_key,'hex_codec')
+        return codecs.encode(self.listToBytes(self.self.v_list),'hex_codec')
 
     def getVerificationKey(self):
-        return codecs.encode(self.verification_key,'hex_codec')
+        return codecs.encode(self.listToBytes(self.self.h_list),'hex_codec')
 
     def getVerified(self):
-        return self.verified
+        return None
