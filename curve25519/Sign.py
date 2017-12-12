@@ -2,6 +2,7 @@ import curve25519.Cpy32 as cpy32
 import curve25519.Divmod as divmod
 import curve25519.Mula_Small as mula_small
 import curve25519.Mula32 as mula32
+import curve25519.Packl_ctypes as packl_ctypes
 
 class Sign(object):
 
@@ -20,38 +21,38 @@ class Sign(object):
         self.x = x
 
         ORDER = [] * 32
-        ORDER.append(bytes(237))
-        ORDER.append(bytes(211))
-        ORDER.append(bytes(245))
-        ORDER.append(bytes(92))
-        ORDER.append(bytes(26))
-        ORDER.append(bytes(99))
-        ORDER.append(bytes(18))
-        ORDER.append(bytes(88))
-        ORDER.append(bytes(214))
-        ORDER.append(bytes(156))
-        ORDER.append(bytes(247))
-        ORDER.append(bytes(162))
-        ORDER.append(bytes(222))
-        ORDER.append(bytes(249))
-        ORDER.append(bytes(222))
-        ORDER.append(bytes(20))
-        ORDER.append(bytes(0))
-        ORDER.append(bytes(0))
-        ORDER.append(bytes(0))
-        ORDER.append(bytes(0))
-        ORDER.append(bytes(0))
-        ORDER.append(bytes(0))
-        ORDER.append(bytes(0))
-        ORDER.append(bytes(0))
-        ORDER.append(bytes(0))
-        ORDER.append(bytes(0))
-        ORDER.append(bytes(0))
-        ORDER.append(bytes(0))
-        ORDER.append(bytes(0))
-        ORDER.append(bytes(0))
-        ORDER.append(bytes(0))
-        ORDER.append(bytes(16))
+        ORDER.append(packl_ctypes(237))
+        ORDER.append(packl_ctypes(211))
+        ORDER.append(packl_ctypes(245))
+        ORDER.append(packl_ctypes(92))
+        ORDER.append(packl_ctypes(26))
+        ORDER.append(packl_ctypes(99))
+        ORDER.append(packl_ctypes(18))
+        ORDER.append(packl_ctypes(88))
+        ORDER.append(packl_ctypes(214))
+        ORDER.append(packl_ctypes(156))
+        ORDER.append(packl_ctypes(247))
+        ORDER.append(packl_ctypes(162))
+        ORDER.append(packl_ctypes(222))
+        ORDER.append(packl_ctypes(249))
+        ORDER.append(packl_ctypes(222))
+        ORDER.append(packl_ctypes(20))
+        ORDER.append(packl_ctypes(0))
+        ORDER.append(packl_ctypes(0))
+        ORDER.append(packl_ctypes(0))
+        ORDER.append(packl_ctypes(0))
+        ORDER.append(packl_ctypes(0))
+        ORDER.append(packl_ctypes(0))
+        ORDER.append(packl_ctypes(0))
+        ORDER.append(packl_ctypes(0))
+        ORDER.append(packl_ctypes(0))
+        ORDER.append(packl_ctypes(0))
+        ORDER.append(packl_ctypes(0))
+        ORDER.append(packl_ctypes(0))
+        ORDER.append(packl_ctypes(0))
+        ORDER.append(packl_ctypes(0))
+        ORDER.append(packl_ctypes(0))
+        ORDER.append(packl_ctypes(16))
 
         self.h1 = [0] * 32
         self.x1 = [0] * 32
@@ -59,6 +60,8 @@ class Sign(object):
 
         self.tmp1 = [0] * 64
         self.tmp2 = [0] * 64
+
+        self.run()
 
     def run(self):
         
@@ -69,11 +72,11 @@ class Sign(object):
         divmod(self.tmp3, self.h1, 32, self.ORDER, 32)
         divmod(self.tmp3, self.x1, 32, self.ORDER, 32)
 
-        mula_small(self.v, self.x1, 0, self.h1, 32, -1);
-        mula_small(self.v, self.v , 0, self.ORDER, 32, 1);
+        mula_small(self.v, self.x1, 0, self.h1, 32, -1, False);
+        mula_small(self.v, self.v , 0, self.ORDER, 32, 1, False);
 
         #// tmp1 = (x-h)*s mod q
-        mula32(self.tmp1, self.v, self.s, 32, 1);
+        mula32(self.tmp1, self.v, self.s, 32, 1, False);
         divmod(self.tmp2, self.tmp1, 64, self.ORDER, 32);
 
         w = 0
