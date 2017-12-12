@@ -101,7 +101,8 @@ class SignTransactionOffline(object):
             print()
 
     def getSignature(self):
-        return codecs.encode(self.signature,'hex_codec')
+        self.signature = self.v_list+self.h_list
+        return codecs.encode(self.listToBytes(self.signature),'hex_codec')
         #return self.signature
 
     def getSigningKey(self):
