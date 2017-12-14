@@ -2,7 +2,7 @@
 from base.BaseGet import BaseGet as Parent
 
 class GetAllTrades(Parent):
-    def __init__(self, timestamp=0, firstIndex=None, lastIndex=None, includeAssetInfo=False, requireBlock=None, requireLastBlock=None ):
+    def __init__(self, timestamp=0, includeAssetInfo=False, ri=None, rb=None ):
         """
             Get all trades since a given timestamp in reverse block height order.
 
@@ -13,17 +13,15 @@ class GetAllTrades(Parent):
             https://nxtwiki.org/wiki/The_Nxt_API#Get_All_Trades
 
             REQUEST
-            timestamp : is the timestamp (in seconds since the genesis block) to begin retrieving trades (optional, default 0)
-            firstIndex : is a zero-based index to the first alias to retrieve (O)
-            lastIndex : is a zero-based index to the last alias to retrieve (O)
-            includeAssetInfo : is true if asset information is to be included in the result (B) (O)
-            requireBlock : is the block ID of a block that must be present in the blockchain during execution (O)
-            requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (O)
+            :param timestamp : is the timestamp (in seconds since the genesis block) to begin retrieving trades (optional, default 0)
+            :param includeAssetInfo : is true if asset information is to be included in the result (B) (O)
+            :param ri : ri object ( check base/Ri.py) (WP)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
-            assets : is an array (A) of asset objects (refer to Get Asset)
-            lastBlock : is the last block ID on the blockchain (S) (applies if requireBlock is provided but not requireLastBlock)
-            requestProcessingTime : is the API request processing time (in millisec) (N)
+            :return assets : is an array (A) of asset objects (refer to Get Asset)
+            :return lastBlock : is the last block ID on the blockchain (S) (applies if requireBlock is provided but not requireLastBlock)
+            :return requestProcessingTime : is the API request processing time (in millisec) (N)
 
             Legenda :
                 ° the parameter are interchangeable on
@@ -36,20 +34,18 @@ class GetAllTrades(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
-                (WP) Wrapper specific parameter
+                (WP) Wrapper Meta-parameter
 
 
         """
 
         # Required parameters
         self.timestamp = timestamp
-        self.firstIndex = firstIndex
-        self.lastIndex = lastIndex
         self.includeAssetInfo = includeAssetInfo
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.ri = ri
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -57,25 +53,17 @@ class GetAllTrades(Parent):
         ## Create data dictionary
 
         self.data["timestamp"] = self.timestamp
-        if self.firstIndex:
-            self.data["firstIndex"] = self.firstIndex
-
-        if self.lastIndex:
-            self.data["lastIndex"] = self.lastIndex
-
         if self.includeAssetInfo:
             self.data["includeAssetInfo"] = self.includeAssetInfo
 
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
-
-        super(GetAllTrades, self).__init__(rt="getAllTrades", data=self.data)
+        super(GetAllTrades, self).__init__(rt="getAllTrades", data=self.data, ri=self.ri, rb=self.rb)
 
     def run(self):
         super(GetAllTrades, self).run()                                         # calls 'BaseGet.run()'
 
     def getData(self, key=None):
+        """
+        :param key: dictionary key, if None return the whole dictionary
+        :return: dictionary of data
+        """
         return super(GetAllTrades, self).getData(key)                           # calls 'BaseGet.getData()'

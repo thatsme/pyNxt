@@ -2,7 +2,7 @@
 from base.BaseGet import BaseGet as Parent
 
 class GetAssetAccountCount(Parent):
-    def __init__(self, asset=None, includeCounts=False, requireBlock=None, requireLastBlock=None ):
+    def __init__(self, asset=None, includeCounts=False, rb=None ):
         """
             Get asset information given an asset ID.
 
@@ -13,24 +13,22 @@ class GetAssetAccountCount(Parent):
             https://nxtwiki.org/wiki/The_Nxt_API#Get_Asset_Account_Count
 
             REQUEST
-
-            includeCounts : is true if the fields beginning with numberOf... are to be included (B) (O)
-            requireBlock : is the block ID of a block that must be present in the blockchain during execution (O)
-            requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (O)
+            :param includeCounts : is true if the fields beginning with numberOf... are to be included (B) (O)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
-            account : is the number of the account that issued the asset (S)
-            accountRS : is the Reed-Solomon address of the account that issued the asset (S)
-            name : is the asset name (S)
-            description : is the asset description (S)
-            quantityQNT : is the total asset quantity (in QNT) in existence (S)
-            asset : is the asset ID (N)
-            decimals : is the number of decimal places used by the asset (N)
-            numberOfAccounts : is the number of accounts that own the asset (N)
-            numberOfTrades : is the number of trades of this asset (N)
-            numberOfTransfers : is the number of transfers of this asset (N)
-            lastBlock : is the last block ID on the blockchain (S) (applies if requireBlock is provided but not requireLastBlock)
-            requestProcessingTime : is the API request processing time (in millisec) (N)
+            :return accounts : is the number of the accounts that issued the asset (S)
+            :return accountRS : is the Reed-Solomon address of the accounts that issued the asset (S)
+            :return name : is the asset name (S)
+            :return description : is the asset description (S)
+            :return quantityQNT : is the total asset quantity (in QNT) in existence (S)
+            :return asset : is the asset ID (N)
+            :return decimals : is the number of decimal places used by the asset (N)
+            :return numberOfAccounts : is the number of accounts that own the asset (N)
+            :return numberOfTrades : is the number of trades of this asset (N)
+            :return numberOfTransfers : is the number of transfers of this asset (N)
+            :return lastBlock : is the last block ID on the blockchain (S) (applies if requireBlock is provided but not requireLastBlock)
+            :return requestProcessingTime : is the API request processing time (in millisec) (N)
 
             Legenda :
                 ° the parameter are interchangeable on
@@ -43,9 +41,9 @@ class GetAssetAccountCount(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
-                (WP) Wrapper specific parameter
+                (WP) Wrapper Meta-parameter
 
 
         """
@@ -53,8 +51,7 @@ class GetAssetAccountCount(Parent):
         # Required parameters
         self.asset = asset
         self.includeCounts = includeCounts
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -65,16 +62,14 @@ class GetAssetAccountCount(Parent):
         if self.includeCounts:
             self.data["includeCounts"] = self.includeCounts
 
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
-
-        super(GetAssetAccountCount, self).__init__(rt="getAssetAccountCount", data=self.data)
+        super(GetAssetAccountCount, self).__init__(rt="getAssetAccountCount", data=self.data, rb=self.rb)
 
     def run(self):
         super(GetAssetAccountCount, self).run()                                         # calls 'BaseGet.run()'
 
     def getData(self, key=None):
+        """
+        :param key: dictionary key, if None return the whole dictionary
+        :return: dictionary of data
+        """
         return super(GetAssetAccountCount, self).getData(key)                           # calls 'BaseGet.getData()'

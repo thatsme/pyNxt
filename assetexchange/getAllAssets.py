@@ -2,7 +2,7 @@
 from base.BaseGet import BaseGet as Parent
 
 class GetAllAssets(Parent):
-    def __init__(self, firstIndex=None, lastIndex=None, includeCounts=False, requireBlock=None, requireLastBlock=None ):
+    def __init__(self, includeCounts=False, ri=None, rb=None ):
         """
             Get all assets in the exchange in reverse block height of creation order.
 
@@ -13,16 +13,14 @@ class GetAllAssets(Parent):
             https://nxtwiki.org/wiki/The_Nxt_API#Get_All_Assets
 
             REQUEST
-            firstIndex : is a zero-based index to the first alias to retrieve (O)
-            lastIndex : is a zero-based index to the last alias to retrieve (O)
-            includeCounts : is true if the fields beginning with numberOf... are to be included (B) (O)
-            requireBlock : is the block ID of a block that must be present in the blockchain during execution (O)
-            requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (O)
+            :param includeCounts : is true if the fields beginning with numberOf... are to be included (B) (O)
+            :param ri : ri object ( check base/Ri.py) (WP)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
-            assets : is an array (A) of asset objects (refer to Get Asset)
-            lastBlock : is the last block ID on the blockchain (S) (applies if requireBlock is provided but not requireLastBlock)
-            requestProcessingTime : is the API request processing time (in millisec) (N)
+            :return assets : is an array (A) of asset objects (refer to Get Asset)
+            :return lastBlock : is the last block ID on the blockchain (S) (applies if requireBlock is provided but not requireLastBlock)
+            :return requestProcessingTime : is the API request processing time (in millisec) (N)
 
             Legenda :
                 ° the parameter are interchangeable on
@@ -35,45 +33,31 @@ class GetAllAssets(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
-                (WP) Wrapper specific parameter
+                (WP) Wrapper Meta-parameter
 
 
         """
 
         # Required parameters
-        self.firstIndex = firstIndex
-        self.lastIndex = lastIndex
         self.includeCounts = includeCounts
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.ri = ri
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
 
         ## Create data dictionary
 
-
-        if self.firstIndex:
-            self.data["firstIndex"] = self.firstIndex
-
-        if self.lastIndex:
-            self.data["lastIndex"] = self.lastIndex
-
-        if self.includeCounts:
-            self.data["includeCounts"] = self.includeCounts
-
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
-
-        super(GetAllAssets, self).__init__(rt="getAllAssets", data=self.data)
+        super(GetAllAssets, self).__init__(rt="getAllAssets", data=self.data, ri=self.ri, rb=self.rb)
 
     def run(self):
         super(GetAllAssets, self).run()                                         # calls 'BaseGet.run()'
 
     def getData(self, key=None):
+        """
+        :param key: dictionary key, if None return the whole dictionary
+        :return: dictionary of data
+        """
         return super(GetAllAssets, self).getData(key)                           # calls 'BaseGet.getData()'

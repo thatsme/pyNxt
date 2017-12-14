@@ -2,7 +2,7 @@
 from base.BasePost import BasePost as Parent
 
 class PlaceAskOrder(Parent):
-    def __init__(self, asset = None, quantityQNT=0, priceNQT=0, secretPhrase=None,  publicKey = None, feeNQT = None, deadline = 0, referencedTransactionFullHash = None, broadcast=False, phasing = None, message=None ):
+    def __init__(self, asset = None, quantityQNT=0, priceNQT=0, secretPhrase=None,  publicKey = None, feeNQT = None, deadline = 0, referencedTransactionFullHash = None, broadcast=False, phasing = None, message=None, recipientPublicKey=None, rec=None ):
         """
             Place an asset order.
 
@@ -15,28 +15,31 @@ class PlaceAskOrder(Parent):
             https://nxtwiki.org/wiki/The_Nxt_API#Place_Ask_Order
 
             REQUEST
-            asset : is the asset ID of the asset being ordered
-            quantityQNT : is the amount (in QNT) of the asset being ordered
-            priceNQT : is the bid/ask price (in NQT)
-            * secretPhrase : secret Phrase of account where we want remove a property ( required or at least ** )
-            ** publicKey : publicKey of account where we want remove a property ( does not get in broadcast ) ( required or at least *)
-            feeNQT : fee for sending transaction if 0 minimum is set ( 100000000 NQT )
-            deadLine : is the deadline (in minutes) for the transaction to be confirmed, 32767 minutes maximum ( if 0, 60 )
-            referencedTransactionFullHash : creates a chained transaction, meaning that the current transaction cannot be confirmed
+            :param asset : is the asset ID of the asset being ordered
+            :param quantityQNT : is the amount (in QNT) of the asset being ordered
+            :param priceNQT : is the bid/ask price (in NQT)
+            :param * secretPhrase : secret Phrase of accounts where we want remove a property ( required or at least ** )
+            :param ** publicKey : publicKey of accounts where we want remove a property ( does not get in broadcast ) ( required or at least *)
+            :param feeNQT : fee for sending transaction if 0 minimum is set ( 100000000 NQT )
+            :param deadLine : is the deadline (in minutes) for the transaction to be confirmed, 32767 minutes maximum ( if 0, 60 )
+            :param referencedTransactionFullHash : creates a chained transaction, meaning that the current transaction cannot be confirmed
                                             unless the referenced transaction is also confirmed (O)
-            broadcast : is set to false to prevent broadcasting the transaction to the network (B) (O)
-            phasing : phasing object ( check base/Phasing.py )
-            message : message object ( check base/message.py )
+            :param broadcast : is set to false to prevent broadcasting the transaction to the network (B) (O)
+            :param phasing : phasing object ( check base/Phasing.py )
+            :param message : message object ( check base/message.py )
+            :param recipientPublicKey : is the public key of the recipient accounts (O)
+                                (only applicable if recipient provided; enhances security of a new accounts)
+            :param rec : rec object ( check base/Rec.py) (WP)
 
             RESPONSE (Create transaction response)
-            signatureHash : is a SHA-256 hash of the transaction signature (S)
-            unsignedTransactionBytes : are the unsigned transaction bytes (S)
-            transactionJSON : is a transaction object (refer to Get Transaction for details) (O)
-            broadcasted : is true if the transaction was broadcast, false otherwise (B)
-            requestProcessingTime : is the API request processing time (in millisec) (N)
-            transactionBytes : are the signed transaction bytes (S)
-            fullHash : is the full hash of the signed transaction (S)
-            transaction : is the ID of the newly created transaction (S)
+            :return signatureHash : is a SHA-256 hash of the transaction signature (S)
+            :return unsignedTransactionBytes : are the unsigned transaction bytes (S)
+            :return transactionJSON : is a transaction object (refer to Get Transaction for details) (O)
+            :return broadcasted : is true if the transaction was broadcast, false otherwise (B)
+            :return requestProcessingTime : is the API request processing time (in millisec) (N)
+            :return transactionBytes : are the signed transaction bytes (S)
+            :return fullHash : is the full hash of the signed transaction (S)
+            :return transaction : is the ID of the newly created transaction (S)
 
             Legenda
                 ° the parameter are interchangeable on
@@ -49,9 +52,9 @@ class PlaceAskOrder(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
-                (WP) Wrapper specific parameter
+                (WP) Wrapper Meta-parameter
 
 
         """
@@ -78,6 +81,8 @@ class PlaceAskOrder(Parent):
 
         self.phasing = phasing
         self.message = message
+        self.recipientPublicKey = recipientPublicKey
+        self.rec = rec
 
         # Initialize dictionary
         self.data = {}
@@ -98,8 +103,10 @@ class PlaceAskOrder(Parent):
             self.data["referencedTransactionFullHash"] = self.referencedTransactionFullHash
         if self.broadcast:
             self.data["broadcast"] = self.broadcast
+        if self.recipientPublicKey:
+            self.data["recipientPublicKey"] = self.recipientPublicKey
 
-        super(PlaceAskOrder, self).__init__(rt="placeAskOrder", data=self.data, phasing=self.phasing, message=self.message)
+        super(PlaceAskOrder, self).__init__(rt="placeAskOrder", data=self.data, phasing=self.phasing, message=self.message, rec=self.rec)
 
     def run(self):
         super(PlaceAskOrder, self).run()                # calls 'BasePost.run()'

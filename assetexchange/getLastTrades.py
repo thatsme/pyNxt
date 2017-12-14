@@ -3,7 +3,7 @@ from base.BaseGet import BaseGet as Parent
 
 class GetLastTrades(Parent):
 
-    def __init__(self,asset=None, requireBlock=None, requireLastBlock=None ):
+    def __init__(self,asset=None, rb=None ):
         """
             Get asset information given multiple asset IDs
 
@@ -13,13 +13,12 @@ class GetLastTrades(Parent):
             https://nxtwiki.org/wiki/The_Nxt_API#Get_Last_Trades
 
             REQUEST
-            asset : is array (A) of asset ID's (S) / Multiaccount parameters (3)
-            requireBlock : is the block ID of a block that must be present in the blockchain during execution (O)
-            requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (O)
+            :param asset : is array (A) of asset ID's (S) / Multiaccount parameters (3)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
-            trades : is an array (A) of trade objects (refer to Get Trades without name and decimals for details)
-            requestProcessingTime : is the API request processing time (N) (in millisec)
+            :return trades : is an array (A) of trade objects (refer to Get Trades without name and decimals for details)
+            :return requestProcessingTime : is the API request processing time (N) (in millisec)
 
             Legenda :
                 ° the parameter are interchangeable on
@@ -32,9 +31,9 @@ class GetLastTrades(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
-                (WP) Wrapper specific parameter
+                (WP) Wrapper Meta-parameter
 
         """
 

@@ -2,9 +2,9 @@
 from base.BaseGet import BaseGet as Parent
 
 class GetTrades(Parent):
-    def __init__(self, asset=None, account=None, firstIndex=None, lastIndex=None, timestamp=0, includeAssetInfo=False, requireBlock=None, requireLastBlock=None ):
+    def __init__(self, asset=None, account=None, timestamp=0, includeAssetInfo=False, ri=None, rb=None ):
         """
-            Get trades associated with a given asset and/or account in reverse block height order.
+            Get trades associated with a given asset and/or accounts in reverse block height order.
 
             GetTrades take a default 1/2 parameter as explained in NXT API Documentation
 
@@ -13,22 +13,20 @@ class GetTrades(Parent):
             https://nxtwiki.org/wiki/The_Nxt_API#Get_Trades
 
             REQUEST
-            asset : is the asset ID (S) (O)
-            account : is the account ID (S) (optional if asset provided)
-            firstIndex : is a zero-based index to the first trade to retrieve (N) (O)
-            lastIndex : is a zero-based index to the last trade to retrieve (N) (O)
-            timestamp : is the earliest block (in seconds since the genesis block) to retrieve (N) (O)
-            includeAssetInfo : is true if the decimals and name fields are to be included (B) (O)
-            requireBlock : is the block ID of a block that must be present in the blockchain during execution (O)
-            requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (O)
+            :param asset : is the asset ID (S) (O)
+            :param accounts : is the accounts ID (S) (optional if asset provided)
+            :param timestamp : is the earliest block (in seconds since the genesis block) to retrieve (N) (O)
+            :param includeAssetInfo : is true if the decimals and name fields are to be included (B) (O)
+            :param ri : ri object ( check base/Ri.py) (WP)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
-            trades : is an array (A) of trade objects with the following fields for each trade:
-            > seller (S) is the account number of the seller
+            :return trades : is an array (A) of trade objects with the following fields for each trade:
+            > seller (S) is the accounts number of the seller
             > quantityQNT (S) is the quantity (in QNT) of the asset traded
             > bidOrder (S) is the bid order ID
             > sellerRS (S) is the Reed-Solomon address of the seller
-            > buyer (S) is the account number of the buyer
+            > buyer (S) is the accounts number of the buyer
             > priceNQT (S) is the trade price (in NQT, the ask price for a buy or the bid price for a sell)
             > askOrder (S) is the ask order ID
             > buyerRS (S) is the Reed-Solomon address of the buyer
@@ -41,8 +39,8 @@ class GetTrades(Parent):
             > tradeType (S) is the trade type (sell or buy, where buy implies that the bid occurred after the ask, or if in the same block, has a greater order ID)
             > timestamp (N) is the timestamp (in seconds since the genesis block) of the trade block
             > height (N) is the height of the trade block
-            lastBlock : is the last block ID on the blockchain (S) (applies if requireBlock is provided but not requireLastBlock)
-            requestProcessingTime : is the API request processing time (in millisec) (N)
+            :return lastBlock : is the last block ID on the blockchain (S) (applies if requireBlock is provided but not requireLastBlock)
+            :return requestProcessingTime : is the API request processing time (in millisec) (N)
 
             Legenda :
                 ° the parameter are interchangeable on
@@ -55,9 +53,9 @@ class GetTrades(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
-                (WP) Wrapper specific parameter
+                (WP) Wrapper Meta-parameter
 
 
         """
@@ -65,34 +63,21 @@ class GetTrades(Parent):
         # Required parameters
         self.asset = asset
         self.account = account
-        self.firstIndex = firstIndex
-        self.lastIndex = lastIndex
         self.timestamp = timestamp
         self.includeAssetInfo = includeAssetInfo
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.ri = ri
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
 
         ## Create data dictionary
         self.data["asset"] = self.asset
-        self.data["account"] = self.account
+        self.data["accounts"] = self.account
         self.data["timestamp"] = self.timestamp
-
-        if self.firstIndex:
-            self.data["firstIndex"] = self.firstIndex
-        if self.lastIndex:
-            self.data["lastIndex"] = self.lastIndex
 
         if self.includeAssetInfo:
             self.data["includeAssetInfo"] = self.includeAssetInfo
-
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
 
         super(GetTrades, self).__init__(rt="getTrades", data=self.data)
 

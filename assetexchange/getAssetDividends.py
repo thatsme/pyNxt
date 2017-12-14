@@ -2,7 +2,7 @@
 from base.BaseGet import BaseGet as Parent
 
 class GetAssetDividends(Parent):
-    def __init__(self, asset=None, firstIndex=None, lastIndex=None, timestamp=0, adminPassword=None, requireBlock=None, requireLastBlock=None ):
+    def __init__(self, asset=None, timestamp=0, adminPassword=None, ri=None, rb=None ):
         """
             Get the dividend payment history for a specific asset.
 
@@ -13,17 +13,15 @@ class GetAssetDividends(Parent):
             https://nxtwiki.org/wiki/The_Nxt_API#Get_Asset_Dividends
 
             REQUEST
-            asset : is the asset ID (S)
-            account : is the account ID (optional if asset is provided)
-            firstIndex : is a zero-based index to the first account to retrieve (N) (O)
-            lastIndex : is a zero-based index to the last account to retrieve (N) (O)
-            timestamp : is the earliest deletion (in seconds since the genesis block) to retrieve (N) (O)
-            adminPassword is a string with the admin password  (S) (O)
-            requireBlock : is the block ID of a block that must be present in the blockchain during execution (O)
-            requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (O)
+            :param asset : is the asset ID (S)
+            :param accounts : is the accounts ID (optional if asset is provided)
+            :param timestamp : is the earliest deletion (in seconds since the genesis block) to retrieve (N) (O)
+            :param adminPassword is a string with the admin password  (S) (O)
+            :param ri : ri object ( check base/Ri.py) (WP)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
-            dividends : is an array (A) of dividend transactions with the following properties:
+            :return dividends : is an array (A) of dividend transactions with the following properties:
             > assetDividend : (S) is the dividend payment transaction ID
             > numberOfAccounts : (N) is the number of accounts that received a dividend
             > amountNQTPerQNT : (S) is the amount of NXT (in NQT) paid per quantity (in QNT) of the asset
@@ -32,8 +30,8 @@ class GetAssetDividends(Parent):
             > asset : (S) is the asset ID
             > height : (N) is the block height of the dividend payment
             > timestamp : (N) is the block timestamp of the dividend payment
-            lastBlock : is the last block ID on the blockchain (S) (applies if requireBlock is provided but not requireLastBlock)
-            requestProcessingTime : is the API request processing time (in millisec) (N)
+            :return lastBlock : is the last block ID on the blockchain (S) (applies if requireBlock is provided but not requireLastBlock)
+            :return requestProcessingTime : is the API request processing time (in millisec) (N)
 
             Legenda :
                 ° the parameter are interchangeable on
@@ -46,21 +44,19 @@ class GetAssetDividends(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
-                (WP) Wrapper specific parameter
+                (WP) Wrapper Meta-parameter
 
 
         """
 
         # Required parameters
         self.asset = asset
-        self.firstIndex = firstIndex
-        self.lastIndex = lastIndex
         self.timestamp = timestamp
         self.adminPassword = adminPassword
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.ri = ri
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -69,20 +65,10 @@ class GetAssetDividends(Parent):
         self.data["asset"] = self.asset
         self.data["timestamp"] = self.timestamp
 
-        if self.firstIndex:
-            self.data["firstIndex"] = self.firstIndex
-        if self.lastIndex:
-            self.data["lastIndex"] = self.lastIndex
         if self.adminPassword:
             self.data["adminPassword"] = self.adminPassword
 
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
-
-        super(GetAssetDividends, self).__init__(rt="getAssetDividends", data=self.data)
+        super(GetAssetDividends, self).__init__(rt="getAssetDividends", data=self.data, ri=self.ri, rb=self.rb)
 
     def run(self):
         super(GetAssetDividends, self).run()                                         # calls 'BaseGet.run()'

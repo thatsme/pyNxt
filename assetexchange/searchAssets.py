@@ -3,7 +3,7 @@ from base.BaseGet import BaseGet as Parent
 
 class SearchAssets(Parent):
 
-    def __init__(self, query=None, firstIndex=None, lastIndex=None, requireBlock=None, requireLastBlock=None ):
+    def __init__(self, query=None, ri=None, rb=None ):
         """
             Get assets having a name or description that match a given query in reverse relevance order.
 
@@ -15,10 +15,8 @@ class SearchAssets(Parent):
             REQUEST
             :param query : is a full text query on the asset fields name (S) and description (S) in the standard Lucene syntax
             :param firstIndex : is a zero-based index to the first block ID to retrieve (N) (O)
-            :param lastIndex : is a zero-based index to the last block ID to retrieve (N) (O)
-            :param includeCounts : is true if the fields beginning with numberOf... are to be included (B) (O)
-            :param requireBlock : is the block ID of a block that must be present in the blockchain during execution (O)
-            :param requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (O)
+            :param ri : ri object ( check base/Ri.py) (WP)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
             :return assets (A) is an array of asset objects (refer to Get Asset)
@@ -36,17 +34,15 @@ class SearchAssets(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
                 (WP) Wrapper Meta-parameter
 
         """
 
         self.query = query
-        self.firstIndex = firstIndex
-        self.lastIndex = lastIndex
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.ri = ri
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -54,16 +50,7 @@ class SearchAssets(Parent):
         ## Create data dictionary
         self.data["query"] = query
 
-        if self.firstIndex:
-            self.data["firstIndex"] = self.firstIndex
-        if self.lastIndex:
-            self.data["lastIndex"] = self.lastIndex
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
-
-        super(SearchAssets, self).__init__(rt = "searchAssets", data=self.data)
+        super(SearchAssets, self).__init__(rt = "searchAssets", data=self.data, ri=self.ri, rb=self.rb)
 
     def run(self):
         super(SearchAssets, self).run()                   # calls 'BaseGet.run()'

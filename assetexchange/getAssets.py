@@ -3,7 +3,7 @@ from base.BaseGet import BaseGet as Parent
 
 class GetAssets(Parent):
 
-    def __init__(self,asset=None, firstIndex=None, lastIndex=None, includeCounts=False, requireBlock=None, requireLastBlock=None ):
+    def __init__(self,asset=None, includeCounts=False, ri=None, rb=None ):
         """
             Get asset information given multiple asset IDs
 
@@ -13,17 +13,15 @@ class GetAssets(Parent):
             https://nxtwiki.org/wiki/The_Nxt_API#Get_Assets
 
             REQUEST
-            account : is array (A) of asset ID's (S) / Multiaccount parameters (3)
-            firstIndex : is a zero-based index to the first block ID to retrieve (N) (O)
-            lastIndex : is a zero-based index to the last block ID to retrieve (N) (O)
-            includeCounts : is true if the fields beginning with numberOf... are to be included (B) (O)
-            requireBlock : is the block ID of a block that must be present in the blockchain during execution (O)
-            requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (O)
+            :param accounts : is array (A) of asset ID's (S) / Multiaccount parameters (3)
+            :param includeCounts : is true if the fields beginning with numberOf... are to be included (B) (O)
+            :param ri : ri object ( check base/Ri.py) (WP)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
-            assets : is an array (A) of asset objects (refer to Get Asset)
-            lastBlock : is the last block ID on the blockchain (S) (applies if requireBlock is provided but not requireLastBlock)
-            requestProcessingTime : is the API request processing time (N) (in millisec)
+            :return assets : is an array (A) of asset objects (refer to Get Asset)
+            :return lastBlock : is the last block ID on the blockchain (S) (applies if requireBlock is provided but not requireLastBlock)
+            :return requestProcessingTime : is the API request processing time (N) (in millisec)
 
             Legenda :
                 ° the parameter are interchangeable on
@@ -36,9 +34,9 @@ class GetAssets(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
-                (WP) Wrapper specific parameter
+                (WP) Wrapper Meta-parameter
 
         """
 
@@ -46,11 +44,9 @@ class GetAssets(Parent):
         for a in asset[:3]:
             self.assets.append(a)
 
-        self.firstIndex = firstIndex
-        self.lastIndex = lastIndex
         self.includeCounts = includeCounts
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.ri = ri
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -59,18 +55,10 @@ class GetAssets(Parent):
         for a in self.assets:
             self.data["asset"] = a
 
-        if firstIndex:
-            self.data["firstIndex"] = self.firstIndex
-        if lastIndex:
-            self.data["lastIndex"] = self.lastIndex
         if self.includeCounts:
             self.data["includeCounts"] = self.includeCounts
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
 
-        super(GetAssets, self).__init__(rt = "getAssets", data=self.data)
+        super(GetAssets, self).__init__(rt = "getAssets", data=self.data, ri=self.ri, rb=self.rb)
 
     def run(self):
         super(GetAssets, self).run()                                # calls 'BaseGet.run()'

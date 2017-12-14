@@ -15,16 +15,16 @@ class CancelBidOrder(Parent):
             https://nxtwiki.org/wiki/The_Nxt_API#Cancel_Bid_Order
 
             REQUEST
-            order : is the order ID of the order being canceled (S) (R)
-            * secretPhrase : secret Phrase of account where we want remove a property ( required or at least ** )
-            ** publicKey : publicKey of account where we want remove a property ( does not get in broadcast ) ( required or at least *)
-            feeNQT : fee for sending transaction if 0 minimum is set ( 100000000 NQT )
-            deadLine : is the deadline (in minutes) for the transaction to be confirmed, 32767 minutes maximum ( if 0, 60 )
-            referencedTransactionFullHash : creates a chained transaction, meaning that the current transaction cannot be confirmed
+            :param order : is the order ID of the order being canceled (S) (R)
+            :param secretPhrase *: secret Phrase of accounts where we want remove a property ( required or at least ** )
+            :param publicKey **: publicKey of accounts where we want remove a property ( does not get in broadcast ) ( required or at least *)
+            :param feeNQT : fee for sending transaction if 0 minimum is set ( 100000000 NQT )
+            :param deadLine : is the deadline (in minutes) for the transaction to be confirmed, 32767 minutes maximum ( if 0, 60 )
+            :param referencedTransactionFullHash : creates a chained transaction, meaning that the current transaction cannot be confirmed
                                             unless the referenced transaction is also confirmed (O)
-            broadcast : is set to false to prevent broadcasting the transaction to the network (B) (O)
-            phasing : phasing object ( check base/Phasing.py )
-            message : message object ( check base/message.py )
+            :param broadcast : is set to false to prevent broadcasting the transaction to the network (B) (O)
+            :param phasing : phasing object ( check base/Phasing.py ) (O) (WP)
+            :param message : message object ( check base/message.py ) (O) (WP)
 
             RESPONSE (Create transaction response)
             signatureHash : is a SHA-256 hash of the transaction signature (S)
@@ -47,9 +47,9 @@ class CancelBidOrder(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
-                (WP) Wrapper specific parameter
+                (WP) Wrapper Meta-parameter
 
 
         """
@@ -98,4 +98,8 @@ class CancelBidOrder(Parent):
         super(CancelBidOrder, self).run()                # calls 'BasePost.run()'
 
     def getData(self, key=None):
+        """
+        :param key: dictionary key, if None return the whole dictionary
+        :return: dictionary of data
+        """
         return super(CancelBidOrder, self).getData(key)  # calls 'BasePost.getData()'

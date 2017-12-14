@@ -2,7 +2,7 @@
 from base.BaseGet import BaseGet as Parent
 
 class GetBidOrderIds(Parent):
-    def __init__(self, asset=None, firstIndex=None, lastIndex=None, requireBlock=None, requireLastBlock=None ):
+    def __init__(self, asset=None, ri=None, rb=None ):
         """
             Get bid/ask order IDs given an asset ID, in order of decreasing bid price or increasing ask price.
 
@@ -13,16 +13,14 @@ class GetBidOrderIds(Parent):
             https://nxtwiki.org/wiki/The_Nxt_API#Get_Bid_Order_Ids
 
             REQUEST
-            asset : is the asset ID (S)
-            firstIndex : is a zero-based index to the first order ID to retrieve (O)
-            lastIndex : is a zero-based index to the last order ID to retrieve (O)
-            requireBlock : is the block ID of a block that must be present in the blockchain during execution (O)
-            requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (O)
+            :param asset : is the asset ID (S)
+            :param ri : ri object ( check base/Ri.py) (WP)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
-            bidOrderIds : is an array (A) of order IDs
-            lastBlock : is the last block ID on the blockchain (S) (applies if requireBlock is provided but not requireLastBlock)
-            requestProcessingTime : is the API request processing time (in millisec) (N)
+            :return bidOrderIds : is an array (A) of order IDs
+            :return lastBlock : is the last block ID on the blockchain (S) (applies if requireBlock is provided but not requireLastBlock)
+            :return requestProcessingTime : is the API request processing time (in millisec) (N)
 
             Legenda :
                 ° the parameter are interchangeable on
@@ -35,19 +33,17 @@ class GetBidOrderIds(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
-                (WP) Wrapper specific parameter
+                (WP) Wrapper Meta-parameter
 
 
         """
 
         # Required parameters
         self.asset = asset
-        self.firstIndex = firstIndex
-        self.lastIndex = lastIndex
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.ri = ri
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -56,17 +52,7 @@ class GetBidOrderIds(Parent):
 
         self.data["asset"] = self.asset
 
-        if self.firstIndex:
-            self.data["firstIndex"] = self.firstIndex
-        if self.lastIndex:
-            self.data["lastIndex"] = self.lastIndex
-
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
-
-        super(GetBidOrderIds, self).__init__(rt="getBidOrderIds", data=self.data)
+        super(GetBidOrderIds, self).__init__(rt="getBidOrderIds", data=self.data, ri=self.ri, rb=self.rb)
 
     def run(self):
         super(GetBidOrderIds, self).run()                                         # calls 'BaseGet.run()'

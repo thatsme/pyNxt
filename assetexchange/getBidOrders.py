@@ -2,7 +2,7 @@
 from base.BaseGet import BaseGet as Parent
 
 class GetBidOrders(Parent):
-    def __init__(self, asset=None, sortByPrice=False, showExpectedCancellations=False, firstIndex=None, lastIndex=None, requireBlock=None, requireLastBlock=None ):
+    def __init__(self, asset=None, sortByPrice=False, showExpectedCancellations=False, ri=None, rb=None ):
         """
             Get bid/ask orders given an asset ID, in order of decreasing bid price or increasing ask price
             (if sortByPrice is true for expected orders, otherwise in the expected order of execution).
@@ -14,16 +14,14 @@ class GetBidOrders(Parent):
             https://nxtwiki.org/wiki/The_Nxt_API#Get_Bid_Orders
 
             REQUEST
-            asset : is the asset ID (S)
-            sortByPrice : is true to sort by price (optional, applies only to expected orders,
+            :param asset : is the asset ID (S)
+            :param sortByPrice : is true to sort by price (optional, applies only to expected orders,
                         which are returned in expected order of execution by default) (B)
-            showExpectedCancellations : is true to include orders that are expected to be cancelled in the next block,
+            :param showExpectedCancellations : is true to include orders that are expected to be cancelled in the next block,
                         based on the content of the unconfirmed transactions pool and the phased transactions
                         expected to finish in the next block (optional, does not apply to expected orders) (B)
-            firstIndex : is a zero-based index to the first order ID to retrieve (O)
-            lastIndex : is a zero-based index to the last order ID to retrieve (O)
-            requireBlock : is the block ID of a block that must be present in the blockchain during execution (O)
-            requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (O)
+            :param ri : ri object ( check base/Ri.py) (WP)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
             bidOrders : is an array (A) of order objects (refer to Get Order for details) with the following additional field only for an expected order:
@@ -42,9 +40,9 @@ class GetBidOrders(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
-                (WP) Wrapper specific parameter
+                (WP) Wrapper Meta-parameter
 
 
         """
@@ -53,10 +51,8 @@ class GetBidOrders(Parent):
         self.asset = asset
         self.sortByPrice = sortByPrice
         self.showExpectedCancellations = showExpectedCancellations
-        self.firstIndex = firstIndex
-        self.lastIndex = lastIndex
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.ri = ri
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -69,17 +65,7 @@ class GetBidOrders(Parent):
         if self.showExpectedCancellations:
             self.data["showExpectedCancellations"] = self.showExpectedCancellations
 
-        if self.firstIndex:
-            self.data["firstIndex"] = self.firstIndex
-        if self.lastIndex:
-            self.data["lastIndex"] = self.lastIndex
-
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
-
-        super(GetBidOrders, self).__init__(rt="getBidOrders", data=self.data)
+        super(GetBidOrders, self).__init__(rt="getBidOrders", data=self.data, ri=self.ri, rb=self.rb)
 
     def run(self):
         super(GetBidOrders, self).run()                                         # calls 'BaseGet.run()'

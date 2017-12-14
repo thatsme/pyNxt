@@ -2,7 +2,7 @@
 from base.BaseGet import BaseGet as Parent
 
 class GetBidOrder(Parent):
-    def __init__(self, order=None, requireBlock=None, requireLastBlock=None ):
+    def __init__(self, order=None, rb=None ):
         """
             Get a bid/ask order given an order ID.
 
@@ -13,23 +13,22 @@ class GetBidOrder(Parent):
             https://nxtwiki.org/wiki/The_Nxt_API#Get_Bid_Order
 
             REQUEST
-            order : is the Order ID
-            requireBlock : is the block ID of a block that must be present in the blockchain during execution (O)
-            requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (O)
+            :param order : is the Order ID
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
-            account : is the account number associated with the order (S)
-            accountRS : is the Reed-Solomon address of the account (S)
-            asset : is the ID of the asset being ordered (S)
-            quantityQNT : is the order quantity (in QNT) (S)
-            priceNQT : is the order price (in NQT) (S)
-            height : is the block height of the order transaction (N)
-            transactionHeight : is the transaction height (N)
-            transactionIndex : is a zero-based index giving the order of the transaction in its block (N)
-            order : is the ID of the order (S)
-            type : is the type of order (bid or ask) (S)
-            lastBlock : is the last block ID on the blockchain (S) (applies if requireBlock is provided but not requireLastBlock)
-            requestProcessingTime : is the API request processing time (in millisec) (N)
+            :return accounts : is the accounts number associated with the order (S)
+            :return accountRS : is the Reed-Solomon address of the accounts (S)
+            :return asset : is the ID of the asset being ordered (S)
+            :return quantityQNT : is the order quantity (in QNT) (S)
+            :return priceNQT : is the order price (in NQT) (S)
+            :return height : is the block height of the order transaction (N)
+            :return transactionHeight : is the transaction height (N)
+            :return transactionIndex : is a zero-based index giving the order of the transaction in its block (N)
+            :return order : is the ID of the order (S)
+            :return type : is the type of order (bid or ask) (S)
+            :return lastBlock : is the last block ID on the blockchain (S) (applies if requireBlock is provided but not requireLastBlock)
+            :return requestProcessingTime : is the API request processing time (in millisec) (N)
 
             Legenda :
                 ° the parameter are interchangeable on
@@ -42,17 +41,16 @@ class GetBidOrder(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
-                (WP) Wrapper specific parameter
+                (WP) Wrapper Meta-parameter
 
 
         """
 
         # Required parameters
         self.order = order
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -61,13 +59,7 @@ class GetBidOrder(Parent):
 
         self.data["order"] = self.order
 
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
-
-        super(GetBidOrder, self).__init__(rt="getBidOrder", data=self.data)
+        super(GetBidOrder, self).__init__(rt="getBidOrder", data=self.data, rb=self.rb)
 
     def run(self):
         super(GetBidOrder, self).run()                                         # calls 'BaseGet.run()'

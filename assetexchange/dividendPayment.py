@@ -15,28 +15,28 @@ class DividendPayment(Parent):
             https://nxtwiki.org/wiki/The_Nxt_API#Dividend_Payment
 
             REQUEST
-            asset : is the asset ID (S) (R)
-            height ; is the blockchain height at which asset holders shares will be counted (N) (must be less than 1440 blocks in the past)
-            amountNQTPerQNT : is dividend amount (in NQT per QNT of the asset) (N) (R)
-            * secretPhrase : secret Phrase of account where we want remove a property ( required or at least ** )
-            ** publicKey : publicKey of account where we want remove a property ( does not get in broadcast ) ( required or at least *)
-            feeNQT : fee for sending transaction if 0 minimum is set ( 100000000 NQT )
-            deadLine : is the deadline (in minutes) for the transaction to be confirmed, 32767 minutes maximum ( if 0, 60 )
-            referencedTransactionFullHash : creates a chained transaction, meaning that the current transaction cannot be confirmed
+            :param asset : is the asset ID (S) (R)
+            :param height ; is the blockchain height at which asset holders shares will be counted (N) (must be less than 1440 blocks in the past)
+            :param amountNQTPerQNT : is dividend amount (in NQT per QNT of the asset) (N) (R)
+            :param secretPhrase *: secret Phrase of accounts where we want remove a property ( required or at least ** )
+            :param publicKey **: publicKey of accounts where we want remove a property ( does not get in broadcast ) ( required or at least *)
+            :param feeNQT : fee for sending transaction if 0 minimum is set ( 100000000 NQT )
+            :param deadLine : is the deadline (in minutes) for the transaction to be confirmed, 32767 minutes maximum ( if 0, 60 )
+            :param referencedTransactionFullHash : creates a chained transaction, meaning that the current transaction cannot be confirmed
                                             unless the referenced transaction is also confirmed (O)
-            broadcast : is set to false to prevent broadcasting the transaction to the network (B) (O)
-            phasing : phasing object ( check base/Phasing.py )
-            message : message object ( check base/message.py )
+            :param broadcast : is set to false to prevent broadcasting the transaction to the network (B) (O)
+            :param phasing : phasing object ( check base/Phasing.py ) (O) (WP)
+            :param message : message object ( check base/message.py ) (O) (WP)
 
             RESPONSE (Create transaction response)
-            signatureHash : is a SHA-256 hash of the transaction signature (S)
-            unsignedTransactionBytes : are the unsigned transaction bytes (S)
-            transactionJSON : is a transaction object (refer to Get Transaction for details) (O)
-            broadcasted : is true if the transaction was broadcast, false otherwise (B)
-            requestProcessingTime : is the API request processing time (in millisec) (N)
-            transactionBytes : are the signed transaction bytes (S)
-            fullHash : is the full hash of the signed transaction (S)
-            transaction : is the ID of the newly created transaction (S)
+            :return signatureHash : is a SHA-256 hash of the transaction signature (S)
+            :return unsignedTransactionBytes : are the unsigned transaction bytes (S)
+            :return transactionJSON : is a transaction object (refer to Get Transaction for details) (O)
+            :return broadcasted : is true if the transaction was broadcast, false otherwise (B)
+            :return requestProcessingTime : is the API request processing time (in millisec) (N)
+            :return transactionBytes : are the signed transaction bytes (S)
+            :return fullHash : is the full hash of the signed transaction (S)
+            :return transaction : is the ID of the newly created transaction (S)
 
             Legenda
                 ° the parameter are interchangeable on
@@ -49,9 +49,9 @@ class DividendPayment(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
-                (WP) Wrapper specific parameter
+                (WP) Wrapper Meta-parameter
 
 
         """
@@ -104,4 +104,8 @@ class DividendPayment(Parent):
         super(DividendPayment, self).run()                # calls 'BasePost.run()'
 
     def getData(self, key=None):
+        """
+        :param key: dictionary key, if None return the whole dictionary
+        :return: dictionary of data
+        """
         return super(DividendPayment, self).getData(key)  # calls 'BasePost.getData()'

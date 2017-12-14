@@ -2,7 +2,7 @@
 from base.BaseGet import BaseGet as Parent
 
 class GetAssetAccounts(Parent):
-    def __init__(self, asset=None, height=None, requireBlock=None, requireLastBlock=None ):
+    def __init__(self, asset=None, height=None, rb=None ):
         """
             Get the accounts that own an asset given the asset ID in reverse quantity order.
 
@@ -13,24 +13,21 @@ class GetAssetAccounts(Parent):
             https://nxtwiki.org/wiki/The_Nxt_API#Get_Asset_Accounts
 
             REQUEST
-            asset : is the asset ID (S)
-            height : is the height of the blockchain to determine the accounts (N) (O) ( default is last block)
-            firstIndex : is a zero-based index to the first account to retrieve (N) (O)
-            lastIndex : is a zero-based index to the last account to retrieve (N) (O)
-            requireBlock : is the block ID of a block that must be present in the blockchain during execution (O)
-            requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (O)
+            :param asset : is the asset ID (S)
+            :param height : is the height of the blockchain to determine the accounts (N) (O) ( default is last block)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             Note: If table trimming is enabled (default), the height must be within 1440 blocks of the last block.
 
             RESPONSE
-            accountAssets : is an array (A) of asset objects with the following fields for each asset:
+            :return accountAssets : is an array (A) of asset objects with the following fields for each asset:
             > quantityQNT : is the quantity (in QNT) of the assets (S)
-            > accountRS : is the Reed-Solomon address of the account that own the asset (S)
+            > accountRS : is the Reed-Solomon address of the accounts that own the asset (S)
             > unconfirmedQuantityQNT : is the unconfirmed quantity (in QNT) of the asset (S)
             > asset : is the asset ID (S)
-            > account : is the number of the account that own the asset (S)
-            lastBlock : is the last block ID on the blockchain (S) (applies if requireBlock is provided but not requireLastBlock)
-            requestProcessingTime : is the API request processing time (in millisec) (N)
+            > accounts : is the number of the accounts that own the asset (S)
+            :return lastBlock : is the last block ID on the blockchain (S) (applies if requireBlock is provided but not requireLastBlock)
+            :return requestProcessingTime : is the API request processing time (in millisec) (N)
 
             Legenda :
                 ° the parameter are interchangeable on
@@ -43,9 +40,9 @@ class GetAssetAccounts(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
-                (WP) Wrapper specific parameter
+                (WP) Wrapper Meta-parameter
 
 
         """
@@ -53,8 +50,7 @@ class GetAssetAccounts(Parent):
         # Required parameters
         self.asset = asset
         self.height = height
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -63,13 +59,7 @@ class GetAssetAccounts(Parent):
         self.data["asset"] = self.asset
         self.data["height"] = self.height
 
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
-
-        super(GetAssetAccounts, self).__init__(rt="getAssetAccounts", data=self.data)
+        super(GetAssetAccounts, self).__init__(rt="getAssetAccounts", data=self.data, rb=self.rb)
 
     def run(self):
         super(GetAssetAccounts, self).run()                                         # calls 'BaseGet.run()'

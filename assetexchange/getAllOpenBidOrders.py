@@ -2,7 +2,7 @@
 from base.BaseGet import BaseGet as Parent
 
 class GetAllOpenBidOrders(Parent):
-    def __init__(self, firstIndex=None, lastIndex=None, requireBlock=None, requireLastBlock=None ):
+    def __init__(self, ri=None, rb=None ):
         """
             Get all open bid/ask orders in reverse block height order.
 
@@ -13,15 +13,13 @@ class GetAllOpenBidOrders(Parent):
             https://nxtwiki.org/wiki/The_Nxt_API#Get_All_Open_Bid_Orders
 
             REQUEST
-            firstIndex : is a zero-based index to the first alias to retrieve (O)
-            lastIndex : is a zero-based index to the last alias to retrieve (O)
-            requireBlock : is the block ID of a block that must be present in the blockchain during execution (O)
-            requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (O)
+            :param ri : ri object ( check base/Ri.py) (WP)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
-            openOrders :is an array (A) of order objects (refer to Get Order for details)
-            lastBlock : is the last block ID on the blockchain (S) (applies if requireBlock is provided but not requireLastBlock)
-            requestProcessingTime : is the API request processing time (in millisec) (N)
+            :return openOrders :is an array (A) of order objects (refer to Get Order for details)
+            :return lastBlock : is the last block ID on the blockchain (S) (applies if requireBlock is provided but not requireLastBlock)
+            :return requestProcessingTime : is the API request processing time (in millisec) (N)
 
             Legenda :
                 ° the parameter are interchangeable on
@@ -34,42 +32,30 @@ class GetAllOpenBidOrders(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
-                (WP) Wrapper specific parameter
+                (WP) Wrapper Meta-parameter
 
 
         """
 
         # Required parameters
-        self.firstIndex = firstIndex
-        self.lastIndex = lastIndex
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.ri = ri
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
 
         ## Create data dictionary
 
-
-        if self.firstIndex:
-            self.data["firstIndex"] = self.firstIndex
-
-        if self.lastIndex:
-            self.data["lastIndex"] = self.lastIndex
-
-
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
-
-        super(GetAllOpenBidOrders, self).__init__(rt="getAllOpenBidOrders", data=self.data)
+        super(GetAllOpenBidOrders, self).__init__(rt="getAllOpenBidOrders", data=self.data, ri=self.ri, rb=self.rb)
 
     def run(self):
         super(GetAllOpenBidOrders, self).run()                                         # calls 'BaseGet.run()'
 
     def getData(self, key=None):
+        """
+        :param key: dictionary key, if None return the whole dictionary
+        :return: dictionary of data
+        """
         return super(GetAllOpenBidOrders, self).getData(key)                           # calls 'BaseGet.getData()'
