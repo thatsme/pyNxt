@@ -3,44 +3,43 @@ from base.BaseGet import BaseGet as Parent
 
 class GetDGSPurchase(Parent):
 
-    def __init__(self, purchase=None, sharedKey=None, requireBlock=None, requireLastBlock=None ):
+    def __init__(self, purchase=None, sharedKey=None, rb=None ):
         """
             Get a purchase order given a purchase order ID.
 
             GetDGSPurchase take a default 1 parameter as explained in NXT API Documentation
-            Class is working with GET method
+            API is working with GET method
 
             https://nxtwiki.org/wiki/The_Nxt_API#Get_DGS_Purchase
 
             REQUEST
-            purchase : is the purchase order ID (S)
-            sharedKey : is the shared key used to decrypt the message (O) (see Get Shared Key)
-            requireBlock : is the block ID of a block that must be present in the blockchain during execution (O)
-            requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (O)
+            :param purchase : is the purchase order ID (S)
+            :param sharedKey : is the shared key used to decrypt the message (O) (see Get Shared Key)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
 
             RESPONSE
-            seller : (S) is the account number of the seller
-            quantity : (N) is the quantity of the product to be purchased
-            feedbackNotes : is an array (A) of AES-encrypted objects, each with data (S) and nonce (S) fields,
+            :return seller : (S) is the accounts number of the seller
+            :return quantity : (N) is the quantity of the product to be purchased
+            :return feedbackNotes : is an array (A) of AES-encrypted objects, each with data (S) and nonce (S) fields,
                             in reverse chronological order, if applicable
-            publicFeedbacks : is an array (A) of feedback strings in reverse chronological order if applicable
-            pending : is true if the deliveryDeadline has not passed, false otherwise (B)
-            purchase : is the purchase order ID (S)
-            goods : is the ID of the product (S)
-            sellerRS : is the Reed-Solomon address of the seller (S)
-            buyer : is the account number of the buyer (S)
-            priceNQT : is the price (in NQT) of the product (S)
-            deliveryDeadlineTimestamp : is the timestamp (N) (in seconds since the genesis block) by which the product must be delivered
-            goodsIsText : is false if the message is a hex string, otherwise the message is text (B) (O)
-            buyerRS : is the Reed-Solomon address of the buyer (S)
-            refundNQT : is the amount (in NQT) refunded, if applicable (S)
-            name : is the name of the product (S)
-            goodsData : is an object with the two fields data (S) (the encrypted product hex string) and nonce (S),
-                        if the product has been delivered (O)
-            timestamp : is the timestamp (in seconds since the genesis block) of the purchase order(N)
-            lastBlock : is the last block ID on the blockchain (S) (applies if requireBlock is provided but not requireLastBlock)
-            requestProcessingTime : is the API request processing time (N) (in millisec)
+            :return publicFeedbacks : is an array (A) of feedback strings in reverse chronological order if applicable
+            :return pending : is true if the deliveryDeadline has not passed, false otherwise (B)
+            :return purchase : is the purchase order ID (S)
+            :return goods : is the ID of the product (S)
+            :return sellerRS : is the Reed-Solomon address of the seller (S)
+            :return buyer : is the accounts number of the buyer (S)
+            :return priceNQT : is the price (in NQT) of the product (S)
+            :return deliveryDeadlineTimestamp : is the timestamp (N) (in seconds since the genesis block) by which the product must be delivered
+            :return goodsIsText : is false if the message is a hex string, otherwise the message is text (B) (O)
+            :return buyerRS : is the Reed-Solomon address of the buyer (S)
+            :return refundNQT : is the amount (in NQT) refunded, if applicable (S)
+            :return name : is the name of the product (S)
+            :return goodsData : is an object with the two fields data (S) (the encrypted product hex string) and nonce (S),
+                                if the product has been delivered (O)
+            :return timestamp : is the timestamp (in seconds since the genesis block) of the purchase order(N)
+            :return lastBlock : is the last block ID on the blockchain (S) (applies if requireBlock is provided but not requireLastBlock)
+            :return requestProcessingTime : is the API request processing time (N) (in millisec)
 
             Legenda :
                 ° the parameter are interchangeable on
@@ -53,16 +52,15 @@ class GetDGSPurchase(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
-                (WP) Wrapper specific parameter
+                (WP) Wrapper Meta-parameter
 
         """
 
         self.purchase = purchase
         self.sharedKey = sharedKey
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -72,12 +70,8 @@ class GetDGSPurchase(Parent):
 
         if self.sharedKey:
             self.data["sharedKey"] = self.sharedKey
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
 
-        super(GetDGSPurchase, self).__init__(rt = "getDGSPurchase", data=self.data)
+        super(GetDGSPurchase, self).__init__(rt = "getDGSPurchase", data=self.data, rb=self.rb)
 
     def run(self):
         super(GetDGSPurchase, self).run()                           # calls 'BaseGet.run()'

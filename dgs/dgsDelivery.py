@@ -1,46 +1,47 @@
-# -*- coding: utf-8 -*-
+ # -*- coding: utf-8 -*-
 from base.BasePost import BasePost as Parent
 
 class DgsDelivery(Parent):
-    def __init__(self, purchase = None, discountNQT=0, goodsToEncrypt=None, goodsIsText=False, goodsData=None, goodsNonce=None, secretPhrase=None,  publicKey = None, feeNQT = None, deadline = 0, referencedTransactionFullHash = None, broadcast=False, phasing = None, message=None ):
+    def __init__(self, purchase = None, discountNQT=0, goodsToEncrypt=None, goodsIsText=False, goodsData=None, goodsNonce=None, secretPhrase=None,  publicKey = None, feeNQT = None, deadline = 0, referencedTransactionFullHash = None, broadcast=False, phasing = None, message=None, rec=None ):
         """
             Deliver a product.
 
             DgsDelivery take a default 5 parameter as explained in NXT API Documentation
 
-            Class is working with POST method only, and create a transaction, for more info about transactions please refer to
+            API is working with POST method only, and create a transaction, for more info about transactions please refer to
             https://nxtwiki.org/wiki/The_Nxt_API#Create_Transaction_Request
 
             https://nxtwiki.org/wiki/The_Nxt_API#Dgs_Delivery
 
             REQUEST
-            purchase : is the purchase order ID (S)
-            discountNQT : is a discount (in NQT) off the selling price (N) (O) (optional, default is zero)
-            goodsToEncrypt : is the product, a text or a hex string to be encrypted (S) (optional if goodsData provided)
-            goodsIsText : is false if goodsToEncrypt is a hex string (B) (O)
-            goodsData : is AES-encrypted (using Encrypt To) goodsToEncrypt, up to 1000 bytes long (required only if secretPhrase is omitted)
-            goodsNonce : is the unique nonce associated with the encrypted data (required only if secretPhrase is omitted)
-            * secretPhrase : secret Phrase of account where we want remove a property ( required or at least ** )
-            ** publicKey : publicKey of account where we want remove a property ( does not get in broadcast ) ( required or at least *)
-            feeNQT : fee for sending transaction if 0 minimum is set ( 100000000 NQT )
-            deadLine : is the deadline (in minutes) for the transaction to be confirmed, 32767 minutes maximum ( if 0, 60 )
-            referencedTransactionFullHash : creates a chained transaction, meaning that the current transaction cannot be confirmed
+            :param purchase : is the purchase order ID (S)
+            :param discountNQT : is a discount (in NQT) off the selling price (N) (O) (optional, default is zero)
+            :param goodsToEncrypt : is the product, a text or a hex string to be encrypted (S) (optional if goodsData provided)
+            :param goodsIsText : is false if goodsToEncrypt is a hex string (B) (O)
+            :param goodsData : is AES-encrypted (using Encrypt To) goodsToEncrypt, up to 1000 bytes long (required only if secretPhrase is omitted)
+            :param goodsNonce : is the unique nonce associated with the encrypted data (required only if secretPhrase is omitted)
+            :param * secretPhrase : secret Phrase of accounts where we want remove a property ( required or at least ** )
+            :param ** publicKey : publicKey of accounts where we want remove a property ( does not get in broadcast ) ( required or at least *)
+            :param feeNQT : fee for sending transaction if 0 minimum is set ( 100000000 NQT )
+            :param deadLine : is the deadline (in minutes) for the transaction to be confirmed, 32767 minutes maximum ( if 0, 60 )
+            :param referencedTransactionFullHash : creates a chained transaction, meaning that the current transaction cannot be confirmed
                                             unless the referenced transaction is also confirmed (O)
-            broadcast : is set to false to prevent broadcasting the transaction to the network (B) (O)
-            phasing : phasing object ( check base/Phasing.py )
-            message : message object ( check base/message.py )
+            :param broadcast : is set to false to prevent broadcasting the transaction to the network (B) (O)
+            :param phasing : phasing object ( check base/Phasing.py ) (WP)
+            :param message : message object ( check base/message.py ) (WP)
+            :param rec : rec object ( check base/Rec.py) (WP)
 
             Note: If the encrypted goods data is longer than 1000 bytes, use a prunable encrypted message to deliver the goods.
 
             RESPONSE (Create transaction response)
-            signatureHash : is a SHA-256 hash of the transaction signature (S)
-            unsignedTransactionBytes : are the unsigned transaction bytes (S)
-            transactionJSON : is a transaction object (refer to Get Transaction for details) (O)
-            broadcasted : is true if the transaction was broadcast, false otherwise (B)
-            requestProcessingTime : is the API request processing time (in millisec) (N)
-            transactionBytes : are the signed transaction bytes (S)
-            fullHash : is the full hash of the signed transaction (S)
-            transaction : is the ID of the newly created transaction (S)
+            :return signatureHash : is a SHA-256 hash of the transaction signature (S)
+            :return unsignedTransactionBytes : are the unsigned transaction bytes (S)
+            :return transactionJSON : is a transaction object (refer to Get Transaction for details) (O)
+            :return broadcasted : is true if the transaction was broadcast, false otherwise (B)
+            :return requestProcessingTime : is the API request processing time (in millisec) (N)
+            :return transactionBytes : are the signed transaction bytes (S)
+            :return fullHash : is the full hash of the signed transaction (S)
+            :return transaction : is the ID of the newly created transaction (S)
 
             Legenda
                 ° the parameter are interchangeable on
@@ -53,10 +54,9 @@ class DgsDelivery(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
-                (WP) Wrapper specific parameter
-
+                (WP) Wrapper Meta-parameter
 
         """
 
@@ -85,6 +85,7 @@ class DgsDelivery(Parent):
 
         self.phasing = phasing
         self.message = message
+        self.rec = rec
 
         # Initialize dictionary
         self.data = {}
@@ -112,7 +113,7 @@ class DgsDelivery(Parent):
         if self.broadcast:
             self.data["broadcast"] = self.broadcast
 
-        super(DgsDelivery, self).__init__(rt="dgsDelivery", data=self.data, phasing=self.phasing, message=self.message)
+        super(DgsDelivery, self).__init__(rt="dgsDelivery", data=self.data, phasing=self.phasing, message=self.message, rec=self.rec)
 
     def run(self):
         super(DgsDelivery, self).run()                # calls 'BasePost.run()'

@@ -2,43 +2,44 @@
 from base.BasePost import BasePost as Parent
 
 class DgsFeedback(Parent):
-    def __init__(self, purchase = None, fmessage=None, secretPhrase=None,  publicKey = None, feeNQT = None, deadline = 0, referencedTransactionFullHash = None, broadcast=False, phasing = None, message=None ):
+    def __init__(self, purchase = None, fmessage=None, secretPhrase=None,  publicKey = None, feeNQT = None, deadline = 0, referencedTransactionFullHash = None, broadcast=False, phasing = None, message=None, rec=None ):
         """
             Give feedback about a purchased product after delivery.
 
             DgsFeedback take a default 5 parameter as explained in NXT API Documentation
 
-            Class is working with POST method only, and create a transaction, for more info about transactions please refer to
+            API is working with POST method only, and create a transaction, for more info about transactions please refer to
             https://nxtwiki.org/wiki/The_Nxt_API#Create_Transaction_Request
 
             https://nxtwiki.org/wiki/The_Nxt_API#Dgs_Feedback
 
             REQUEST
-            purchase : is the purchase order ID (S)
-            message is unencrypted (public) feedback text up to 1000 bytes
-            * secretPhrase : secret Phrase of account where we want remove a property ( required or at least ** )
-            ** publicKey : publicKey of account where we want remove a property ( does not get in broadcast ) ( required or at least *)
-            feeNQT : fee for sending transaction if 0 minimum is set ( 100000000 NQT )
-            deadLine : is the deadline (in minutes) for the transaction to be confirmed, 32767 minutes maximum ( if 0, 60 )
-            referencedTransactionFullHash : creates a chained transaction, meaning that the current transaction cannot be confirmed
+            :param purchase : is the purchase order ID (S)
+            :param message is unencrypted (public) feedback text up to 1000 bytes
+            :param * secretPhrase : secret Phrase of accounts where we want remove a property ( required or at least ** )
+            :param ** publicKey : publicKey of accounts where we want remove a property ( does not get in broadcast ) ( required or at least *)
+            :param feeNQT : fee for sending transaction if 0 minimum is set ( 100000000 NQT )
+            :param deadLine : is the deadline (in minutes) for the transaction to be confirmed, 32767 minutes maximum ( if 0, 60 )
+            :param referencedTransactionFullHash : creates a chained transaction, meaning that the current transaction cannot be confirmed
                                             unless the referenced transaction is also confirmed (O)
-            broadcast : is set to false to prevent broadcasting the transaction to the network (B) (O)
-            phasing : phasing object ( check base/Phasing.py )
-            message : message object ( check base/message.py )
+            :param broadcast : is set to false to prevent broadcasting the transaction to the network (B) (O)
+            :param phasing : phasing object ( check base/Phasing.py ) (WP)
+            :param message : message object ( check base/message.py ) (WP)
+            :param rec : rec object ( check base/Rec.py) (WP)
 
             Note: The unencrypted message parameter is used for public feedback, but in addition or instead,
             an encrypted message can be used for private feedback to the seller and/or an encrypted message can be sent to self (buyer)
             although the current NRS client does not recognize non-public feedback messages.
 
             RESPONSE (Create transaction response)
-            signatureHash : is a SHA-256 hash of the transaction signature (S)
-            unsignedTransactionBytes : are the unsigned transaction bytes (S)
-            transactionJSON : is a transaction object (refer to Get Transaction for details) (O)
-            broadcasted : is true if the transaction was broadcast, false otherwise (B)
-            requestProcessingTime : is the API request processing time (in millisec) (N)
-            transactionBytes : are the signed transaction bytes (S)
-            fullHash : is the full hash of the signed transaction (S)
-            transaction : is the ID of the newly created transaction (S)
+            :param signatureHash : is a SHA-256 hash of the transaction signature (S)
+            :param unsignedTransactionBytes : are the unsigned transaction bytes (S)
+            :param transactionJSON : is a transaction object (refer to Get Transaction for details) (O)
+            :param broadcasted : is true if the transaction was broadcast, false otherwise (B)
+            :param requestProcessingTime : is the API request processing time (in millisec) (N)
+            :param transactionBytes : are the signed transaction bytes (S)
+            :param fullHash : is the full hash of the signed transaction (S)
+            :param transaction : is the ID of the newly created transaction (S)
 
             Legenda
                 ° the parameter are interchangeable on
@@ -51,9 +52,9 @@ class DgsFeedback(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
-                (WP) Wrapper specific parameter
+                (WP) Wrapper Meta-parameter
 
 
         """
@@ -79,6 +80,7 @@ class DgsFeedback(Parent):
 
         self.phasing = phasing
         self.message = message
+        self.rec = rec
 
         # Initialize dictionary
         self.data = {}
@@ -99,7 +101,7 @@ class DgsFeedback(Parent):
         if self.broadcast:
             self.data["broadcast"] = self.broadcast
 
-        super(DgsFeedback, self).__init__(rt="dgsFeedback", data=self.data, phasing=self.phasing, message=self.message)
+        super(DgsFeedback, self).__init__(rt="dgsFeedback", data=self.data, phasing=self.phasing, message=self.message, rec=self.rec)
 
     def run(self):
         super(DgsFeedback, self).run()                # calls 'BasePost.run()'

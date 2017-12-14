@@ -5,40 +5,40 @@ from base.BasePost import BasePost as Parent
 class DgsPriceChange(Parent):
     def __init__(self, goods=None, priceNQT=0, secretPhrase=None,
                  publicKey=None, feeNQT=None, deadline=0, referencedTransactionFullHash=None, broadcast=False,
-                 phasing=None, message=None):
+                 phasing=None, message=None, rec=None):
         """
             Change the price of a listed product.
 
             DgsPriceChange take a default 5 parameter as explained in NXT API Documentation
 
-            Class is working with POST method only, and create a transaction, for more info about transactions please refer to
+            API is working with POST method only, and create a transaction, for more info about transactions please refer to
             https://nxtwiki.org/wiki/The_Nxt_API#Create_Transaction_Request
-
 
             https://nxtwiki.org/wiki/The_Nxt_API#Dgs_Price_Change
 
             REQUEST
-            goods is the goods ID of the product
-            priceNQT : is the new price (in NQT) of the product (N)
-            * secretPhrase : secret Phrase of account where we want remove a property ( required or at least ** )
-            ** publicKey : publicKey of account where we want remove a property ( does not get in broadcast ) ( required or at least *)
-            feeNQT : fee for sending transaction if 0 minimum is set ( 100000000 NQT )
-            deadLine : is the deadline (in minutes) for the transaction to be confirmed, 32767 minutes maximum ( if 0, 60 )
-            referencedTransactionFullHash : creates a chained transaction, meaning that the current transaction cannot be confirmed
+            :param goods is the goods ID of the product
+            :param priceNQT : is the new price (in NQT) of the product (N)
+            :param * secretPhrase : secret Phrase of accounts where we want remove a property ( required or at least ** )
+            :param ** publicKey : publicKey of accounts where we want remove a property ( does not get in broadcast ) ( required or at least *)
+            :param feeNQT : fee for sending transaction if 0 minimum is set ( 100000000 NQT )
+            :param deadLine : is the deadline (in minutes) for the transaction to be confirmed, 32767 minutes maximum ( if 0, 60 )
+            :param referencedTransactionFullHash : creates a chained transaction, meaning that the current transaction cannot be confirmed
                                             unless the referenced transaction is also confirmed (O)
-            broadcast : is set to false to prevent broadcasting the transaction to the network (B) (O)
-            phasing : phasing object ( check base/Phasing.py )
-            message : message object ( check base/message.py )
+            :param broadcast : is set to false to prevent broadcasting the transaction to the network (B) (O)
+            :param phasing : phasing object ( check base/Phasing.py ) (WP)
+            :param message : message object ( check base/message.py ) (WP)
+            :param rec : rec object ( check base/Rec.py) (WP)
 
             RESPONSE (Create transaction response)
-            signatureHash : is a SHA-256 hash of the transaction signature (S)
-            unsignedTransactionBytes : are the unsigned transaction bytes (S)
-            transactionJSON : is a transaction object (refer to Get Transaction for details) (O)
-            broadcasted : is true if the transaction was broadcast, false otherwise (B)
-            requestProcessingTime : is the API request processing time (in millisec) (N)
-            transactionBytes : are the signed transaction bytes (S)
-            fullHash : is the full hash of the signed transaction (S)
-            transaction : is the ID of the newly created transaction (S)
+            :return signatureHash : is a SHA-256 hash of the transaction signature (S)
+            :return unsignedTransactionBytes : are the unsigned transaction bytes (S)
+            :return transactionJSON : is a transaction object (refer to Get Transaction for details) (O)
+            :return broadcasted : is true if the transaction was broadcast, false otherwise (B)
+            :return requestProcessingTime : is the API request processing time (in millisec) (N)
+            :return transactionBytes : are the signed transaction bytes (S)
+            :return fullHash : is the full hash of the signed transaction (S)
+            :return transaction : is the ID of the newly created transaction (S)
 
             Note : The transaction ID is also the goods ID.
 
@@ -54,9 +54,9 @@ class DgsPriceChange(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
-                (WP) Wrapper specific parameter
+                (WP) Wrapper Meta-parameter
 
 
         """
@@ -82,6 +82,7 @@ class DgsPriceChange(Parent):
 
         self.phasing = phasing
         self.message = message
+        self.rec = rec
 
         # Initialize dictionary
         self.data = {}
@@ -101,7 +102,7 @@ class DgsPriceChange(Parent):
         if self.broadcast:
             self.data["broadcast"] = self.broadcast
 
-        super(DgsPriceChange, self).__init__(rt="dgsPriceChange", data=self.data, phasing=self.phasing, message=self.message)
+        super(DgsPriceChange, self).__init__(rt="dgsPriceChange", data=self.data, phasing=self.phasing, message=self.message, rec=self.rec)
 
     def run(self):
         super(DgsPriceChange, self).run()                           # calls 'BasePost.run()'
