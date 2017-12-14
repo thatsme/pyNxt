@@ -8,7 +8,7 @@ class GetAskOrderIds(Parent):
 
             GetAskOrderIds take a default 1/2 parameter as explained in NXT API Documentation
 
-            Class is working with GET method
+            API is working with GET method
 
             https://nxtwiki.org/wiki/The_Nxt_API#Get_Ask_Order_Ids
 

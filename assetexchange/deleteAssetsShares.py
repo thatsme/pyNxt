@@ -8,9 +8,8 @@ class DeleteAssetsShares(Parent):
 
             DeleteAssetsShares take a default 5 parameter as explained in NXT API Documentation
 
-            Class is working with POST method only, and create a transaction, for more info about transactions please refer to
+            API is working with POST method only, and create a transaction, for more info about transactions please refer to
             https://nxtwiki.org/wiki/The_Nxt_API#Create_Transaction_Request
-
 
             https://nxtwiki.org/wiki/The_Nxt_API#Delete_Assets_Shares
 

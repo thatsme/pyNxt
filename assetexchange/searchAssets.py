@@ -8,7 +8,8 @@ class SearchAssets(Parent):
             Get assets having a name or description that match a given query in reverse relevance order.
 
             SearchAssets take a default 1 parameter as explained in NXT API Documentation
-            Class is working with GET method
+
+            API is working with GET method
 
             https://nxtwiki.org/wiki/The_Nxt_API#Search_Assets
 
