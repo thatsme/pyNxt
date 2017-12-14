@@ -3,12 +3,12 @@ from base.BaseGet import BaseGet as Parent
 
 class GetPrunableMessage(Parent):
 
-    def __init__(self, transaction=None, secretPhrase=None, sharedKey=None, retrieve=False, requireBlock=None, requireLastBlock=None ):
+    def __init__(self, transaction=None, secretPhrase=None, sharedKey=None, retrieve=False, rb=None ):
         """
             Get the prunable message given a transaction ID, optionally decrypting it if encrypted and if a secretPhrase is provided, if it is still available.
 
             GetPrunableMessage take a default 1 parameter as explained in NXT API Documentation
-            Class is working with GET method
+            API is working with GET method
 
             https://nxtwiki.org/wiki/The_Nxt_API#Get_Prunable_Message
 
@@ -17,8 +17,7 @@ class GetPrunableMessage(Parent):
             :param secretPhrase : is the secret passphrase used to decrypt the encrypted part of the message (O)
             :param sharedKey : is the shared key used to decrypt the message (O) (see Get Shared Key)
             :param retrieve : is true to retrieve the message from achival node if needed (B) (O)
-            :param requireBlock : is theblock ID of a block that must be present in the blockchain during execution (O)
-            :param requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (O)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
 
@@ -50,7 +49,7 @@ class GetPrunableMessage(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
                 (WP) Wrapper Meta-parameter
 
@@ -60,8 +59,7 @@ class GetPrunableMessage(Parent):
         self.secretPhrase = secretPhrase
         self.sharedKey = sharedKey
         self.retrieve = retrieve
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -72,13 +70,8 @@ class GetPrunableMessage(Parent):
         self.data["sharedKey"] = self.sharedKey
         if self.retrieve:
             self.data["retrieve"] = self.retrieve
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
 
-
-        super(GetPrunableMessage, self).__init__(rt = "getPrunableMessage", data=self.data)
+        super(GetPrunableMessage, self).__init__(rt = "getPrunableMessage", data=self.data, rb=self.rb)
 
     def run(self):
         super(GetPrunableMessage, self).run()                           # calls 'BaseGet.run()'

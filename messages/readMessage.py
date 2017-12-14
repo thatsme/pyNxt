@@ -3,7 +3,7 @@ from base.BaseGet import BaseGet as Parent
 
 class ReadMessage(Parent):
 
-    def __init__(self, transaction=None, secretPhrase=None, sharedKey=None, retrieve=False, requireBlock=None, requireLastBlock=None ):
+    def __init__(self, transaction=None, secretPhrase=None, sharedKey=None, retrieve=False, rb=None ):
         """
             Get a message given a transaction ID.
 
@@ -17,8 +17,7 @@ class ReadMessage(Parent):
             :param secretPhrase : is the secret passphrase of the account that received the message (S) (O)
             :param sharedKey : is the shared key used to decrypt the message (optional) (see Get Shared Key)
             :param retrieve : is true to retrieve pruned data from archival nodes (B) (O)
-            :param requireBlock : is the block ID of a block that must be present in the blockchain during execution (O)
-            :param requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (O)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
             :return messageIsPrunable : (B) is true if there is a plain message and it is prunable, false if it is not prunable
@@ -42,7 +41,7 @@ class ReadMessage(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
                 (WP) Wrapper Meta-parameter
 
@@ -52,6 +51,7 @@ class ReadMessage(Parent):
         self.secretPhrase = secretPhrase
         self.sharedKey = sharedKey
         self.retrieve = retrieve
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -62,7 +62,7 @@ class ReadMessage(Parent):
         self.data["sharedKey"] = self.sharedKey
         self.data["retrieve"] = self.retrieve
 
-        super(ReadMessage, self).__init__(rt = "readMessage", data=self.data)
+        super(ReadMessage, self).__init__(rt = "readMessage", data=self.data, rb=self.rb)
 
     def run(self):
         super(ReadMessage, self).run()                           # calls 'BaseGet.run()'

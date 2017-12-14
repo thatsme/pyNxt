@@ -8,7 +8,7 @@ class EncryptTo(Parent):
             Encrypt a message using AES without sending it.
 
             EncryptTo take a default 1 parameter as explained in NXT API Documentation
-            Class is working with GET method
+            API is working with GET method
 
             https://nxtwiki.org/wiki/The_Nxt_API#Encrypt_To
 
@@ -37,7 +37,7 @@ class EncryptTo(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
                 (WP) Wrapper Meta-parameter
 

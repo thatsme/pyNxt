@@ -2,18 +2,18 @@
 from base.BasePost import BasePost as Parent
 
 class SendMessage(Parent):
-    def __init__(self, recipient = None, recipientPublicKey=None,  secretPhrase=None,  publicKey = None, feeNQT = None, deadline = 0, referencedTransactionFullHash = None, broadcast=False, phasing = None, message=None ):
+    def __init__(self, recipient = None, recipientPublicKey=None,  secretPhrase=None,  publicKey = None, feeNQT = None, deadline = 0, referencedTransactionFullHash = None, broadcast=False, phasing = None, message=None, rec=None ):
         """
             SendMessage take a default 5 parameter as explained in NXT API Documentation
 
-            Class is working with POST method only, and create a transaction, for more info about transactions please refer to
-
+            API is working with POST method only, and create a transaction, for more info about transactions please refer to
 
             https://nxtwiki.org/wiki/The_Nxt_API#Send_Message
 
             REQUEST
             :param recipient : is the account ID of the recipient (O)
-            :param recipientPublicKey *: publicKey of recipient accounts ( does not get in broadcast )
+            :param publicKey : is the public key of the account (optional if secretPhrase provided)
+            :param recipientPublicKey * publicKey of recipient accounts ( does not get in broadcast )
             :param secretPhrase **: secret Phrase of sender accounts
             :param feeNQT : fee for sending transaction (R) if 0 minimum is set ( 100000000 NQT )
             :param deadLine : is the deadline (in minutes) for the transaction to be confirmed, 32767 minutes maximum ( if 0, 60 )
@@ -22,6 +22,7 @@ class SendMessage(Parent):
             :param broadcast : is set to false to prevent broadcasting the transaction to the network (B) (O)
             :param phasing : phasing object ( check base/Phasing.py ) (O) (WP)
             :param message : message object ( check base/message.py ) (O) (WP)
+            :param rec : rec object ( check base/Rec.py) (WP)
 
             RESPONSE (Create transaction response)
             :return signatureHash : is a SHA-256 hash of the transaction signature (S)
@@ -53,7 +54,7 @@ class SendMessage(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
                 (WP) Wrapper Meta-parameter
 
@@ -61,8 +62,7 @@ class SendMessage(Parent):
         """
         # Required parameters
         self.recipient = recipient
-        self.recipientPublicKey = recipientPublicKey
-
+        self.publicKey = publicKey
         self.secretPhrase = secretPhrase
         if feeNQT == 0:
             self.feeNQT = 100000000
@@ -80,6 +80,8 @@ class SendMessage(Parent):
 
         self.phasing = phasing
         self.message = message
+        self.recipientPublicKey = recipientPublicKey
+        self.rec = rec
 
         # Initialize dictionary
         self.data = {}
@@ -87,8 +89,6 @@ class SendMessage(Parent):
         ## Create data dictionary
 
         self.data["recipient"] = self.recipient
-        self.data["setter"] = self.setter
-        self.data["property"] = self.property
         if publicKey:
             self.data["publicKey"] = self.publicKey
         if secretPhrase:
@@ -100,7 +100,7 @@ class SendMessage(Parent):
         if self.broadcast:
             self.data["broadcast"] = self.broadcast
 
-        super(SendMessage, self).__init__(rt="sendMessage", data=self.data, phasing=self.phasing, message=self.message)
+        super(SendMessage, self).__init__(rt="sendMessage", data=self.data, phasing=self.phasing, message=self.message, rec=self.rec)
 
     def run(self):
         super(SendMessage, self).run()                # calls 'BasePost.run()'

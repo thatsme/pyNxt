@@ -3,7 +3,7 @@ from base.BaseGet import BaseGet as Parent
 
 class DownloadPrunableMessage(Parent):
 
-    def __init__(self, transaction=None, secretPhrase=None, sharedKey=None, retrieve=False, requireBlock=None, requireLastBlock=None ):
+    def __init__(self, transaction=None, secretPhrase=None, sharedKey=None, retrieve=False, rb=None ):
         """
             Downloading a prunable message attachments directly as binary data. An optional secretPhrase parameter is supported,
             to allow decryption and downloading of the encrypted part of the message instead of the plain text part.
@@ -18,8 +18,7 @@ class DownloadPrunableMessage(Parent):
             :param secretPhrase : is the secret passphrase used to decrypt the encrypted part of the message (O)
             :param sharedKey : is the shared key used to decrypt the message (O) (see Get Shared Key)
             :param retrieve : is true to retrieve the message from achival node if needed (B) (O)
-            :param requireBlock : is theblock ID of a block that must be present in the blockchain during execution (O)
-            :param requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (O)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
             :return decryptedMessage : (S) is the decrypted message
@@ -36,7 +35,7 @@ class DownloadPrunableMessage(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
                 (WP) Wrapper Meta-parameter
 
@@ -46,8 +45,7 @@ class DownloadPrunableMessage(Parent):
         self.secretPhrase = secretPhrase
         self.sharedKey = sharedKey
         self.retrieve = retrieve
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -58,13 +56,8 @@ class DownloadPrunableMessage(Parent):
         self.data["sharedKey"] = self.sharedKey
         if self.retrieve:
             self.data["retrieve"] = self.retrieve
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
 
-
-        super(DownloadPrunableMessage, self).__init__(rt = "downloadPrunableMessage", data=self.data)
+        super(DownloadPrunableMessage, self).__init__(rt = "downloadPrunableMessage", data=self.data, rb=self.rb)
 
     def run(self):
         super(DownloadPrunableMessage, self).run()                           # calls 'BaseGet.run()'

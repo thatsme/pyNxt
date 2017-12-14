@@ -8,7 +8,7 @@ class DecryptFrom(Parent):
             Decrypt an AES-encrypted message.
 
             DecryptFrom take a default 1 parameter as explained in NXT API Documentation
-            Class is working with GET method
+            API is working with GET method
 
             https://nxtwiki.org/wiki/The_Nxt_API#Decrypt_From
 
@@ -35,7 +35,7 @@ class DecryptFrom(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
                 (WP) Wrapper Meta-parameter
 

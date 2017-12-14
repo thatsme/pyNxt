@@ -3,12 +3,12 @@ from base.BaseGet import BaseGet as Parent
 
 class VerifyPrunableMessage(Parent):
 
-    def __init__(self, message=None, messageIsText=False, encryptedMessageData=None, encryptedMessageNonce=None, messageToEncryptIsText=False, compressMessageToEncrypt=False, requireBlock=None, requireLastBlock=None  ):
+    def __init__(self, message=None, messageIsText=False, encryptedMessageData=None, encryptedMessageNonce=None, messageToEncryptIsText=False, compressMessageToEncrypt=False, rb=None  ):
         """
             Verify that a prunable message obtained from any source, when hashed, matches the hash of the original prunable message.
 
             VerifyPrunableMessage take a default 1 parameter as explained in NXT API Documentation
-            Class is working with GET method
+            API is working with GET method
 
             https://nxtwiki.org/wiki/The_Nxt_API#Verify_Prunable_Message
 
@@ -19,8 +19,7 @@ class VerifyPrunableMessage(Parent):
             :param encryptedMessageNonce : is the nonce part of the encrypted data-nonce pair (required if encryptedMessageData provided)
             :param messageToEncryptIsText : (B) is false if the encrypted message was a hex string before encryption (O)
             :param compressMessageToEncrypt : (B) is false if the encrypted message was not compressed before encryption (O)
-            :param requireBlock : is the block ID of a block that must be present in the blockchain during execution (O)
-            :param requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (O)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             Note: The hash is computed from the message itself plus its associated flag(s) isText and isCompressed
             (encrypted only); therefore the flag(s) must be provided for verification if different from the default(s).
@@ -52,7 +51,7 @@ class VerifyPrunableMessage(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
                 (WP) Wrapper Meta-parameter
 
@@ -64,8 +63,7 @@ class VerifyPrunableMessage(Parent):
         self.encryptedMessageNonce = encryptedMessageNonce
         self.messageToEncryptIsText = messageToEncryptIsText
         self.compressMessageToEncrypt = compressMessageToEncrypt
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -95,7 +93,7 @@ class VerifyPrunableMessage(Parent):
         if self.requireLastBlock:
             self.data["requireLastBlock"] = self.requireLastBlock
 
-        super(VerifyPrunableMessage, self).__init__(rt = "verifyPrunableMessage", data=self.data)
+        super(VerifyPrunableMessage, self).__init__(rt = "verifyPrunableMessage", data=self.data, rb=self.rb)
 
     def run(self):
         super(VerifyPrunableMessage, self).run()                           # calls 'BaseGet.run()'

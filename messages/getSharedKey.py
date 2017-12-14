@@ -8,7 +8,7 @@ class GetSharedKey(Parent):
             Get the one-time shared key used for encryption of messages.
 
             GetSharedKey take a default 1 parameter as explained in NXT API Documentation
-            Class is working with GET method
+            API is working with GET method
 
             https://nxtwiki.org/wiki/The_Nxt_API#Get_Shared_Key
 
@@ -32,7 +32,7 @@ class GetSharedKey(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
                 (WP) Wrapper Meta-parameter
 

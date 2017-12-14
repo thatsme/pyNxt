@@ -3,13 +3,13 @@ from base.BaseGet import BaseGet as Parent
 
 class GetPrunableMessages(Parent):
 
-    def __init__(self, account=None,otherAccount=None,  secretPhrase=None, timestamp=0, firstIndex=None, lastIndex=None, requireBlock=None, requireLastBlock=None ):
+    def __init__(self, account=None,otherAccount=None,  secretPhrase=None, timestamp=0, ri=None, rb=None ):
         """
             Get all still-available prunable messages given an accounts id,
             optionally limiting to only those with another accounts as recipient or sender, in reverse chronological order.
 
             GetPrunableMessages take a default 1 parameter as explained in NXT API Documentation
-            Class is working with GET method
+            API is working with GET method
 
             https://nxtwiki.org/wiki/The_Nxt_API#Get_Prunable_Messages
 
@@ -18,10 +18,8 @@ class GetPrunableMessages(Parent):
             :param otherAccount : is another accounts ID, either sender or recipient, to limit the response (S)
             :param secretPhrase : is the secret passphrase used to decrypt the encrypted part of the message (O)
             :param timestamp : is the earliest prunable message (in seconds since the genesis block) to retrieve (optional)
-            :param firstIndex : is a zero-based index to the first block ID to retrieve (N) (O)
-            :param lastIndex : is a zero-based index to the last block ID to retrieve (N) (O)
-            :param requireBlock : is theblock ID of a block that must be present in the blockchain during execution (O)
-            :param requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (O)
+            :param ri : ri object ( check base/Ri.py) (WP)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
             :return prunableMessages : is an array (A) of prunable message objects (refer to Get Prunable Message for details)
@@ -39,7 +37,7 @@ class GetPrunableMessages(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
                 (WP) Wrapper Meta-parameter
 
@@ -49,10 +47,8 @@ class GetPrunableMessages(Parent):
         self.otherAccount = otherAccount
         self.secretPhrase = secretPhrase
         self.timestamp = timestamp
-        self.firstIndex = firstIndex
-        self.lastIndex = lastIndex
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.ri = ri
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -65,18 +61,7 @@ class GetPrunableMessages(Parent):
         self.data["secretPhrase"] = self.secretPhrase
         self.data["timestamp"] = self.timestamp
 
-        if self.firstIndex:
-            self.data["firstIndex"] = self.firstIndex
-        if self.lastIndex:
-            self.data["lastIndex"] = self.lastIndex
-
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
-
-
-        super(GetPrunableMessages, self).__init__(rt = "getPrunableMessages", data=self.data)
+        super(GetPrunableMessages, self).__init__(rt = "getPrunableMessages", data=self.data, ri=self.ri, rb=self.rb)
 
     def run(self):
         super(GetPrunableMessages, self).run()                           # calls 'BaseGet.run()'
