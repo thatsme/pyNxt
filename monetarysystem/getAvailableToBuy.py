@@ -2,21 +2,20 @@
 from base.BaseGet import BaseGet as Parent
 
 class GetAvailableToBuy(Parent):
-    def __init__(self, currency=None, unit=0, requireBlock=None, requireLastBlock=None ):
+    def __init__(self, currency=None, unit=0, rb=None ):
         """
             Calculates the rate required in order to completely fill an exchange request.
 
             GetAvailableToBuy take a default 1/2 parameter as explained in NXT API Documentation
 
-            Class is working with GET method
+            API is working with GET method
 
             https://nxtwiki.org/wiki/The_Nxt_API#Get_Available_To_Buy
 
             REQUEST
             :param currency : is the currency ID (S)
             :param units : is the number of units to buy (N)
-            :param requireBlock : is the block ID of a block that must be present in the blockchain during execution (O)
-            :param requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (O)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
             :return amountNQT : (S) is the total amount needed to fill the exchange request
@@ -35,7 +34,7 @@ class GetAvailableToBuy(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
                 (WP) Wrapper Meta-parameter
 
@@ -44,8 +43,7 @@ class GetAvailableToBuy(Parent):
         # Required parameters
         self.currency = currency
         self.unit = unit
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -55,13 +53,7 @@ class GetAvailableToBuy(Parent):
         self.data["currency"] = self.currency
         self.data["unit"] = self.unit
 
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
-
-        super(GetAvailableToBuy, self).__init__(rt="getAvailableToBuy", data=self.data)
+        super(GetAvailableToBuy, self).__init__(rt="getAvailableToBuy", data=self.data, rb=self.rb)
 
     def run(self):
         super(GetAvailableToBuy, self).run()                                         # calls 'BaseGet.run()'

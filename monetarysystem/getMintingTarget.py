@@ -2,13 +2,13 @@
 from base.BaseGet import BaseGet as Parent
 
 class GetMintingTarget(Parent):
-    def __init__(self, currency=None, account=None, units= 0, requireBlock=None, requireLastBlock=None ):
+    def __init__(self, currency=None, account=None, units= 0, rb=None ):
         """
             Get the last exchange of each of multiple currencies.
 
             GetMintingTarget take a default 1/2 parameter as explained in NXT API Documentation
 
-            Class is working with GET method
+            API is working with GET method
 
             https://nxtwiki.org/wiki/The_Nxt_API#Get_Minting_Target
 
@@ -16,8 +16,7 @@ class GetMintingTarget(Parent):
             :param currency : is the mintable currency ID (S)
             :param account is the minting account ID
             :param units is the amount (in QNT) of currency to mint
-            :param requireBlock : is the block ID of a block that must be present in the blockchain during execution (O)
-            :param requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (O)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             Note: units cannot be greater than 1/10000 of the maxSupply (refer to Issue Currency).
             Increasing units decreases targetBytes.
@@ -47,7 +46,7 @@ class GetMintingTarget(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
                 (WP) Wrapper Meta-parameter
 
@@ -57,9 +56,7 @@ class GetMintingTarget(Parent):
         self.currency = currency
         self.account = account
         self.units = units
-
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -69,13 +66,7 @@ class GetMintingTarget(Parent):
         self.data["account"] = self.account
         self.data["units"] = self.units
 
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
-
-        super(GetMintingTarget, self).__init__(rt="getMintingTarget", data=self.data)
+        super(GetMintingTarget, self).__init__(rt="getMintingTarget", data=self.data, rb=self.rb)
 
     def run(self):
         super(GetMintingTarget, self).run()                                         # calls 'BaseGet.run()'

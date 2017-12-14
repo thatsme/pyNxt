@@ -2,7 +2,7 @@
 from base.BasePost import BasePost as Parent
 
 class IssueCurrency(Parent):
-    def __init__(self, name=None, code=None, description=None, type=0, initialSupply=0, reserveSupply=0, maxSupply=0, issuanceHeight=None, minReservePerUnitNQT=0, minDifficulty=0, maxDifficulty=0, ruleset=0, algorithm=2, decimals=0, publicKey = None, secretPhrase=None, feeNQT = None, deadline = 0, referencedTransactionFullHash = None, broadcast=True, phasing = None, message=None ):
+    def __init__(self, name=None, code=None, description=None, type=0, initialSupply=0, reserveSupply=0, maxSupply=0, issuanceHeight=None, minReservePerUnitNQT=0, minDifficulty=0, maxDifficulty=0, ruleset=0, algorithm=2, decimals=0, publicKey = None, secretPhrase=None, feeNQT = None, deadline = 0, referencedTransactionFullHash = None, broadcast=True, phasing = None, message=None,rec=None ):
         """
             Issue a new currency or re-issue an existing currency with different properties. POST only.
 
@@ -35,6 +35,7 @@ class IssueCurrency(Parent):
             :param broadcast : is set to false to prevent broadcasting the transaction to the network (B) (O)
             :param phasing : phasing object ( check base/Phasing.py ) (O) (WP)
             :param message : message object ( check base/message.py ) (O) (WP)
+            :param rec : rec object ( check base/Rec.py) (WP)
 
             Notes: Reservable requires exchangeable and/or claimable, as does controllable; but mintable requires exchangeable.
             Claimable requires reservable, non-mintable and zero initialSupply.
@@ -63,7 +64,7 @@ class IssueCurrency(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
                 (WP) Wrapper Meta-parameter
 
@@ -102,6 +103,7 @@ class IssueCurrency(Parent):
 
         self.phasing = phasing
         self.message = message
+        self.rec = rec
 
         # Initialize dictionary
         self.data = {}
@@ -139,7 +141,7 @@ class IssueCurrency(Parent):
         self.data["feeNQT"] = self.feeNQT
         self.data["deadline"] = self.deadline
 
-        super(IssueCurrency, self).__init__(rt="issueCurrency", data=self.data)
+        super(IssueCurrency, self).__init__(rt="issueCurrency", data=self.data, rec=self.rec)
 
     def run(self):
         super(IssueCurrency, self).run()                # calls 'BasePost.run()'

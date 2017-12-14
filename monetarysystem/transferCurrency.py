@@ -2,7 +2,7 @@
 from base.BasePost import BasePost as Parent
 
 class TransferCurrency(Parent):
-    def __init__(self, recipient=None, currency = None, unit=0, secretPhrase=None,  publicKey = None, feeNQT = None, deadline = 0, referencedTransactionFullHash = None, broadcast=False, phasing = None, message=None ):
+    def __init__(self, recipient=None, currency = None, unit=0, secretPhrase=None,  publicKey = None, feeNQT = None, deadline = 0, referencedTransactionFullHash = None, broadcast=False, phasing = None, message=None, rec=None ):
         """
             Transfer currency to a given recipient. POST only.
 
@@ -25,8 +25,9 @@ class TransferCurrency(Parent):
             referencedTransactionFullHash : creates a chained transaction, meaning that the current transaction cannot be confirmed
                                             unless the referenced transaction is also confirmed (O)
             broadcast : is set to false to prevent broadcasting the transaction to the network (B) (O)
-            phasing : phasing object ( check base/Phasing.py )
-            message : message object ( check base/message.py )
+            phasing : phasing object ( check base/Phasing.py ) (WP)
+            message : message object ( check base/message.py ) (WP)
+            :param rec : rec object ( check base/Rec.py) (WP)
 
             RESPONSE (Create transaction response)
             signatureHash : is a SHA-256 hash of the transaction signature (S)
@@ -49,7 +50,7 @@ class TransferCurrency(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
                 (WP) Wrapper Meta-parameter
 
@@ -78,6 +79,7 @@ class TransferCurrency(Parent):
 
         self.phasing = phasing
         self.message = message
+        self.rec = rec
 
         # Initialize dictionary
         self.data = {}
@@ -99,7 +101,7 @@ class TransferCurrency(Parent):
         if self.broadcast:
             self.data["broadcast"] = self.broadcast
 
-        super(TransferCurrency, self).__init__(rt="transferCurrency", data=self.data, phasing=self.phasing, message=self.message)
+        super(TransferCurrency, self).__init__(rt="transferCurrency", data=self.data, phasing=self.phasing, message=self.message, rec=self.rec)
 
     def run(self):
         super(TransferCurrency, self).run()                # calls 'BasePost.run()'

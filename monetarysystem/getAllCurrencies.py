@@ -2,13 +2,13 @@
 from base.BaseGet import BaseGet as Parent
 
 class GetAllCurrencies(Parent):
-    def __init__(self, firstIndex=None, lastIndex=None, includeCounts=False, requireBlock=None, requireLastBlock=None ):
+    def __init__(self, includeCounts=False, ri=None, rb=None ):
         """
             Get all currencies in reverse creation order.
 
             GetAllCurrencies take a default 1/2 parameter as explained in NXT API Documentation
 
-            Class is working with GET method
+            API is working with GET method
 
             https://nxtwiki.org/wiki/The_Nxt_API#Get_All_Currencies
 
@@ -16,8 +16,8 @@ class GetAllCurrencies(Parent):
             :param firstIndex : is a zero-based index to the first alias to retrieve (O)
             :param lastIndex : is a zero-based index to the last alias to retrieve (O)
             :param includeCounts : is true to include numberOf... fields (B) (O)
-            :param requireBlock : is the block ID of a block that must be present in the blockchain during execution (O)
-            :param requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (O)
+            :param ri : ri object ( check base/Ri.py) (WP)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
             :return assets : is an array (A) of asset objects (refer to Get Asset)
@@ -35,7 +35,7 @@ class GetAllCurrencies(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
                 (WP) Wrapper Meta-parameter
 
@@ -43,33 +43,19 @@ class GetAllCurrencies(Parent):
         """
 
         # Required parameters
-        self.firstIndex = firstIndex
-        self.lastIndex = lastIndex
         self.includeCounts = includeCounts
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.ri = ri
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
 
         ## Create data dictionary
 
-        if self.firstIndex:
-            self.data["firstIndex"] = self.firstIndex
-
-        if self.lastIndex:
-            self.data["lastIndex"] = self.lastIndex
-
         if self.includeCounts:
             self.data["includeCounts"] = self.includeCounts
 
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
-
-        super(GetAllCurrencies, self).__init__(rt="getAllCurrencies", data=self.data)
+        super(GetAllCurrencies, self).__init__(rt="getAllCurrencies", data=self.data, ri=self.ri, rb=self.rb)
 
     def run(self):
         super(GetAllCurrencies, self).run()                                         # calls 'BaseGet.run()'

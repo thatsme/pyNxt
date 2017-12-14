@@ -2,21 +2,20 @@
 from base.BaseGet import BaseGet as Parent
 
 class GetExchangesByExchangeRequest(Parent):
-    def __init__(self, transaction=None, includeCurrencyInfo=False, requireBlock=None, requireLastBlock=None ):
+    def __init__(self, transaction=None, includeCurrencyInfo=False, rb=None ):
         """
             Get currency exchanges given an exchange request transaction ID in reverse chronological order.
 
             GetExchangesByExchangeRequest take a default 1/5 parameter as explained in NXT API Documentation
 
-            Class is working with GET method
+            API is working with GET method
 
             https://nxtwiki.org/wiki/The_Nxt_API#Get_Exchanges_By_Exchange_Request
 
             REQUEST
             :param transaction : is the transaction ID of the exchange request (S)
             :param includeCurrencyInfo : is true (B) to include some currency fields (optional, does not apply to expected transfers)
-            :param requireBlock : is the block ID of a block that must be present in the blockchain during execution (O)
-            :param requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (O)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
             :return exchanges : (A) is an array of exchange objects with the following fields for each exchange:
@@ -53,7 +52,7 @@ class GetExchangesByExchangeRequest(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
                 (WP) Wrapper Meta-parameter
 
@@ -62,8 +61,7 @@ class GetExchangesByExchangeRequest(Parent):
         # Required parameters
         self.transaction  = transaction
         self.includeCurrencyInfo = includeCurrencyInfo
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -72,13 +70,7 @@ class GetExchangesByExchangeRequest(Parent):
         self.data["transaction"] = self.transaction
         self.data["includeCurrencyInfo"] = self.includeCurrencyInfo
 
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
-
-        super(GetExchangesByExchangeRequest, self).__init__(rt="getExchangesByExchangeRequest", data=self.data)
+        super(GetExchangesByExchangeRequest, self).__init__(rt="getExchangesByExchangeRequest", data=self.data, rb=self.rb)
 
     def run(self):
         super(GetExchangesByExchangeRequest, self).run()                                         # calls 'BaseGet.run()'

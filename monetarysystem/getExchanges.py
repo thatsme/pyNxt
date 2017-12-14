@@ -2,14 +2,14 @@
 from base.BaseGet import BaseGet as Parent
 
 class GetExchanges(Parent):
-    def __init__(self, currency=None, account = None, timestamp=None, includeCurrencyInfo=False, firstIndex=None, lastIndex=None, requireBlock=None, requireLastBlock=None ):
+    def __init__(self, currency=None, account = None, timestamp=None, includeCurrencyInfo=False, ri=None, rb=None ):
         """
             Get currency transfers given a currency ID and/or an account ID in reverse block height order
             (or in expected order of execution for expected transfers).
 
             GetExchanges take a default 1/5 parameter as explained in NXT API Documentation
 
-            Class is working with GET method
+            API is working with GET method
 
             https://nxtwiki.org/wiki/The_Nxt_API#Get_Exchanges
 
@@ -17,11 +17,9 @@ class GetExchanges(Parent):
             :param currency : is the currency ID (S)
             :param account : is an account ID (S)(O)
             :param timestamp : is the earliest transfer (in seconds since the genesis block) to retrieve (optional, does not apply to expected transfers)
-            :param firstIndex is a zero-based index to the first account to retrieve (O)
-            :param lastIndex is a zero-based index to the last account to retrieve (O)
             :param includeCurrencyInfo : is true (B) to include some currency fields (optional, does not apply to expected transfers)
-            :param requireBlock : is the block ID of a block that must be present in the blockchain during execution (O)
-            :param requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (O)
+            :param ri : ri object ( check base/Ri.py) (WP)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
             :return exchanges : (A) is an array of exchange objects with the following fields for each exchange:
@@ -58,7 +56,7 @@ class GetExchanges(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
                 (WP) Wrapper Meta-parameter
 
@@ -69,10 +67,8 @@ class GetExchanges(Parent):
         self.account = account
         self.timestamp = timestamp
         self.includeCurrencyInfo = includeCurrencyInfo
-        self.firstIndex = firstIndex
-        self.lastIndex = lastIndex
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.ri = ri
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -83,19 +79,7 @@ class GetExchanges(Parent):
         self.data["timestamp"] = self.timestamp
         self.data["includeCurrencyInfo"] = self.includeCurrencyInfo
 
-        if self.firstIndex:
-            self.data["firstIndex"] = self.firstIndex
-
-        if self.lastIndex:
-            self.data["lastIndex"] = self.lastIndex
-
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
-
-        super(GetExchanges, self).__init__(rt="getExchanges", data=self.data)
+        super(GetExchanges, self).__init__(rt="getExchanges", data=self.data, ri=self.ri, rb=self.rb)
 
     def run(self):
         super(GetExchanges, self).run()                                         # calls 'BaseGet.run()'

@@ -2,21 +2,20 @@
 from base.BaseGet import BaseGet as Parent
 
 class GetCurrencyAccountCount(Parent):
-    def __init__(self, currency=None, height = None, requireBlock=None, requireLastBlock=None ):
+    def __init__(self, currency=None, height = None, rb=None ):
         """
             Get the number of accounts that hold a given currency.
 
             GetCurrencyAccountCount take a default 1/2 parameter as explained in NXT API Documentation
 
-            Class is working with GET method
+            API is working with GET method
 
             https://nxtwiki.org/wiki/The_Nxt_API#Get_Currency_Account_Count
 
             REQUEST
             :param currency is the currency ID (S)
             :param height : is the blockchain height at which the response applies (optional, default is the current height)
-            :param requireBlock : is the block ID of a block that must be present in the blockchain during execution (O)
-            :param requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (O)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
             :return numberOfAccounts : (N) is the number of accounts that hold the currency
@@ -34,7 +33,7 @@ class GetCurrencyAccountCount(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
                 (WP) Wrapper Meta-parameter
 
@@ -43,8 +42,7 @@ class GetCurrencyAccountCount(Parent):
         # Required parameters
         self.currency  = currency
         self.height = height
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -53,13 +51,7 @@ class GetCurrencyAccountCount(Parent):
         self.data["currency"] = self.currency
         self.data["height"] = self.height
 
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
-
-        super(GetCurrencyAccountCount, self).__init__(rt="getCurrencyAccountCount", data=self.data)
+        super(GetCurrencyAccountCount, self).__init__(rt="getCurrencyAccountCount", data=self.data, rb=self.rb)
 
     def run(self):
         super(GetCurrencyAccountCount, self).run()                                         # calls 'BaseGet.run()'

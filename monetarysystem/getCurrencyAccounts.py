@@ -2,23 +2,21 @@
 from base.BaseGet import BaseGet as Parent
 
 class GetCurrencyAccounts(Parent):
-    def __init__(self, currency=None, height = None, firstIndex=None, lastIndex=None, requireBlock=None, requireLastBlock=None ):
+    def __init__(self, currency=None, height = None, ri=None, rb=None ):
         """
             Get the accounts that hold a given currency in reverse units order.
 
             GetCurrencyAccounts take a default 1/2 parameter as explained in NXT API Documentation
 
-            Class is working with GET method
+            API is working with GET method
 
             https://nxtwiki.org/wiki/The_Nxt_API#Get_Currency_Accounts
 
             REQUEST
             :param currency is the currency ID (S)
             :param height : is the blockchain height at which the response applies (optional, default is the current height)
-            :param firstIndex is a zero-based index to the first account to retrieve (optional)
-            :param lastIndex is a zero-based index to the last account to retrieve (optional)
-            :param requireBlock : is the block ID of a block that must be present in the blockchain during execution (O)
-            :param requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (O)
+            :param ri : ri object ( check base/Ri.py) (WP)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
             :return accountCurrencies : (A) is an array of account objects with the following fields:
@@ -41,7 +39,7 @@ class GetCurrencyAccounts(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
                 (WP) Wrapper Meta-parameter
 
@@ -50,10 +48,8 @@ class GetCurrencyAccounts(Parent):
         # Required parameters
         self.currency  = currency
         self.height = height
-        self.firstIndex = firstIndex
-        self.lastIndex = lastIndex
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.ri = ri
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -62,19 +58,7 @@ class GetCurrencyAccounts(Parent):
         self.data["currency"] = self.currency
         self.data["height"] = self.height
 
-        if self.firstIndex:
-            self.data["firstIndex"] = self.firstIndex
-
-        if self.lastIndex:
-            self.data["lastIndex"] = self.lastIndex
-
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
-
-        super(GetCurrencyAccounts, self).__init__(rt="getCurrencyAccounts", data=self.data)
+        super(GetCurrencyAccounts, self).__init__(rt="getCurrencyAccounts", data=self.data, ri=self.ri, rb=self.rb)
 
     def run(self):
         super(GetCurrencyAccounts, self).run()                                         # calls 'BaseGet.run()'

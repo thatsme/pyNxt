@@ -2,21 +2,20 @@
 from base.BaseGet import BaseGet as Parent
 
 class GetCurrencies(Parent):
-    def __init__(self, currencies=None, includeCounts=False, requireBlock=None, requireLastBlock=None ):
+    def __init__(self, currencies=None, includeCounts=False, rb=None ):
         """
             Get currencies given multiple currency IDs.
 
             GetCurrencies take a default 1/2 parameter as explained in NXT API Documentation
 
-            Class is working with GET method
+            API is working with GET method
 
             https://nxtwiki.org/wiki/The_Nxt_API#Get_Currencies
 
             REQUEST
             :param currencies : is one of multiple currency IDs
             :param includeCounts : (B) is true to include numberOf... fields (O)
-            :param requireBlock : is the block ID of a block that must be present in the blockchain during execution (O)
-            :param requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (O)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
             :return currencies (A) is an array of currency objects (refer to Get Currency for details)
@@ -34,7 +33,7 @@ class GetCurrencies(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
                 (WP) Wrapper Meta-parameter
 
@@ -46,8 +45,7 @@ class GetCurrencies(Parent):
             self.currencies.append(a)
 
         self.includeCounts = includeCounts
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -57,13 +55,7 @@ class GetCurrencies(Parent):
         self.data["currencies"] = self.currencies
         self.data["includeCounts"] = self.includeCounts
 
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
-
-        super(GetCurrencies, self).__init__(rt="getCurrencies", data=self.data)
+        super(GetCurrencies, self).__init__(rt="getCurrencies", data=self.data, rb=self.rb)
 
     def run(self):
         super(GetCurrencies, self).run()                                         # calls 'BaseGet.run()'

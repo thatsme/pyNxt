@@ -3,22 +3,20 @@ from base.BaseGet import BaseGet as Parent
 
 class SearchCurrencies(Parent):
 
-    def __init__(self, query=None, firstIndex=None, lastIndex=None, requireBlock=None, requireLastBlock=None ):
+    def __init__(self, query=None, ri=None, rb=None ):
         """
             Get currencies having a code that matches a given query in reverse relevance order.
 
             SearchCurrencies take a default 1 parameter as explained in NXT API Documentation
-            Class is working with GET method
+            API is working with GET method
 
             https://nxtwiki.org/wiki/The_Nxt_API#Search_Currencies
 
             REQUEST
             :param query : is a full text query on the currency field code in the standard Lucene syntax (S)
-            :param firstIndex : is a zero-based index to the first block ID to retrieve (N) (O)
-            :param lastIndex : is a zero-based index to the last block ID to retrieve (N) (O)
             :param includeCounts : is true if the fields beginning with numberOf... are to be included (B) (O)
-            :param requireBlock : is the block ID of a block that must be present in the blockchain during execution (O)
-            :param requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (O)
+            :param ri : ri object ( check base/Ri.py) (WP)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
             :return currencies (A) is an array of currency objects (refer to Get Currency for details)
@@ -36,17 +34,15 @@ class SearchCurrencies(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
                 (WP) Wrapper Meta-parameter
 
         """
 
         self.query = query
-        self.firstIndex = firstIndex
-        self.lastIndex = lastIndex
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.ri = ri
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -54,16 +50,7 @@ class SearchCurrencies(Parent):
         ## Create data dictionary
         self.data["query"] = query
 
-        if self.firstIndex:
-            self.data["firstIndex"] = self.firstIndex
-        if self.lastIndex:
-            self.data["lastIndex"] = self.lastIndex
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
-
-        super(SearchCurrencies, self).__init__(rt = "searchCurrencies", data=self.data)
+        super(SearchCurrencies, self).__init__(rt = "searchCurrencies", data=self.data, ri=self.ri, rb=self.rb)
 
     def run(self):
         super(SearchCurrencies, self).run()                   # calls 'BaseGet.run()'

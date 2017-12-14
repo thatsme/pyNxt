@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 from base.BasePost import BasePost as Parent
 
-class PublishExchangeOffer(Parent):
+class ScheduleCurrencyBuy(Parent):
     def __init__(self, currency=None, buyRateNQT=None, sellRateNQT=None, totalBuyLimit=0, totalSellLimit=0, initialBuySupply=0, initialSellSupply=0, expirationHeight=None, publicKey = None, secretPhrase=None, feeNQT = None, deadline = 0, referencedTransactionFullHash = None, broadcast=True, phasing = None, message=None, rec=None ):
         """
             Publish an exchange offer for an exchangeable currency. POST only.
 
-            PublishExchangeOffer take a default 1 parameter as explained in NXT API Documentation
+            ScheduleCurrencyBuy take a default 1 parameter as explained in NXT API Documentation
 
-            https://nxtwiki.org/wiki/The_Nxt_API#Publish_Exchange_Offer
+            https://nxtwiki.org/wiki/The_Nxt_API#Schedule_Currency_Buy ( NO DOC )
 
             REQUEST
             :param currency : is the currency ID (S)
@@ -122,14 +122,14 @@ class PublishExchangeOffer(Parent):
         self.data["feeNQT"] = self.feeNQT
         self.data["deadline"] = self.deadline
 
-        super(PublishExchangeOffer, self).__init__(rt="publishExchangeOffer", data=self.data, rec=self.rec)
+        super(ScheduleCurrencyBuy, self).__init__(rt="scheduleCurrencyBuy", data=self.data, rec=self.rec)
 
     def run(self):
-        super(PublishExchangeOffer, self).run()                # calls 'BasePost.run()'
+        super(ScheduleCurrencyBuy, self).run()                # calls 'BasePost.run()'
 
     def getData(self, key=None):
         """
         :param key: dictionary key, if None return the whole dictionary
         :return: dictionary of data
         """
-        return super(PublishExchangeOffer, self).getData(key)  # calls 'BasePost.getData()'
+        return super(ScheduleCurrencyBuy, self).getData(key)  # calls 'BasePost.getData()'

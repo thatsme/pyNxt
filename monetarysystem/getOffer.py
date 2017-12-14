@@ -2,13 +2,13 @@
 from base.BaseGet import BaseGet as Parent
 
 class GetOffer(Parent):
-    def __init__(self, offer=None, requireBlock=None, requireLastBlock=None ):
+    def __init__(self, offer=None, rb=None ):
         """
             Get offer details given an offer ID.
 
             GetOffer take a default 1/2 parameter as explained in NXT API Documentation
 
-            Class is working with GET method
+            API is working with GET method
 
             https://nxtwiki.org/wiki/The_Nxt_API#Get_Offer
 
@@ -16,8 +16,7 @@ class GetOffer(Parent):
             :param currency : is the mintable currency ID (S)
             :param account is the minting account ID
             :param units is the amount (in QNT) of currency to mint
-            :param requireBlock : is the block ID of a block that must be present in the blockchain during execution (O)
-            :param requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (O)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
             :return sellOffer and buyOffer : (O) are objects with the following fields:
@@ -44,7 +43,7 @@ class GetOffer(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
                 (WP) Wrapper Meta-parameter
 
@@ -52,9 +51,7 @@ class GetOffer(Parent):
 
         # Required parameters
         self.offer = offer
-
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -62,13 +59,7 @@ class GetOffer(Parent):
         ## Create data dictionary
         self.data["offer"] = self.offer
 
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
-
-        super(GetOffer, self).__init__(rt="getOffer", data=self.data)
+        super(GetOffer, self).__init__(rt="getOffer", data=self.data, rb=self.rb)
 
     def run(self):
         super(GetOffer, self).run()                                         # calls 'BaseGet.run()'

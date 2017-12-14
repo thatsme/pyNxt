@@ -2,14 +2,14 @@
 from base.BaseGet import BaseGet as Parent
 
 class GetBuyOffers(Parent):
-    def __init__(self, currency=None, account=None, availableOny=False, sortByRate=False,  requireBlock=None, requireLastBlock=None ):
+    def __init__(self, currency=None, account=None, availableOny=False, sortByRate=False, ri=None, rb=None ):
         """
             Get currency buy or sell offers given a currency ID and/or an account ID in order of rate
             (if sortByRate is true for expected offers, otherwise in the expected order of execution).
 
             GetBuyOffers take a default 1/2 parameter as explained in NXT API Documentation
 
-            Class is working with GET method
+            API is working with GET method
 
             https://nxtwiki.org/wiki/The_Nxt_API#Get_Buy_Offers
 
@@ -20,10 +20,8 @@ class GetBuyOffers(Parent):
                             currency and account are given (optional, does not apply to expected offers)
             :param sortByRate : is true (B) to sort by rate (optional, applies only to expected offers,
                             which are returned in expected order of execution by default)
-            :param firstIndex : is a zero-based index to the first offer to retrieve (optional, does not apply to expected offers)
-            :param lastIndex : is a zero-based index to the last offer to retrieve (optional, does not apply to expected offers)
-            :param requireBlock : is the block ID of a block that must be present in the blockchain during execution (O)
-            :param requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (O)
+            :param ri : ri object ( check base/Ri.py) (WP)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
             :return offers : (A) is an array of buy or sell offer objects (refer to Get Offer for details)
@@ -43,7 +41,7 @@ class GetBuyOffers(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
                 (WP) Wrapper Meta-parameter
 
@@ -54,8 +52,8 @@ class GetBuyOffers(Parent):
         self.account = account
         self.availableOny = availableOny
         self.sortByRate = sortByRate
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.ri = ri
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -67,13 +65,7 @@ class GetBuyOffers(Parent):
         self.data["availableOny"] = self.availableOny
         self.data["sortByRate"] = self.sortByRate
 
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
-
-        super(GetBuyOffers, self).__init__(rt="getBuyOffers", data=self.data)
+        super(GetBuyOffers, self).__init__(rt="getBuyOffers", data=self.data, ri=self.ri, rb=self.rb)
 
     def run(self):
         super(GetBuyOffers, self).run()                                         # calls 'BaseGet.run()'

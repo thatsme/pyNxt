@@ -3,13 +3,13 @@ from base.BaseGet import BaseGet as Parent
 
 class GetExpectedExchangeRequests(Parent):
 
-    def __init__(self, account=None, currency=None, includeCurrencyInfo=False, firstIndex=None, lastIndex=None, requireBlock=None, requireLastBlock=None):
+    def __init__(self, account=None, currency=None, includeCurrencyInfo=False, ri=None, rb=None):
         """
             Get the exchange requests associated with a given accounts and/or currency in reverse chronological
             order (or in expected order of execution for expected requests).
 
             GetExpectedExchangeRequests take a default 1 parameter as explained in NXT API Documentation
-            Class is working with GET method
+            API is working with GET method
 
             https://nxtwiki.org/wiki/The_Nxt_API#Get_Expected_Exchange_Requests
 
@@ -53,7 +53,7 @@ class GetExpectedExchangeRequests(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
                 (WP) Wrapper Meta-parameter
 
@@ -62,10 +62,8 @@ class GetExpectedExchangeRequests(Parent):
         self.account = account
         self.currency = currency
         self.includeCurrencyInfo = includeCurrencyInfo
-        self.firstIndex = firstIndex
-        self.lastIndex = lastIndex
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.ri = ri
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -76,17 +74,8 @@ class GetExpectedExchangeRequests(Parent):
             self.data["currency"] = self.currency
         if self.includeCurrencyInfo:
             self.data["includeCurrencyInfo"] = self.includeCurrencyInfo
-        if self.firstIndex:
-            self.data["firstIndex"] = self.firstIndex
-        if self.lastIndex:
-            self.data["lastIndex"] = self.lastIndex
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
 
-
-        super(GetExpectedExchangeRequests, self).__init__(rt = "getExpectedExchangeRequests", data=self.data)
+        super(GetExpectedExchangeRequests, self).__init__(rt = "getExpectedExchangeRequests", data=self.data, ri=self.ri, rb=self.rb)
 
     def run(self):
         super(GetExpectedExchangeRequests, self).run()               # calls 'BaseGet.run()'

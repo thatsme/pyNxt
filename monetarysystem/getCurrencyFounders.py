@@ -2,23 +2,21 @@
 from base.BaseGet import BaseGet as Parent
 
 class GetCurrencyFounders(Parent):
-    def __init__(self, currency=None, account = None, firstIndex=None, lastIndex=None, requireBlock=None, requireLastBlock=None ):
+    def __init__(self, currency=None, account = None, ri=None, rb=None ):
         """
             Get a reservable currency's founders.
 
             GetCurrencyFounders take a default 1/2 parameter as explained in NXT API Documentation
 
-            Class is working with GET method
+            API is working with GET method
 
             https://nxtwiki.org/wiki/The_Nxt_API#Get_Currency_Founders
 
             REQUEST
             :param currency : is the currency ID (S)
             :param account : is an account ID (S)(O)
-            :param firstIndex is a zero-based index to the first account to retrieve (O)
-            :param lastIndex is a zero-based index to the last account to retrieve (O)
-            :param requireBlock : is the block ID of a block that must be present in the blockchain during execution (O)
-            :param requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (O)
+            :param ri : ri object ( check base/Ri.py) (WP)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
             :return founders : (A) is an array of founder objects each of which has the following fields:
@@ -40,7 +38,7 @@ class GetCurrencyFounders(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
                 (WP) Wrapper Meta-parameter
 
@@ -49,10 +47,8 @@ class GetCurrencyFounders(Parent):
         # Required parameters
         self.currency  = currency
         self.account = account
-        self.firstIndex = firstIndex
-        self.lastIndex = lastIndex
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.ri = ri
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -61,19 +57,7 @@ class GetCurrencyFounders(Parent):
         self.data["currency"] = self.currency
         self.data["account"] = self.account
 
-        if self.firstIndex:
-            self.data["firstIndex"] = self.firstIndex
-
-        if self.lastIndex:
-            self.data["lastIndex"] = self.lastIndex
-
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
-
-        super(GetCurrencyFounders, self).__init__(rt="getCurrencyFounders", data=self.data)
+        super(GetCurrencyFounders, self).__init__(rt="getCurrencyFounders", data=self.data, ri=self.ri, rb=self.rb)
 
     def run(self):
         super(GetCurrencyFounders, self).run()                                         # calls 'BaseGet.run()'
