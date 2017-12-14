@@ -13,7 +13,7 @@ class GetNextBlockGenerators(Parent):
             This API will be replaced when transparent forging is activated.
 
             GetNextBlockGenerators take a default 1 parameter as explained in NXT API Documentation
-            Class is working with GET method
+            API is working with GET method
 
             https://nxtwiki.org/wiki/The_Nxt_API#Get_Next_Block_Generators
 
@@ -44,7 +44,7 @@ class GetNextBlockGenerators(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
                 (WP) Wrapper Meta-parameter
 

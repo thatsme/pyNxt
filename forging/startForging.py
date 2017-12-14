@@ -8,7 +8,6 @@ class StartForging(Parent):
 
             StartForging take a default 1 parameter as explained in NXT API Documentation
 
-
             https://nxtwiki.org/wiki/The_Nxt_API#Start_Forging
 
             REQUEST
@@ -33,7 +32,7 @@ class StartForging(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
                 (WP) Wrapper Meta-parameter
 

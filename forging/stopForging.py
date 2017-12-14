@@ -8,7 +8,6 @@ class StopForging(Parent):
 
             StopForging take a default 1 parameter as explained in NXT API Documentation
 
-
             https://nxtwiki.org/wiki/The_Nxt_API#Stop_Forging
 
             REQUEST
@@ -30,7 +29,7 @@ class StopForging(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
                 (WP) Wrapper Meta-parameter
 

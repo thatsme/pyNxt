@@ -4,13 +4,13 @@ from base.BasePost import BasePost as Parent
 
 class LeaseBalance(Parent):
     def __init__(self, period=1440, recipient=None, recipientPublicKey=None, secretPhrase=None, feeNQT=None, deadline=0,
-                 referencedTransactionFullHash=None, broadcast=True, phasing=None, message=None):
+                 referencedTransactionFullHash=None, broadcast=True, phasing=None, message=None, rec=None):
         """
             Lease the entire guaranteed balance of NXT to another account, after 1440 confirmations
 
             LeaseBalance take a default 5 parameter as explained in NXT API Documentation
 
-            Class is working with POST method only, and create a transaction, for more info about transactions please refer to
+            API is working with POST method only, and create a transaction, for more info about transactions please refer to
             https://nxtwiki.org/wiki/The_Nxt_API#Create_Transaction_Request
 
 
@@ -29,17 +29,18 @@ class LeaseBalance(Parent):
             :param broadcast : is set to false to prevent broadcasting the transaction to the network (B) (O)
             :param phasing : phasing object ( check base/Phasing.py ) (O) (WP)
             :param message : message object ( check base/message.py ) (O) (WP)
+            :param rec : rec object ( check base/Rec.py) (WP)
 
             RESPONSE
-            signatureHash : is a SHA-256 hash of the transaction signature (S)
-            unsignedTransactionBytes : are the unsigned transaction bytes (S)
-            transactionJSON : is a transaction object (O)  (refer to Get Transaction for details)
-            broadcasted : is true if the transaction was broadcast, false otherwise (B)
-            requestProcessingTime : is the API request processing time (in millisec)  (N)
-            transactionBytes :  are the signed transaction bytes (S)
-            fullHash : is the full hash of the signed transaction (S)
-            transaction : is the ID of the newly created transaction (S)
-            requestProcessingTime : is the API request processing time (N) (in millisec)
+            :return signatureHash : is a SHA-256 hash of the transaction signature (S)
+            :return unsignedTransactionBytes : are the unsigned transaction bytes (S)
+            :return transactionJSON : is a transaction object (O)  (refer to Get Transaction for details)
+            :return broadcasted : is true if the transaction was broadcast, false otherwise (B)
+            :return requestProcessingTime : is the API request processing time (in millisec)  (N)
+            :return transactionBytes :  are the signed transaction bytes (S)
+            :return fullHash : is the full hash of the signed transaction (S)
+            :return transaction : is the ID of the newly created transaction (S)
+            :return requestProcessingTime : is the API request processing time (N) (in millisec)
 
             Legenda :
                 ° the parameter are interchangeable on
@@ -52,7 +53,7 @@ class LeaseBalance(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
                 (WP) Wrapper Meta-parameter
 
@@ -81,6 +82,7 @@ class LeaseBalance(Parent):
 
         self.phasing = phasing
         self.message = message
+        self.rec = rec
 
         # Initialize dictionary
         self.data = {}
@@ -89,7 +91,7 @@ class LeaseBalance(Parent):
 
         self.data["recipient"] = self.recipient
         self.data["period"] = self.period
-        if self.ecipentPublicKey:
+        if self.recipientPublicKey:
             self.data["recipientPublicKey"] = self.recipientPublicKey
         if secretPhrase:
             self.data["secretPhrase"] = self.secretPhrase
@@ -100,7 +102,7 @@ class LeaseBalance(Parent):
         self.data["broadcast"] = self.broadcast
 
         # self.data["message"] = self.message
-        super(LeaseBalance, self).__init__(rt="leaseBalance", data=self.data, phasing=self.phasing, message=self.message)
+        super(LeaseBalance, self).__init__(rt="leaseBalance", data=self.data, phasing=self.phasing, message=self.message, rec=self.rec)
 
     def run(self):
         super(LeaseBalance, self).run()  # calls 'BasePost.run()'

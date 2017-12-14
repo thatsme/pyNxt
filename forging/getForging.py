@@ -4,10 +4,10 @@ from base.BasePost import BasePost as Parent
 class GetForging(Parent):
     def __init__(self, secretPhrase=None):
         """
-            Start or stop forging with an account, or check to see if an account is forging. POST only.
+            Start or stop forging with an account, or check to see if an account is forging.
+            POST only.
 
             GetForging take a default 1 parameter as explained in NXT API Documentation
-
 
             https://nxtwiki.org/wiki/The_Nxt_API#Get_Forging
 
@@ -30,7 +30,7 @@ class GetForging(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
                 (WP) Wrapper Meta-parameter
 
