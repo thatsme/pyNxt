@@ -8,17 +8,17 @@ class RsConvert(Parent):
             Get both the Reed-Solomon accounts address and the accounts number given an accounts ID.
 
             RsConvert take a default 1 parameter as explained in NXT API Documentation
-            Class is working with GET method
+            API is working with GET method
 
             https://nxtwiki.org/wiki/The_Nxt_API#Get_Currencies_By_Issuer
 
             REQUEST
-            accounts : is an accounts ID (either RS address or number)
+            :param accounts : is an accounts ID (either RS address or number)
 
             RESPONSE
-            accountRS : is the Reed-Solomon address of the accounts (S)
-            accounts : is the accounts number (S)
-            requestProcessingTime : is the API request processing time (N) (in millisec)
+            :return accountRS : is the Reed-Solomon address of the accounts (S)
+            :return accounts : is the accounts number (S)
+            :return requestProcessingTime : is the API request processing time (N) (in millisec)
 
             Legenda :
                 ° the parameter are interchangeable on
@@ -31,9 +31,9 @@ class RsConvert(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
-                (WP) Wrapper specific parameter
+                (WP) Wrapper Meta-parameter
 
         """
 
@@ -51,4 +51,8 @@ class RsConvert(Parent):
         super(RsConvert, self).run()               # calls 'BaseGet.run()'
 
     def getData(self, key=None):
+        """
+        :param key: dictionary key, if None return the whole dictionary
+        :return: dictionary of data
+        """
         return super(RsConvert, self).getData(key)    # calls 'BaseGet.getData()'

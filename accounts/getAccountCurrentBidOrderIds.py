@@ -3,25 +3,24 @@ from base.BaseGet import BaseGet as Parent
 
 class GetAccountCurrentBidOrderIds(Parent):
 
-    def __init__(self, account=None, assets=None, firstIndex=None, lastIndex=None, requireBlock=None, requireLastBlock=None):
+    def __init__(self, account=None, assets=None, ri=None, rb=None):
         """
             GetAccountCurrentBidOrderIds take a default 1 parameter as explained in NXT API Documentation
-            Class is working with GET method
+
+            API is working with GET method
 
             https://nxtwiki.org/wiki/The_Nxt_API#Get_Account_Current_Bid_Order_Ids
 
             REQUEST
-            accounts : is the id of accounts (S) (R)
-            asset : is an asset ID filter (S) (O)
-            firstIndex : is a zero-based index to the first order ID to retrieve (N) (O)
-            lastIndex : is a zero-based index to the last order ID to retrieve (N) (O)
-            requireBlock : is the block ID of a block that must be present in the blockchain during execution (O)
-            requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (O)
+            :param accounts : is the id of accounts (S) (R)
+            :param asset : is an asset ID filter (S) (O)
+            :param ri : ri object ( check base/Ri.py) (WP)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
-            bidOrderIds or askOrderIds : is an array (A) of order IDs
-            lastBlock : is the last block ID on the blockchain (S) (applies if requireBlock is provided but not requireLastBlock)
-            requestProcessingTime : is the API request processing time (N) (in millisec)
+            :return bidOrderIds or askOrderIds : is an array (A) of order IDs
+            :return lastBlock : is the last block ID on the blockchain (S) (applies if requireBlock is provided but not requireLastBlock)
+            :return requestProcessingTime : is the API request processing time (N) (in millisec)
 
             Legenda :
                 ° the parameter are interchangeable on
@@ -34,18 +33,16 @@ class GetAccountCurrentBidOrderIds(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
-                (WP) Wrapper specific parameter
+                (WP) Wrapper Meta-parameter
 
         """
 
         self.account = account
         self.assets = assets
-        self.firstIndex = firstIndex
-        self.lastIndex = lastIndex
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.ri = ri
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -53,19 +50,15 @@ class GetAccountCurrentBidOrderIds(Parent):
         ## Create data dictionary
         self.data["accounts"] = self.account
         self.data["assets"] = self.assets
-        if self.firstIndex:
-            self.data["firstIndex"] = self.firstIndex
-        if self.lastIndex:
-            self.data["lastIndex"] = self.lastIndex
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
 
-        super(GetAccountCurrentBidOrderIds, self).__init__(rt = "getAccountCurrentBidOrderIds", data=self.data)
+        super(GetAccountCurrentBidOrderIds, self).__init__(rt = "getAccountCurrentBidOrderIds", data=self.data, ri=self.ri, rb=self.rb)
 
     def run(self):
         super(GetAccountCurrentBidOrderIds, self).run()               # calls 'BaseGet.run()'
 
     def getData(self, key=None):
+        """
+        :param key: dictionary key, if None return the whole dictionary
+        :return: dictionary of data
+        """
         return super(GetAccountCurrentBidOrderIds, self).getData(key)    # calls 'BaseGet.getData()'

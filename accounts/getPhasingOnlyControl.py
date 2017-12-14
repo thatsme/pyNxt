@@ -3,35 +3,34 @@ from base.BaseGet import BaseGet as Parent
 
 class GetPhasingOnlyControl(Parent):
 
-    def __init__(self, account=None ):
+    def __init__(self, account=None, rb=None ):
         """
             Retrieve phasing control with their respective restrictions for a specific accounts.
 
             GetPhasingOnlyControl take a default 1 parameter as explained in NXT API Documentation
-            Class is working with GET method
+            API is working with GET method
 
             https://nxtwiki.org/wiki/The_Nxt_API#Get_Phasing_Only_Control
 
             REQUEST
-            accounts : is an accounts ID
-            requireBlock : is the block ID of a block that must be present in the blockchain during execution (O)
-            requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (O)
+            :param accounts : is an accounts ID
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
-            accounts : is the accounts number (S)
-            accountRS : is the Reed-Solomon address of the accounts (S)
-            quorum : is the minimum number of votes needed to approve the transaction (S)
-            whitelist : is an array (A) with the whitelisted accounts including the fields:
+            :return accounts : is the accounts number (S)
+            :return accountRS : is the Reed-Solomon address of the accounts (S)
+            :return quorum : is the minimum number of votes needed to approve the transaction (S)
+            :return whitelist : is an array (A) with the whitelisted accounts including the fields:
             > whitelisted (S) is the accounts number
             > whitelistedRS (S) is the Reed-Solomon address of the accounts
-            maxFees : is the maximum fees the accounts can spend per block (S)
-            minDuration : is the minimum duration of the phasing period (N)
-            maxDuration : is the maximum duration of the phasing period (N)
-            votingModel : is an integer code for the method of approval (N)
-            minBalance : is the minimum balance (in NQT or QNT) required for voting (S)
-            minBalanceModel : is the minimum balance model (N)
-            holding : is the asset or currency ID (only included if holding != 0) (S)
-            requestProcessingTime : is the API request processing time (N) (in millisec)
+            :return maxFees : is the maximum fees the accounts can spend per block (S)
+            :return minDuration : is the minimum duration of the phasing period (N)
+            :return maxDuration : is the maximum duration of the phasing period (N)
+            :return votingModel : is an integer code for the method of approval (N)
+            :return minBalance : is the minimum balance (in NQT or QNT) required for voting (S)
+            :return minBalanceModel : is the minimum balance model (N)
+            :return holding : is the asset or currency ID (only included if holding != 0) (S)
+            :return requestProcessingTime : is the API request processing time (N) (in millisec)
 
             Legenda :
                 ° the parameter are interchangeable on
@@ -44,12 +43,13 @@ class GetPhasingOnlyControl(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
-                (WP) Wrapper specific parameter
+                (WP) Wrapper Meta-parameter
         """
 
         self.account = account
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -57,10 +57,14 @@ class GetPhasingOnlyControl(Parent):
         ## Create data dictionary
         self.data["accounts"] = account
 
-        super(GetPhasingOnlyControl, self).__init__(rt = "getPhasingOnlyControl", data=self.data)
+        super(GetPhasingOnlyControl, self).__init__(rt = "getPhasingOnlyControl", data=self.data, rb=self.rb)
 
     def run(self):
         super(GetPhasingOnlyControl, self).run()               # calls 'BaseGet.run()'
 
     def getData(self, key=None):
+        """
+        :param key: dictionary key, if None return the whole dictionary
+        :return: dictionary of data
+        """
         return super(GetPhasingOnlyControl, self).getData(key)    # calls 'BaseGet.getData()'

@@ -3,36 +3,34 @@ from base.BaseGet import BaseGet as Parent
 
 class GetBlockchainTransactions(Parent):
 
-    def __init__(self,account=None, timestamp=0, type=None, subtype=None, firstIndex=None, lastIndex=None, numberOfConfirmations=0, withMessage=False, phasedOnly=False, nonPhasedOnly=False, includeExpiredPrunable=False, includePhasingResult=False, executeOnly=False, requireBlock=None, requireLastBlock=None ):
+    def __init__(self,account=None, timestamp=0, type=None, subtype=None, numberOfConfirmations=0, withMessage=False, phasedOnly=False, nonPhasedOnly=False, includeExpiredPrunable=False, includePhasingResult=False, executeOnly=False, ri=None, rb=None ):
         """
             Get the transactions associated with an accounts in reverse block timestamp order.
 
             GetBlockchainTransactions take a default 1 parameter as explained in NXT API Documentation
-            Class is working with GET method
+            API is working with GET method
 
             https://nxtwiki.org/wiki/The_Nxt_API#Get_Blockchain_Transactions
 
             REQUEST
-            accounts : is accounts ID (S)
-            timestamp : is the earliest block (in seconds since the genesis block) to retrieve (N) (O)
-            type : is the type of transactions to retrieve (S) (O)
-            subtype : is the subtype of transactions to retrieve (S) (O)
-            firstIndex : is a zero-based index to the first transaction to retrieve (N) (O)
-            lastIndex : is a zero-based index to the last transaction to retrieve (N) (O)
-            numberOfConfirmations : is the required number of confirmations per transaction (B) (O)
-            withMessage : is true to retrieve only only transactions having a message attachment, either non-encrypted or decryptable by the accounts (B) (O)
-            phasedOnly : is true to retrieve only phased transactions (B) (O) (optional unless nonPhasedOnly provided)
-            nonPhasedOnly : is true to retrieve only nonphased transactions (B) (O) (optional unless phasedOnly provided)
-            includeExpiredPrunable : is true' to retrieve pruned data if available (B) (O)
-            includePhasingResult : is true to retrieve execution status of each phased transaction (B) (O)
-            executedOnly : is true to exclude phased transactions that are not yet executed (B) (O)
-            requireBlock : is the block ID of a block that must be present in the blockchain during execution (O)
-            requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (O)
+            :param accounts : is accounts ID (S)
+            :param timestamp : is the earliest block (in seconds since the genesis block) to retrieve (N) (O)
+            :param type : is the type of transactions to retrieve (S) (O)
+            :param subtype : is the subtype of transactions to retrieve (S) (O)
+            :param numberOfConfirmations : is the required number of confirmations per transaction (B) (O)
+            :param withMessage : is true to retrieve only only transactions having a message attachment, either non-encrypted or decryptable by the accounts (B) (O)
+            :param phasedOnly : is true to retrieve only phased transactions (B) (O) (optional unless nonPhasedOnly provided)
+            :param nonPhasedOnly : is true to retrieve only nonphased transactions (B) (O) (optional unless phasedOnly provided)
+            :param includeExpiredPrunable : is true' to retrieve pruned data if available (B) (O)
+            :param includePhasingResult : is true to retrieve execution status of each phased transaction (B) (O)
+            :param executedOnly : is true to exclude phased transactions that are not yet executed (B) (O)
+            :param ri : ri object ( check base/Ri.py) (WP)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
-            transactions : is an array (A) of transactions (refer to Get Transaction for details)
-            lastBlock : is the last block ID on the blockchain (S) (applies if requireBlock is provided but not requireLastBlock)
-            requestProcessingTime : is the API request processing time (N) (in millisec)
+            :return transactions : is an array (A) of transactions (refer to Get Transaction for details)
+            :return lastBlock : is the last block ID on the blockchain (S) (applies if requireBlock is provided but not requireLastBlock)
+            :return requestProcessingTime : is the API request processing time (N) (in millisec)
 
             Legenda :
                 ° the parameter are interchangeable on
@@ -45,9 +43,9 @@ class GetBlockchainTransactions(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
-                (WP) Wrapper specific parameter
+                (WP) Wrapper Meta-parameter
 
         """
 
@@ -55,8 +53,6 @@ class GetBlockchainTransactions(Parent):
         self.timestamp = timestamp
         self.type = type
         self.subtype = subtype
-        self.firstIndex = firstIndex
-        self.lastIndex = lastIndex
         self.numberOfConfirmations = numberOfConfirmations
         self.withMessage = withMessage
         self.phasedOnly = phasedOnly
@@ -64,8 +60,8 @@ class GetBlockchainTransactions(Parent):
         self.includeExpiredPrunable = includeExpiredPrunable
         self.includePhasingResult = includePhasingResult
         self.executeOnly = executeOnly
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.ri = ri
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -79,10 +75,6 @@ class GetBlockchainTransactions(Parent):
         if self.subtype:
             self.data["subtype"] = self.subtype
 
-        if self.firstIndex:
-            self.data["firstIndex"] = self.firstIndex
-        if self.lastIndex:
-            self.data["lastIndex"] = self.lastIndex
         if self.withMessage:
             self.data["withMessage"] = self.withMessage
         if self.phasedOnly:
@@ -95,15 +87,15 @@ class GetBlockchainTransactions(Parent):
             self.data["includePhasingResult"] = self.includePhasingResult
         if self.executeOnly:
             self.data["executeOnly"] = self.executeOnly
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
 
-        super(GetBlockchainTransactions, self).__init__(rt = "getBlockchainTransactions", data=self.data)
+        super(GetBlockchainTransactions, self).__init__(rt = "getBlockchainTransactions", data=self.data, ri=self.ri, rb=self.rb)
 
     def run(self):
         super(GetBlockchainTransactions, self).run()               # calls 'BaseGet.run()'
 
     def getData(self, key=None):
+        """
+        :param key: dictionary key, if None return the whole dictionary
+        :return: dictionary of data
+        """
         return super(GetBlockchainTransactions, self).getData(key)    # calls 'BaseGet.getData()'

@@ -8,19 +8,19 @@ class GetAccountId(Parent):
             Get an accounts ID given a secret passphrase or public key. POST only.
 
             GetAccountId take a default 1 parameter as explained in NXT API Documentation
-            Class is working with POST method only
+            API is working with POST method only
 
             https://nxtwiki.org/wiki/The_Nxt_API#Get_Account_Id
 
             REQUEST
-            secretPhrase : is the secret passphrase of the accounts (S) (O)
-            publicKey : is the public key of the accounts (S) (optional if secretPhrase provided)
+            :param secretPhrase : is the secret passphrase of the accounts (S) (O)
+            :param publicKey : is the public key of the accounts (S) (optional if secretPhrase provided)
 
             RESPONSE
-            accountRS : is the Reed-Solomon address of the accounts (S)
-            publicKey : is the public key of the accounts (S)
-            accounts : is the accounts number (S)
-            requestProcessingTime : is the API request processing time (N) (in millisec)
+            :return accountRS : is the Reed-Solomon address of the accounts (S)
+            :return publicKey : is the public key of the accounts (S)
+            :return accounts : is the accounts number (S)
+            :return requestProcessingTime : is the API request processing time (N) (in millisec)
 
             Legenda :
                 ° the parameter are interchangeable on
@@ -33,9 +33,9 @@ class GetAccountId(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
-                (WP) Wrapper specific parameter
+                (WP) Wrapper Meta-parameter
 
         """
 
@@ -55,4 +55,8 @@ class GetAccountId(Parent):
         super(GetAccountId, self).run()                     # calls 'BaseGet.run()'
 
     def getData(self, key=None):
+        """
+        :param key: dictionary key, if None return the whole dictionary
+        :return: dictionary of data
+        """
         return super(GetAccountId, self).getData(key)       # calls 'BaseGet.getData()'

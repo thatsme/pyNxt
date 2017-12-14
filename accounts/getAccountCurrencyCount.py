@@ -3,23 +3,23 @@ from base.BaseGet import BaseGet as Parent
 
 class GetAccountCurrencyCount(Parent):
 
-    def __init__(self, account=None, height=None, requireBlock=None, requireLastBlock=None):
+    def __init__(self, account=None, height=None, rb=None):
         """
             GetAccountCurrencyCount take a default 1 parameter as explained in NXT API Documentation
-            Class is working with GET method
+
+            API is working with GET method
 
             https://nxtwiki.org/wiki/The_Nxt_API#Get_Account_Currency_Count
 
             REQUEST
-            accounts : is the id of accounts (S) (R)
-            height : is the height of the blockchain to determine the asset count (N) (O) (default is last block)
-            requireBlock : is the block ID of a block that must be present in the blockchain during execution (O)
-            requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (O)
+            :param accounts : is the id of accounts (S) (R)
+            :param height : is the height of the blockchain to determine the asset count (N) (O) (default is last block)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
-            numberOfCurrencies : is the number of currencies issued (N)
-            lastBlock : is the last block ID on the blockchain (S) (applies if requireBlock is provided but not requireLastBlock)
-            requestProcessingTime : is the API request processing time (N) (in millisec)
+            :return numberOfCurrencies : is the number of currencies issued (N)
+            :return lastBlock : is the last block ID on the blockchain (S) (applies if requireBlock is provided but not requireLastBlock)
+            :return requestProcessingTime : is the API request processing time (N) (in millisec)
 
             Legenda :
                 ° the parameter are interchangeable on
@@ -32,16 +32,15 @@ class GetAccountCurrencyCount(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
-                (WP) Wrapper specific parameter
+                (WP) Wrapper Meta-parameter
 
         """
 
         self.account = account
         self.height = height
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -50,15 +49,15 @@ class GetAccountCurrencyCount(Parent):
         self.data["accounts"] = self.account
         if self.height:
             self.data["height"] = self.height
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
 
-        super(GetAccountCurrencyCount, self).__init__(rt = "getAccountCurrencyCount", data=self.data)
+        super(GetAccountCurrencyCount, self).__init__(rt = "getAccountCurrencyCount", data=self.data, rb=self.rb)
 
     def run(self):
         super(GetAccountCurrencyCount, self).run()               # calls 'BaseGet.run()'
 
     def getData(self, key=None):
+        """
+        :param key: dictionary key, if None return the whole dictionary
+        :return: dictionary of data
+        """
         return super(GetAccountCurrencyCount, self).getData(key)    # calls 'BaseGet.getData()'

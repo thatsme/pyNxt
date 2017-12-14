@@ -16,23 +16,23 @@ class StartFundingMonitor(Parent):
 
             StartFoundingMonitor take a default 5 parameter as explained in NXT API Documentation
 
-            Class is working with POST method only
+            API is working with POST method only
 
             https://nxtwiki.org/wiki/The_Nxt_API#Start_Founding_Monitor
 
             REQUEST
-            property : is the name of the accounts property (R)
-            amount : is the amount to fund the recipient accounts with (in NQT or QNT) (N)
-            threshold : is the threshold (N)
-            interval : is the the number of blocks to wait after before funding the recipient (N)
-            * secretPhrase : is the secret phrase of the funding accounts
-            holdingType : is a string representing the holding type (S) (O)
-            holding : is the holding ID (S) (O)
+            :param property : is the name of the accounts property (R)
+            :param amount : is the amount to fund the recipient accounts with (in NQT or QNT) (N)
+            :param threshold : is the threshold (N)
+            :param interval : is the the number of blocks to wait after before funding the recipient (N)
+            :param secretPhrase *: is the secret phrase of the funding accounts
+            :param holdingType : is a string representing the holding type (S) (O)
+            :param holding : is the holding ID (S) (O)
 
 
             RESPONSE
-            started : is true if the monitor has been started (B)
-            requestProcessingTime : is the API request processing time (N) (in millisec)
+            :return started : is true if the monitor has been started (B)
+            :return requestProcessingTime : is the API request processing time (N) (in millisec)
 
             Legenda :
                 ° the parameter are interchangeable on
@@ -45,9 +45,9 @@ class StartFundingMonitor(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
-                (WP) Wrapper specific parameter
+                (WP) Wrapper Meta-parameter
 
         """
 
@@ -80,6 +80,10 @@ class StartFundingMonitor(Parent):
         super(StartFundingMonitor, self).run()                    # calls 'BasePost.run()'
 
     def getData(self, key=None):
+        """
+        :param key: dictionary key, if None return the whole dictionary
+        :return: dictionary of data
+        """
         return super(StartFundingMonitor, self).getData(key)      # calls 'BasePost.getData()'
 
 

@@ -4,29 +4,28 @@ from base.BaseGet import BaseGet as Parent
 class GetAccount(Parent):
 
 
-    def __init__(self, account=None, includeLessors=False, includeAssets=False, includeCurrencies=False, includeEffectiveBalance=False, requireBlock=None, requireLastBlock=None):
+    def __init__(self, account=None, includeLessors=False, includeAssets=False, includeCurrencies=False, includeEffectiveBalance=False, rb=None):
         """
             GetAccount take a default 1 parameter as explained in NXT API Documentation ( is deadLine requested or not ? )
 
-            Class is working with GET method
+            API is working with GET method
 
             https://nxtwiki.org/wiki/The_Nxt_API#Get_Account
 
             REQUEST
-            accounts : is the id of accounts (S) (R)
-            includeLessors : is true to include lessors, lessorsRS and lessorsInfo (B) (O)
-            includeAssets : is true to include assetBalances and unconfirmedAssetBalances (B) (O)
-            includeCurrencies : is true to include accountCurrencies (B) (O)
-            includeEffectiveBalance : is true to include effectiveBalanceNXT and guaranteedBalanceNQT (B) (O)
-            requireBlock : is the block ID of a block that must be present in the blockchain during execution (O)
-            requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (O)
+            :param accounts : is the id of accounts (S) (R)
+            :param includeLessors : is true to include lessors, lessorsRS and lessorsInfo (B) (O)
+            :param includeAssets : is true to include assetBalances and unconfirmedAssetBalances (B) (O)
+            :param includeCurrencies : is true to include accountCurrencies (B) (O)
+            :param includeEffectiveBalance : is true to include effectiveBalanceNXT and guaranteedBalanceNQT (B) (O)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
 
-            unconfirmedBalanceNQT : is balanceNQT less unconfirmed outgoing transactions, the balance displayed in the client (S)
-            effectiveBalanceNXT : is the balance (in NXT) of the accounts available for forging: the unleased guaranteedBalance of this
+            :return unconfirmedBalanceNQT : is balanceNQT less unconfirmed outgoing transactions, the balance displayed in the client (S)
+            :return effectiveBalanceNXT : is the balance (in NXT) of the accounts available for forging: the unleased guaranteedBalance of this
                                     accounts plus the leased guaranteedBalance of all lessors to this accounts (N)
-            lessorsInfo : is an array of lessor objects including the fields  (A) :
+            :return lessorsInfo : is an array of lessor objects including the fields  (A) :
             > currentHeightTo (S)
             > nextHeightFrom (S)
             > effectiveBalanceNXT (S)
@@ -34,29 +33,30 @@ class GetAccount(Parent):
             > currentLesseeRS (S)
             > currentHeightFrom (S)
             > nextHeightTo (S)
-            lessors : is an array of lessor accounts IDs (A)
-            currentLessee : is the accounts number of the lessee, if applicable (S)
-            currentLeasingHeightTo : is the block height when the lease completes, if applicable (N)
-            forgedBalanceNQT : is the balance (in NQT) that the accounts has forged (S)
-            balanceNQT : is the minimally confirmed basic balance (in NQT) of the accounts (S)
-            publicKey : is the public key of the accounts (S)
-            requestProcessingTime : is the API request processing time (in millisec) (N)
-            assetBalances : is an array of asset objects (A) including the fields :
+            :return lessors : is an array of lessor accounts IDs (A)
+            :return currentLessee : is the accounts number of the lessee, if applicable (S)
+            :return currentLeasingHeightTo : is the block height when the lease completes, if applicable (N)
+            :return forgedBalanceNQT : is the balance (in NQT) that the accounts has forged (S)
+            :return balanceNQT : is the minimally confirmed basic balance (in NQT) of the accounts (S)
+            :return publicKey : is the public key of the accounts (S)
+            :return requestProcessingTime : is the API request processing time (in millisec) (N)
+            :return assetBalances : is an array of asset objects (A) including the fields :
             > balanceQNT (S)
             > asset ID (S)
-            guaranteedBalanceNQT : is the balance (in NQT) of the accounts with at least 1440 confirmations (S)
-            unconfirmedAssetBalances : is an array of asset objects (A) including the fields :
+            :return guaranteedBalanceNQT : is the balance (in NQT) of the accounts with at least 1440 confirmations (S)
+            :return unconfirmedAssetBalances : is an array of asset objects (A) including the fields :
             > unconfirmedBalanceQNT (S)
             > asset ID (S)
-            currentLesseeRS : is the Reed-Solomon address of the lessee accounts (S)
-            accountRS : is the Reed-Solomon address of the accounts (S)
-            lessorsRS : is an array (A) of Reed-Solomon lessor accounts addresses
-            accountCurrencies : is an array of currency objects  (A) (refer to Get Account Currencies for details)
-            name : is the name associated with the accounts, if applicable (S)
-            description : is the description of the accounts, if applicable (S)
-            accounts : is the accounts number (S)
-            currentLeasingHeightFrom : is the block height when the lease starts, if applicable (N)
-            lastBlock : is the last block ID on the blockchain (applies if requireBlock is provided but not requireLastBlock) (S)
+            :return currentLesseeRS : is the Reed-Solomon address of the lessee accounts (S)
+            :return accountRS : is the Reed-Solomon address of the accounts (S)
+            :return lessorsRS : is an array (A) of Reed-Solomon lessor accounts addresses
+            :return accountCurrencies : is an array of currency objects  (A) (refer to Get Account Currencies for details)
+            :return name : is the name associated with the accounts, if applicable (S)
+            :return description : is the description of the accounts, if applicable (S)
+            :return accounts : is the accounts number (S)
+            :return currentLeasingHeightFrom : is the block height when the lease starts, if applicable (N)
+            :return lastBlock : is the last block ID on the blockchain (applies if requireBlock is provided but not requireLastBlock) (S)
+
 
             Legenda :
                 ° the parameter are interchangeable on
@@ -69,9 +69,9 @@ class GetAccount(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
-                (WP) Wrapper specific parameter
+                (WP) Wrapper Meta-parameter
         """
 
 
@@ -84,8 +84,7 @@ class GetAccount(Parent):
         self.includeAssets = includeAssets
         self.includeCurrencies = includeCurrencies
         self.includeEffectiveBalance = includeEffectiveBalance
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -100,17 +99,22 @@ class GetAccount(Parent):
             self.data["includeCurrencies"] = self.includeCurrencies
         if self.includeEffectiveBalance:
             self.data["includeEffectiveBalace"] = self.includeEffectiveBalance
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
 
-        super(GetAccount, self).__init__(rt = "getAccount", data=self.data)
+        super(GetAccount, self).__init__(rt = "getAccount", data=self.data, rb=self.rb)
 
     def run(self):
+        """
+        Run rest request
+        """
         super(GetAccount, self).run()                               # calls 'BaseGet.run()'
 
     def getData(self, key=None):
+        """
+        :param key: dictionary key, if None return the whole dictionary
+        :return: dictionary of data
+        """
         return super(GetAccount, self).getData(key)                 # calls 'BaseGet.getData()'
 
+    def phelp(self):
+        print(GetAccount.__doc__)
 

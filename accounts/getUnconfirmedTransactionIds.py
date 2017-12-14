@@ -3,26 +3,24 @@ from base.BaseGet import BaseGet as Parent
 
 class GetUnconfirmedTransactionIds(Parent):
 
-    def __init__(self, account=None, firstIndex=None, lastIndex=None, requireBlock=None, requireLastBlock=None):
+    def __init__(self, account=None, ri=None, rb=None):
         """
             Get a list of unconfirmed transaction IDs associated with an accounts.
 
             GetUnconfirmetTransactionIds take a default 1 parameter as explained in NXT API Documentation
-            Class is working with GET method
+            API is working with GET method
 
             https://nxtwiki.org/wiki/The_Nxt_API#Get_Unconfirmed_Transaction_Ids
 
             REQUEST
-            accounts : is array (A) of accounts ID's (S) / Multiaccount parameters (3)
-            firstIndex : is a zero-based index to the first block ID to retrieve (N) (O)
-            lastIndex : is a zero-based index to the last block ID to retrieve (N) (O)
-            requireBlock : is the block ID of a block that must be present in the blockchain during execution (O)
-            requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (O)
+            :param accounts : is array (A) of accounts ID's (S) / Multiaccount parameters (3)
+            :param ri : ri object ( check base/Ri.py) (WP)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
-            unconfirmedTransactionIds : is an array (A) of unconfirmed transaction IDs
-            lastBlock : is the last block ID on the blockchain (S) (applies if requireBlock is provided but not requireLastBlock)
-            requestProcessingTime : is the API request processing time (N) (in millisec)
+            :return unconfirmedTransactionIds : is an array (A) of unconfirmed transaction IDs
+            :return lastBlock : is the last block ID on the blockchain (S) (applies if requireBlock is provided but not requireLastBlock)
+            :return requestProcessingTime : is the API request processing time (N) (in millisec)
 
             Legenda :
                 ° the parameter are interchangeable on
@@ -35,9 +33,9 @@ class GetUnconfirmedTransactionIds(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
-                (WP) Wrapper specific parameter
+                (WP) Wrapper Meta-parameter
 
         """
 
@@ -45,10 +43,8 @@ class GetUnconfirmedTransactionIds(Parent):
         for a in account[:3]:
             self.accounts.append(a)
 
-        self.firstIndex = firstIndex
-        self.lastIndex = lastIndex
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.ri = ri
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -57,19 +53,14 @@ class GetUnconfirmedTransactionIds(Parent):
         for a in self.accounts:
             self.data["accounts"] = a
 
-        if self.firstIndex:
-            self.data["firstIndex"] = self.firstIndex
-        if self.lastIndex:
-            self.data["lastIndex"] = self.lastIndex
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
-
-        super(GetUnconfirmedTransactionIds, self).__init__(rt = "getUnconfirmedTransactionIds", data=self.data)
+        super(GetUnconfirmedTransactionIds, self).__init__(rt = "getUnconfirmedTransactionIds", data=self.data, ri=self.ri, rb=self.rb)
 
     def run(self):
         super(GetUnconfirmedTransactionIds, self).run()               # calls 'BaseGet.run()'
 
     def getData(self, key=None):
+        """
+        :param key: dictionary key, if None return the whole dictionary
+        :return: dictionary of data
+        """
         return super(GetUnconfirmedTransactionIds, self).getData(key)    # calls 'BaseGet.getData()'

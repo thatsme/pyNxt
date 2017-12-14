@@ -3,31 +3,30 @@ from base.BaseGet import BaseGet as Parent
 
 class GetBalance(Parent):
 
-    def __init__(self, account=None, includeEffectiveBalance=False, height= None, requireBlock=None, requireLastBlock=None ):
+    def __init__(self, account=None, includeEffectiveBalance=False, height= None, rb=None ):
         """
             Get asset information given multiple creation accounts IDs in reverse block height of creation order.
 
             GetBalance take a default 1 parameter as explained in NXT API Documentation
-            Class is working with GET method
+            API is working with GET method
 
             https://nxtwiki.org/wiki/The_Nxt_API#Get_Balance
 
             REQUEST
-            accounts : is array (A) of accounts ID's (S) / Multiaccount parameters (3)
-            includeEffectiveBalance : is true to include effectiveBalanceNXT and guaranteedBalanceNQT (B) (O)
-            height : is the height to retrieve accounts balance for, if still available (N) (O)
-            requireBlock : is the block ID of a block that must be present in the blockchain during execution (O)
-            requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (O)
+            :param accounts : is array (A) of accounts ID's (S) / Multiaccount parameters (3)
+            :param includeEffectiveBalance : is true to include effectiveBalanceNXT and guaranteedBalanceNQT (B) (O)
+            :param height : is the height to retrieve accounts balance for, if still available (N) (O)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
-            unconfirmedBalanceNQT : is balanceNQT less unconfirmed outgoing transactions, the balance displayed in the client (S)
-            guaranteedBalanceNQT : is the balance (in NQT) of the accounts with at least 1440 confirmations (S)
-            effectiveBalanceNXT : is the balance (in NXT) of the accounts available for forging: the unleased guaranteedBalance
+            :return unconfirmedBalanceNQT : is balanceNQT less unconfirmed outgoing transactions, the balance displayed in the client (S)
+            :return guaranteedBalanceNQT : is the balance (in NQT) of the accounts with at least 1440 confirmations (S)
+            :return effectiveBalanceNXT : is the balance (in NXT) of the accounts available for forging: the unleased guaranteedBalance
                                 of this accounts plus the leased guaranteedBalance of all lessors to this accounts (N)
-            forgedBalanceNQT : is the balance (in NQT) that the accounts has forged (S)
-            balanceNQT : is the minimally confirmed basic balance (in NQT) of the accounts (S)
-            lastBlock : is the last block ID on the blockchain (S) (applies if requireBlock is provided but not requireLastBlock)
-            requestProcessingTime : is the API request processing time (N) (in millisec)
+            :return forgedBalanceNQT : is the balance (in NQT) that the accounts has forged (S)
+            :return balanceNQT : is the minimally confirmed basic balance (in NQT) of the accounts (S)
+            :return lastBlock : is the last block ID on the blockchain (S) (applies if requireBlock is provided but not requireLastBlock)
+            :return requestProcessingTime : is the API request processing time (N) (in millisec)
 
             Legenda :
                 ° the parameter are interchangeable on
@@ -40,17 +39,16 @@ class GetBalance(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
-                (WP) Wrapper specific parameter
+                (WP) Wrapper Meta-parameter
 
         """
 
         self.account = account
         self.includeEffectiveBalance = includeEffectiveBalance
         self.height = height
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -61,15 +59,15 @@ class GetBalance(Parent):
             self.data["includeEffectiveBalance"] = self.includeEffectiveBalance
         if self.height:
             self.data["height"] = self.height
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
 
-        super(GetBalance, self).__init__(rt = "getBalance", data=self.data)
+        super(GetBalance, self).__init__(rt = "getBalance", data=self.data, rb=self.rb)
 
     def run(self):
         super(GetBalance, self).run()               # calls 'BaseGet.run()'
 
     def getData(self, key=None):
+        """
+        :param key: dictionary key, if None return the whole dictionary
+        :return: dictionary of data
+        """
         return super(GetBalance, self).getData(key)    # calls 'BaseGet.getData()'

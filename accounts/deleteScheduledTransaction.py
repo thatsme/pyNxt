@@ -6,11 +6,11 @@ class DeleteScheduledTransaction(Parent):
         """
             DeleteScheduledTransaction take a default 1 parameter as explained in NXT API Documentation
 
-            Class is working with POST method only, and create a transaction, for more info about transactions please refer to
+            API is working with POST method only, and create a transaction, for more info about transactions please refer to
             https://nxtwiki.org/wiki/The_Nxt_API#Delete_Scheduled_Transaction
 
             REQUEST
-            transaction : is the name of the transaction (S) (R)
+            :param transaction : is the name of the transaction (S) (R)
 
             RESPONSE
 
@@ -25,9 +25,9 @@ class DeleteScheduledTransaction(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
-                (WP) Wrapper specific parameter
+                (WP) Wrapper Meta-parameter
 
         """
 

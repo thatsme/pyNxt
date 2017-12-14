@@ -2,37 +2,38 @@
 from base.BasePost import BasePost as Parent
 
 class DeleteAccountProperty(Parent):
-    def __init__(self, recipient = None, property=None, setter=None, secretPhrase=None,  publicKey = None, feeNQT = None, deadline = 0, referencedTransactionFullHash = None, broadcast=False, phasing = None, message=None ):
+    def __init__(self, recipient = None, property=None, setter=None, secretPhrase=None,  publicKey = None, feeNQT = None, deadline = 0, referencedTransactionFullHash = None, broadcast=False, phasing = None, message=None, rec=None ):
         """
             DeleteAccountProperty take a default 5 parameter as explained in NXT API Documentation
 
-            Class is working with POST method only, and create a transaction, for more info about transactions please refer to
+            API is working with POST method only, and create a transaction, for more info about transactions please refer to
 
             https://nxtwiki.org/wiki/The_Nxt_API#Delete_Account_Property
 
             REQUEST
-            property : is the name of the property (S) (R)
-            recipient : is the accounts where a property should be removed (S) (O)
-            setter : is the accounts who did set the property (S) (O)
-            * secretPhrase : secret Phrase of accounts where we want remove a property ( required or at least ** )
-            ** publicKey : publicKey of accounts where we want remove a property ( does not get in broadcast ) ( required or at least *)
-            feeNQT : fee for sending transaction if 0 minimum is set ( 100000000 NQT )
-            deadLine : is the deadline (in minutes) for the transaction to be confirmed, 32767 minutes maximum ( if 0, 60 )
-            referencedTransactionFullHash : creates a chained transaction, meaning that the current transaction cannot be confirmed
+            :param property : is the name of the property (S) (R)
+            :param recipient : is the accounts where a property should be removed (S) (O)
+            :param setter : is the accounts who did set the property (S) (O)
+            :param secretPhrase * : secret Phrase of accounts where we want remove a property ( required or at least ** )
+            :param publicKey ** : publicKey of accounts where we want remove a property ( does not get in broadcast ) ( required or at least *)
+            :param feeNQT : fee for sending transaction if 0 minimum is set ( 100000000 NQT )
+            :param deadLine : is the deadline (in minutes) for the transaction to be confirmed, 32767 minutes maximum ( if 0, 60 )
+            :param referencedTransactionFullHash : creates a chained transaction, meaning that the current transaction cannot be confirmed
                                             unless the referenced transaction is also confirmed (O)
-            broadcast : is set to false to prevent broadcasting the transaction to the network (B) (O)
-            phasing : phasing object ( check base/Phasing.py )
-            message : message object ( check base/message.py )
+            :param broadcast : is set to false to prevent broadcasting the transaction to the network (B) (O)
+            :param phasing : phasing object ( check base/Phasing.py ) (WP)
+            :param message : message object ( check base/Message.py ) (WP)
+            :param rec : ec object ( check base/Rec.py) (WP)
 
             RESPONSE (Create transaction response)
-            signatureHash : is a SHA-256 hash of the transaction signature (S)
-            unsignedTransactionBytes : are the unsigned transaction bytes (S)
-            transactionJSON : is a transaction object (refer to Get Transaction for details) (O)
-            broadcasted : is true if the transaction was broadcast, false otherwise (B)
-            requestProcessingTime : is the API request processing time (in millisec) (N)
-            transactionBytes : are the signed transaction bytes (S)
-            fullHash : is the full hash of the signed transaction (S)
-            transaction : is the ID of the newly created transaction (S)
+            :return signatureHash : is a SHA-256 hash of the transaction signature (S)
+            :return unsignedTransactionBytes : are the unsigned transaction bytes (S)
+            :return transactionJSON : is a transaction object (refer to Get Transaction for details) (O)
+            :return broadcasted : is true if the transaction was broadcast, false otherwise (B)
+            :return requestProcessingTime : is the API request processing time (in millisec) (N)
+            :return transactionBytes : are the signed transaction bytes (S)
+            :return fullHash : is the full hash of the signed transaction (S)
+            :return transaction : is the ID of the newly created transaction (S)
 
             Legenda
                 ° the parameter are interchangeable on
@@ -45,9 +46,9 @@ class DeleteAccountProperty(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
-                (WP) Wrapper specific parameter
+                (WP) Wrapper Meta-parameter
 
 
         """
@@ -74,6 +75,7 @@ class DeleteAccountProperty(Parent):
 
         self.phasing = phasing
         self.message = message
+        self.rec = rec
 
         # Initialize dictionary
         self.data = {}
@@ -94,7 +96,7 @@ class DeleteAccountProperty(Parent):
         if self.broadcast:
             self.data["broadcast"] = self.broadcast
 
-        super(DeleteAccountProperty, self).__init__(rt="deleteAccountProperty", data=self.data, phasing=self.phasing, message=self.message)
+        super(DeleteAccountProperty, self).__init__(rt="deleteAccountProperty", data=self.data, phasing=self.phasing, message=self.message, rec=self.rec)
 
     def run(self):
         super(DeleteAccountProperty, self).run()                # calls 'BasePost.run()'

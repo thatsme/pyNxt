@@ -3,31 +3,30 @@ from base.BaseGet import BaseGet as Parent
 
 class GetAccountLessors(Parent):
 
-    def __init__(self, account=None, height=None, requireBlock=None, requireLastBlock=None):
+    def __init__(self, account=None, height=None, rb=None):
         """
             Get the lessors to an accounts.
 
             GetAccountLedgerLessor take a default 1 parameter as explained in NXT API Documentation
-            Class is working with GET method
+            API is working with GET method
 
             https://nxtwiki.org/wiki/The_Nxt_API#Get_Account_Lessor
 
             REQUEST
-            accounts : is the ledger ID
-            height : is the height of the blockchain to determine the lessors (N) (O) ( default is last block)
-            requireBlock : is the block ID of a block that must be present in the blockchain during execution (O)
-            requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (O)
+            :param accounts : is the ledger ID
+            :param height : is the height of the blockchain to determine the lessors (N) (O) ( default is last block)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
-            accountRS (S) is the Reed-Solomon address of the accounts
-            accounts (S) is the accounts number
-            height : is the the block height associated with the event (N)
-            lastBlock : is the last block ID on the blockchain (S) (applies if requireBlock is provided but not requireLastBlock)
-            lessors : is an array (A) of lessor objects including the fields:
+            :return accountRS (S) is the Reed-Solomon address of the accounts
+            :return accounts (S) is the accounts number
+            :return height : is the the block height associated with the event (N)
+            :return lastBlock : is the last block ID on the blockchain (S) (applies if requireBlock is provided but not requireLastBlock)
+            :return lessors : is an array (A) of lessor objects including the fields:
             > lessorRS (S)
             > lessor (S)
             > guaranteedBalanceNQT (S)
-            requestProcessingTime : is the API request processing time (N) (in millisec)
+            :return requestProcessingTime : is the API request processing time (N) (in millisec)
 
             Legenda :
                 ° the parameter are interchangeable on
@@ -40,16 +39,15 @@ class GetAccountLessors(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
-                (WP) Wrapper specific parameter
+                (WP) Wrapper Meta-parameter
 
         """
 
         self.account = account
         self.height = height
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -58,15 +56,15 @@ class GetAccountLessors(Parent):
         self.data["accounts"] = self.account
         if self.height:
             self.data["height"] = self.height
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
 
-        super(GetAccountLessors, self).__init__(rt = "getAccountLessors", data=self.data)
+        super(GetAccountLessors, self).__init__(rt = "getAccountLessors", data=self.data, rb=self.rb)
 
     def run(self):
         super(GetAccountLessors, self).run()                         # calls 'BaseGet.run()'
 
     def getData(self, key=None):
+        """
+        :param key: dictionary key, if None return the whole dictionary
+        :return: dictionary of data
+        """
         return super(GetAccountLessors, self).getData(key)           # calls 'BaseGet.getData()'

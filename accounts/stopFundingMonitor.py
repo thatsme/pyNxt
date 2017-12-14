@@ -17,22 +17,22 @@ class StopFundingMonitor(Parent):
 
             StopFoundingMonitor take a default 5 parameter as explained in NXT API Documentation
 
-            Class is working with POST method only
+            API is working with POST method only
 
             https://nxtwiki.org/wiki/The_Nxt_API#Stop_Founding_Monitor
 
             REQUEST
-            property : is the name of the accounts property (S) (O)
-            adminPassword : is the admin password, used to stop a single monitor or all monitors (optional if secretPhrase is provided)
-            secretPhrase : is the secret phrase of the funding accounts (S)
-            accounts : is the accounts ID (S) (O)
-            holdingType : is a string representing the holding type (S) (O)
-            holding : is the holding ID (S) (O)
+            :param property : is the name of the accounts property (S) (O)
+            :param adminPassword : is the admin password, used to stop a single monitor or all monitors (optional if secretPhrase is provided)
+            :param secretPhrase : is the secret phrase of the funding accounts (S)
+            :param accounts : is the accounts ID (S) (O)
+            :param holdingType : is a string representing the holding type (S) (O)
+            :param holding : is the holding ID (S) (O)
 
 
             RESPONSE
-            stopped : is the number of the monitors that have been stopped (N)
-            requestProcessingTime : is the API request processing time (N) (in millisec)
+            :return stopped : is the number of the monitors that have been stopped (N)
+            :return requestProcessingTime : is the API request processing time (N) (in millisec)
 
             Legenda :
                 ° the parameter are interchangeable on
@@ -45,9 +45,9 @@ class StopFundingMonitor(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
-                (WP) Wrapper specific parameter
+                (WP) Wrapper Meta-parameter
 
         """
 
@@ -83,6 +83,10 @@ class StopFundingMonitor(Parent):
         super(StopFundingMonitor, self).run()                    # calls 'BasePost.run()'
 
     def getData(self, key=None):
+        """
+        :param key: dictionary key, if None return the whole dictionary
+        :return: dictionary of data
+        """
         return super(StopFundingMonitor, self).getData(key)      # calls 'BasePost.getData()'
 
 

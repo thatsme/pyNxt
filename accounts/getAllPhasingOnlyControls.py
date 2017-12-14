@@ -3,24 +3,22 @@ from base.BaseGet import BaseGet as Parent
 
 class GetAllPhasingOnlyControl(Parent):
 
-    def __init__(self, account=None ):
+    def __init__(self, ri=None, rb=None ):
         """
             Retrieve all accounts subject to phasing control with their respective restrictions.
 
             GetAllPhasingOnlyControl take a default 1 parameter as explained in NXT API Documentation
-            Class is working with GET method
+            API is working with GET method
 
             https://nxtwiki.org/wiki/The_Nxt_API#Get_All_Phasing_Only_Control
 
             REQUEST
-            firstIndex : is a zero-based index to the first block ID to retrieve (N) (O)
-            lastIndex : is a zero-based index to the last block ID to retrieve (N) (O)
-            requireBlock : is the block ID of a block that must be present in the blockchain during execution (O)
-            requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (O)
+            :param ri : ri object ( check base/Ri.py) (WP)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
-            phasingOnlyControls :is an array (A) with phasing only controls objects (Refer to Get Phasing Only Control for details)
-            requestProcessingTime : is the API request processing time (N) (in millisec)
+            :return phasingOnlyControls :is an array (A) with phasing only controls objects (Refer to Get Phasing Only Control for details)
+            :return requestProcessingTime : is the API request processing time (N) (in millisec)
 
             Legenda :
                 ° the parameter are interchangeable on
@@ -33,23 +31,24 @@ class GetAllPhasingOnlyControl(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
-                (WP) Wrapper specific parameter
+                (WP) Wrapper Meta-parameter
         """
-
-        self.account = account
 
         # Initialize dictionary
         self.data = {}
 
         ## Create data dictionary
-        self.data["accounts"] = account
 
-        super(GetAllPhasingOnlyControl, self).__init__(rt = "getAllPhasingOnlyControl", data=self.data)
+        super(GetAllPhasingOnlyControl, self).__init__(rt = "getAllPhasingOnlyControl", data=self.data, ri=self.ri, rb=self.rb)
 
     def run(self):
         super(GetAllPhasingOnlyControl, self).run()                     # calls 'BaseGet.run()'
 
     def getData(self, key=None):
+        """
+        :param key: dictionary key, if None return the whole dictionary
+        :return: dictionary of data
+        """
         return super(GetAllPhasingOnlyControl, self).getData(key)       # calls 'BaseGet.getData()'

@@ -8,16 +8,16 @@ class GetScheduledTransactions(Parent):
             Get scheduled transactions
 
             GetScheduledTransactions take a default 1 parameter as explained in NXT API Documentation
-            Class is working with GET method
+            API is working with GET method
 
             https://nxtwiki.org/wiki/The_Nxt_API#Get_Scheduled_Transactions
 
             REQUEST
-            accounts : is the accounts ID (O)
+            :param accounts : is the accounts ID (O)
 
             RESPONSE
-            scheduledTransactions : is an array (A) of scheduled transaction
-            requestProcessingTime : is the API request processing time (N) (in millisec)
+            :return scheduledTransactions : is an array (A) of scheduled transaction
+            :return requestProcessingTime : is the API request processing time (N) (in millisec)
 
             Legenda :
                 ° the parameter are interchangeable on
@@ -30,9 +30,9 @@ class GetScheduledTransactions(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
-                (WP) Wrapper specific parameter
+                (WP) Wrapper Meta-parameter
 
         """
 
@@ -50,4 +50,8 @@ class GetScheduledTransactions(Parent):
         super(GetScheduledTransactions, self).run()                 # calls 'BaseGet.run()'
 
     def getData(self, key=None):
+        """
+        :param key: dictionary key, if None return the whole dictionary
+        :return: dictionary of data
+        """
         return super(GetScheduledTransactions, self).getData(key)    # calls 'BaseGet.getData()'

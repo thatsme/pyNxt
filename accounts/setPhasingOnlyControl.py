@@ -3,36 +3,37 @@ from base.BasePost import BasePost as Parent
 
 
 class SetPhasingOnlyControl(Parent):
-    def __init__(self, controlVotingModel=0, controlQuorum=0, controlWhiteListed=None, controlMinBalance=None, controlMinBalanceModel=None, controlHolding=None, controlMaxFee=None, controlMinDuration=None, controlMaxDuration=None, publicKey=None, secretPhrase=None, feeNQT=None, deadline=0, referencedTransactionFullHash=None, broadcast=True, phasing=None, message=None):
+    def __init__(self, controlVotingModel=0, controlQuorum=0, controlWhiteListed=None, controlMinBalance=None, controlMinBalanceModel=None, controlHolding=None, controlMaxFee=None, controlMinDuration=None, controlMaxDuration=None, publicKey=None, secretPhrase=None, feeNQT=None, deadline=0, referencedTransactionFullHash=None, broadcast=True, phasing=None, message=None, rec=None):
         """
             Sets (or removes) phasing control for a specific accounts.
             SetPhasingOnlyControl take a default 5 parameter as explained in NXT API Documentation
 
-            Class is working with POST method only, and create a transaction, for more info about transactions please refer to
+            API is working with POST method only, and create a transaction, for more info about transactions please refer to
             https://nxtwiki.org/wiki/The_Nxt_API#Create_Transaction_Request
 
             https://nxtwiki.org/wiki/The_Nxt_API#Set_Phasing_Only_Control
 
             REQUEST
-            controlVotingModel : is the voting model or -1 to remove phasing control (R)
-            controlQuorum : is the expected quorum (N) (O)
-            controlWhitelisted : is the whitelisted accounts (R) (O) (multiple values)
-            controlMinBalance : is the expected minimum balance (N) (O)
-            controlMinBalanceModel : is the expected minimum balance model (O)
-            controlHolding : is the holding ID (S) (O)
-            controlMaxFee : is the maximum allowed accumulated total fees for not yet finished phased transactions (N) (O)
-            controlMinDuration : is the minimum duration in block height (N) (O)
-            controlMaxDuration : is the maximum phasing duration in block height (N) (O)
-            recipientPublicKey is the public key of the lessee (recipient) accounts (optional, enhances security of a new accounts)
-            * publicKey : publicKey of sender accounts ( does not get in broadcast )
-            ** secretPhrase : secret Phrase of sender accounts
-            feeNQT : fee for sending transaction (R) if 0 minimum is set ( 100000000 NQT )
-            deadLine : is the deadline (in minutes) for the transaction to be confirmed, 32767 minutes maximum ( if 0, 60 )
-            referencedTransactionFullHash : creates a chained transaction, meaning that the current transaction cannot be confirmed
+            :param controlVotingModel : is the voting model or -1 to remove phasing control (R)
+            :param controlQuorum : is the expected quorum (N) (O)
+            :param controlWhitelisted : is the whitelisted accounts (R) (O) (multiple values)
+            :param controlMinBalance : is the expected minimum balance (N) (O)
+            :param controlMinBalanceModel : is the expected minimum balance model (O)
+            :param controlHolding : is the holding ID (S) (O)
+            :param controlMaxFee : is the maximum allowed accumulated total fees for not yet finished phased transactions (N) (O)
+            :param controlMinDuration : is the minimum duration in block height (N) (O)
+            :param controlMaxDuration : is the maximum phasing duration in block height (N) (O)
+            :param recipientPublicKey is the public key of the lessee (recipient) accounts (optional, enhances security of a new accounts)
+            :param publicKey *: publicKey of sender accounts ( does not get in broadcast )
+            :param secretPhrase **: secret Phrase of sender accounts
+            :param feeNQT : fee for sending transaction (R) if 0 minimum is set ( 100000000 NQT )
+            :param deadLine : is the deadline (in minutes) for the transaction to be confirmed, 32767 minutes maximum ( if 0, 60 )
+            :param referencedTransactionFullHash : creates a chained transaction, meaning that the current transaction cannot be confirmed
                                             unless the referenced transaction is also confirmed (O)
-            broadcast : is set to false to prevent broadcasting the transaction to the network (B) (O)
-            phasing : phasing object ( check base/Phasing.py )
-            message : message object ( check base/message.py )
+            :param broadcast : is set to false to prevent broadcasting the transaction to the network (B) (O)
+            :param phasing : phasing object ( check base/Phasing.py ) (O) (WP)
+            :param message : message object ( check base/message.py ) (O) (WP)
+            :param rec : rec object ( check base/Rec.py) (WP)
 
             RESPONSE
             signatureHash : is a SHA-256 hash of the transaction signature (S)
@@ -56,9 +57,9 @@ class SetPhasingOnlyControl(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
-                (WP) Wrapper specific parameter
+                (WP) Wrapper Meta-parameter
 
         """
 
@@ -93,6 +94,7 @@ class SetPhasingOnlyControl(Parent):
 
         self.phasing = phasing
         self.message = message
+        self.rec = rec
 
         # Initialize dictionary
         self.data = {}
@@ -132,11 +134,15 @@ class SetPhasingOnlyControl(Parent):
         self.data["deadline"] = self.deadline
         self.data["broadcast"] = self.broadcast
 
-        super(SetPhasingOnlyControl, self).__init__(rt="setPhasingOnlyControl", data=self.data, phasing=self.phasing, message=self.message)
+        super(SetPhasingOnlyControl, self).__init__(rt="setPhasingOnlyControl", data=self.data, phasing=self.phasing, message=self.message, rec=self.rec)
 
     def run(self):
         super(SetPhasingOnlyControl, self).run()                         # calls 'BasePost.run()'
 
     def getData(self, key=None):
+        """
+        :param key: dictionary key, if None return the whole dictionary
+        :return: dictionary of data
+        """
         return super(SetPhasingOnlyControl, self).getData(key)           # calls 'BasePost.getData()'
 
