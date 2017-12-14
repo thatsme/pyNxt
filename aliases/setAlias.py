@@ -2,45 +2,46 @@
 from base.BasePost import BasePost as Parent
 
 class SetAlias(Parent):
-    def __init__(self, aliasName = None, aliasURI=None, secretPhrase=None,  publicKey = None, feeNQT = None, deadline = 0, referencedTransactionFullHash = None, broadcast=False, phasing = None, message=None, recipientPublicKey=None, ecBlockId=None, ecBlockHeight=None ):
+    def __init__(self, aliasName = None, aliasURI=None, secretPhrase=None,  publicKey = None, feeNQT = None, deadline = 0, referencedTransactionFullHash = None, broadcast=False, phasing = None, message=None, recipientPublicKey=None, rec=None ):
         """
             Create and/or assign an alias.
 
             SetAlias take a default 5 parameter as explained in NXT API Documentation ( is deadLine requested or not ? )
 
-            Class is working with POST method only, and create a transaction, for more info about transactions please refer to
+            API is working with POST method only, and create a transaction, for more info about transactions please refer to
             https://nxtwiki.org/wiki/The_Nxt_API#Create_Transaction_Response
 
 
             https://nxtwiki.org/wiki/The_Nxt_API#Set_Alias
 
             REQUEST
-            aliasName : is the name of the alias ( required )
-            aliasURI : is the URI associated within the aliasName (optional)
-            * secretPhrase : secret Phrase of account where we want remove a property ( required or at lease ** )
-            ** publicKey : publicKey of account where we want remove a property ( does not get in broadcast ) ( required or at least *)
-            *** feeNQT : fee for sending transaction if 0 minimum is set ( 100000000 NQT )
-            deadLine : is the deadline (in minutes) for the transaction to be confirmed, 32767 minutes maximum ( if 0, 60 )
-            referencedTransactionFullHash :
-            broadcast :
-            phasing :
-            message :
-            recipientPublicKey :
-            ecBlockId : is the EC (Economic Cluster) block height (N)
-            ecBlockHeight : is the EC (Economic Cluster) block id (S)
+            :param aliasName : is the name of the alias (S) (R)
+            :param aliasURI : is the URI associated within the aliasName (S) (O)
+            :param secretPhrase *: secret Phrase of accounts where we want remove a property ( required or at lease ** )
+            :param publicKey : publicKey of accounts where we want remove a property ( does not get in broadcast ) ( required or at least *)
+            :param feeNQT : fee for sending transaction if 0 minimum is set ( 100000000 NQT )
+            :param deadLine : is the deadline (in minutes) for the transaction to be confirmed, 32767 minutes maximum ( if 0, 60 )
+            :param referencedTransactionFullHash : creates a chained transaction, meaning that the current transaction
+                                            cannot be confirmed unless the referenced transaction is also confirmed (O)
+            :param broadcast : is set to false to prevent broadcasting the transaction to the network (B) (O)
+            :param phasing : see base/Phasing.py class (O) (WP)
+            :param message : see base/Message.py class (O) (WP)
+            :param recipientPublicKey : is the public key of the recipient accounts (O)
+                                (only applicable if recipient provided; enhances security of a new accounts)
+            :param rec : rec object ( check base/Rec.py) (WP)
 
             RESPONSE
-            signatureHash : is a SHA-256 hash of the transaction signature (S)
-            unsignedTransactionBytes : are the unsigned transaction bytes (S)
-            transactionJSON : is a transaction object (O)  (refer to Get Transaction for details)
-            broadcasted : is true if the transaction was broadcast, false otherwise (B)
-            requestProcessingTime : is the API request processing time (in millisec)  (N)
-            transactionBytes :  are the signed transaction bytes (S)
-            fullHash : is the full hash of the signed transaction (S)
-            transaction : is the ID of the newly created transaction (S)
-            requestProcessingTime : is the API request processing time (N) (in millisec)
+            :return signatureHash : is a SHA-256 hash of the transaction signature (S)
+            :return unsignedTransactionBytes : are the unsigned transaction bytes (S)
+            :return transactionJSON : is a transaction object (O)  (refer to Get Transaction for details)
+            :return broadcasted : is true if the transaction was broadcast, false otherwise (B)
+            :return requestProcessingTime : is the API request processing time (in millisec)  (N)
+            :return transactionBytes :  are the signed transaction bytes (S)
+            :return fullHash : is the full hash of the signed transaction (S)
+            :return transaction : is the ID of the newly created transaction (S)
+            :return requestProcessingTime : is the API request processing time (N) (in millisec)
 
-            NB. The transaction ID is also the alias ID.
+            Note: The transaction ID is also the alias ID.
 
             Legenda :
                 ° the parameter are interchangeable on
@@ -53,8 +54,9 @@ class SetAlias(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
+                (WP) Wrapper Meta-parameter
         """
 
         # Required parameters
@@ -78,10 +80,9 @@ class SetAlias(Parent):
 
         self.phasing = phasing
         self.message = message
+        self.rec = rec
 
         self.recipientPublicKey = recipientPublicKey
-        self.ecBlockId = ecBlockId
-        self.ecBlockHeight = ecBlockHeight
 
         # Initialize dictionary
         self.data = {}
@@ -104,16 +105,14 @@ class SetAlias(Parent):
         if self.recipientPublicKey:
             self.data["recipientPublicKey"] = self.recipientPublicKey
 
-        if self.ecBlockId:
-            self.data["ecBlockId"] = self.ecBlockId
-
-        if self.ecBlockHeight:
-            self.data["ecBlockHeight"] = self.ecBlockHeight
-
-        super(SetAlias, self).__init__(rt="setAlias", data=self.data, phasing=self.phasing, message=self.message)
+        super(SetAlias, self).__init__(rt="setAlias", data=self.data, phasing=self.phasing, message=self.message, rec=self.rec)
 
     def run(self):
         super(SetAlias, self).run()                                     # calls 'BasePost.run()'
 
     def getData(self, key=None):
+        """
+        :param key: dictionary key, if None return the whole dictionary
+        :return: dictionary of data
+        """
         return super(SetAlias, self).getData(key)                       # calls 'BasePost.getData()'

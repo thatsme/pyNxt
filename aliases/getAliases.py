@@ -2,30 +2,27 @@
 from base.BaseGet import BaseGet as Parent
 
 class GetAliases(Parent):
-    def __init__(self, account = None, timestamp=0, firstIndex=None, lastIndex=None, requireBlock=None, requireLastBlock=None ):
+    def __init__(self, account = None, timestamp=0, ri=None, rb=None ):
         """
-            Get information on aliases owned by a given account in alias name order.
+            Get information on aliases owned by a given accounts in alias name order.
 
             GetAliases take a default 1/2 parameter as explained in NXT API Documentation
 
-            Class is working with POST method only , and create a transaction, for more info about transactions please refer to
+            API is working with POST method only , and create a transaction, for more info about transactions please refer to
             https://nxtwiki.org/wiki/The_Nxt_API#Create_Transaction_Request
-
 
             https://nxtwiki.org/wiki/The_Nxt_API#Get_Aliases
 
             REQUEST
-            account : is the ID of the account that owns the aliases (S)
-            timestamp : is the earliest creation time (in seconds since the genesis block) of the aliases (S) (O)
-            firstIndex : is a zero-based index to the first alias to retrieve (O)
-            lastIndex : is a zero-based index to the last alias to retrieve (O)
-            requireBlock : is the block ID of a block that must be present in the blockchain during execution (O)
-            requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (optional)
+            :param accounts : is the ID of the accounts that owns the aliases (S)
+            :param timestamp : is the earliest creation time (in seconds since the genesis block) of the aliases (S) (O)
+            :param ri : ri object ( check base/Ri.py) (WP)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
-            aliases : is an array (A) of alias objects (refer to Get Alias for details)
-            lastBlock : is the last block ID on the blockchain (S) (applies if requireBlock is provided but not requireLastBlock)
-            requestProcessingTime : is the API request processing time (in millisec) (N)
+            :return aliases : is an array (A) of alias objects (refer to Get Alias for details)
+            :return lastBlock : is the last block ID on the blockchain (S) (applies if requireBlock is provided but not requireLastBlock)
+            :return requestProcessingTime : is the API request processing time (in millisec) (N)
 
             Legenda :
                 ° the parameter are interchangeable on
@@ -38,43 +35,34 @@ class GetAliases(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
+                (WP) Wrapper Meta-parameter
 
         """
 
         # Required parameters
         self.account = account
         self.timestamp = timestamp
-        self.firstIndex = firstIndex
-        self.lastIndex = lastIndex
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.ri = ri
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
 
         ## Create data dictionary
 
-        self.data["account"] = self.account
+        self.data["accounts"] = self.account
         self.data["timestamp"] = self.timestamp
 
-        if self.firstIndex:
-            self.data["firstIndex"] = self.firstIndex
-
-        if self.lastIndex:
-            self.data["lastIndex"] = self.lastIndex
-
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
-
-        super(GetAliases, self).__init__(rt="getAliases", data=self.data)
+        super(GetAliases, self).__init__(rt="getAliases", data=self.data, ri=self.ri, rb=self.rb)
 
     def run(self):
-        super(GetAliases, self).run()                                         # calls 'BasePost.run()'
+        super(GetAliases, self).run()                                         # calls 'BaseGet.run()'
 
     def getData(self, key=None):
-        return super(GetAliases, self).getData(key)                           # calls 'BasePost.getData()'
+        """
+        :param key: dictionary key, if None return the whole dictionary
+        :return: dictionary of data
+        """
+        return super(GetAliases, self).getData(key)                           # calls 'BaseGet.getData()'

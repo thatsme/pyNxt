@@ -2,25 +2,25 @@
 from base.BaseGet import BaseGet as Parent
 
 class GetAliasesLike(Parent):
-    def __init__(self, aliasPrefix = None, firstIndex=None, lastIndex=None, requireBlock=None, requireLastBlock=None ):
+    def __init__(self, aliasPrefix = None, ri=None, rb=None ):
         """
             Get all aliases starting with a given prefix in alias name order.
+
+            API is working with GET method
 
             GetAliases take a default 1 parameter as explained in NXT API Documentation
 
             https://nxtwiki.org/wiki/The_Nxt_API#Get_Aliases_Like
 
             REQUEST
-            aliasPrefix : is the prefix (at least 2 characters long) of the aliasName (S) (R)
-            firstIndex : is a zero-based index to the first alias to retrieve (S) (O)
-            lastIndex : is a zero-based index to the last alias to retrieve (S) (O)
-            requireBlock : is the block ID of a block that must be present in the blockchain during execution (S) (O)
-            requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (S) (O)
+            :param aliasPrefix : is the prefix (at least 2 characters long) of the aliasName (S) (R)
+            :param ri : ri object ( check base/Ri.py) (WP)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
-            aliases : is an array (A) of alias objects (refer to Get Alias for details)
-            lastBlock : is the last block ID on the blockchain (S) (applies if requireBlock is provided but not requireLastBlock)
-            requestProcessingTime : is the API request processing time (in millisec) (N)
+            :return aliases : is an array (A) of alias objects (refer to Get Alias for details)
+            :return lastBlock : is the last block ID on the blockchain (S) (applies if requireBlock is provided but not requireLastBlock)
+            :return requestProcessingTime : is the API request processing time (in millisec) (N)
 
             Legenda :
                 ° the parameter are interchangeable on
@@ -33,18 +33,16 @@ class GetAliasesLike(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
+                (WP) Wrapper Meta-parameter
 
         """
 
         # Required parameters
         self.aliasPrefix = aliasPrefix
-
-        self.firstIndex = firstIndex
-        self.lastIndex = lastIndex
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.ri = ri
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -53,22 +51,14 @@ class GetAliasesLike(Parent):
 
         self.data["aliasPrefix"] = self.aliasPrefix
 
-        if self.firstIndex:
-            self.data["firstIndex"] = self.firstIndex
-
-        if self.lastIndex:
-            self.data["lastIndex"] = self.lastIndex
-
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
-
-        super(GetAliasesLike, self).__init__(rt="getAliasesLike", data=self.data)
+        super(GetAliasesLike, self).__init__(rt="getAliasesLike", data=self.data, ri=self.ri, rb=self.rb)
 
     def run(self):
-        super(GetAliasesLike, self).run()                                         # calls 'BasePost.run()'
+        super(GetAliasesLike, self).run()                                         # calls 'BaseGet.run()'
 
     def getData(self, key=None):
-        return super(GetAliasesLike, self).getData(key)                           # calls 'BasePost.getData()'
+        """
+        :param key: dictionary key, if None return the whole dictionary
+        :return: dictionary of data
+        """
+        return super(GetAliasesLike, self).getData(key)                           # calls 'BaseGet.getData()'

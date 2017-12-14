@@ -2,35 +2,32 @@
 from base.BaseGet import BaseGet as Parent
 
 class GetAlias(Parent):
-    def __init__(self, alias = None, aliasName=None, requireBlock=None, requireLastBlock=None ):
+    def __init__(self, alias = None, aliasName=None, rb=None ):
         """
             Get information about a given alias
 
             GetAlias take a default 1/2 parameter as explained in NXT API Documentation
 
-            Class is working with POST method only , and create a transaction, for more info about transactions please refer to
-            https://nxtwiki.org/wiki/The_Nxt_API#Create_Transaction_Request
-
+            API is working with GET method
 
             https://nxtwiki.org/wiki/The_Nxt_API#Get_Alias
 
             REQUEST
-            alias : is the ID of the account that owns the aliases (S)
-            aliasName : is the earliest creation time (in seconds since the genesis block) of the aliases (S) (O)
-            requireBlock : is the block ID of a block that must be present in the blockchain during execution (O)
-            requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (optional)
+            :param alias : is the ID of the accounts that owns the aliases (S)
+            :param aliasName : is the earliest creation time (in seconds since the genesis block) of the aliases (S) (O)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
-            timestamp : is the time (in seconds since the genesis block) when the alias was created or last transferred (N)
-            aliasName : is the name of the alias (S)
-            account : is the number of the account that owns the alias (S)
-            accountRS : is the Reed-Solomon address of the account that owns the alias (S)
-            aliasURI : is what the alias points to, in URI format (S)
-            alias : is the alias ID (S)
-            priceNQT : is the asking price (in NQT) of the alias if it is for sale (S)
-            buyer : is the account number of the buyer if the alias is for sale and a buyer is specified (S)
-            lastBlock : is the last block ID on the blockchain (S) (applies if requireBlock is provided but not requireLastBlock)
-            requestProcessingTime : is the API request processing time (in millisec) (N)
+            :return timestamp : is the time (in seconds since the genesis block) when the alias was created or last transferred (N)
+            :return aliasName : is the name of the alias (S)
+            :return accounts : is the number of the accounts that owns the alias (S)
+            :return accountRS : is the Reed-Solomon address of the accounts that owns the alias (S)
+            :return aliasURI : is what the alias points to, in URI format (S)
+            :return alias : is the alias ID (S)
+            :return priceNQT : is the asking price (in NQT) of the alias if it is for sale (S)
+            :return buyer : is the accounts number of the buyer if the alias is for sale and a buyer is specified (S)
+            :return lastBlock : is the last block ID on the blockchain (S) (applies if requireBlock is provided but not requireLastBlock)
+            :return requestProcessingTime : is the API request processing time (in millisec) (N)
 
             Legenda :
                 ° the parameter are interchangeable on
@@ -43,16 +40,16 @@ class GetAlias(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
+                (WP) Wrapper Meta-parameter
 
         """
 
         # Required parameters
         self.alias = alias
         self.aliasName = aliasName
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -62,16 +59,14 @@ class GetAlias(Parent):
         self.data["alias"] = self.alias
         self.data["aliasName"] = self.aliasName
 
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
-
-        super(GetAlias, self).__init__(rt="getAlias", data=self.data)
+        super(GetAlias, self).__init__(rt="getAlias", data=self.data, rb=self.rb)
 
     def run(self):
-        super(GetAlias, self).run()                                         # calls 'BasePost.run()'
+        super(GetAlias, self).run()                                         # calls 'BaseGet.run()'
 
     def getData(self, key=None):
-        return super(GetAlias, self).getData(key)                           # calls 'BasePost.getData()'
+        """
+        :param key: dictionary key, if None return the whole dictionary
+        :return: dictionary of data
+        """
+        return super(GetAlias, self).getData(key)                           # calls 'BaseGet.getData()'
