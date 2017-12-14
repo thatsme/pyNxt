@@ -2,20 +2,19 @@
 from base.BaseGet import BaseGet as Parent
 
 class GetBlockId(Parent):
-    def __init__(self, height=None, requireBlock=None, requireLastBlock=None ):
+    def __init__(self, height=None, rb=None ):
         """
             Get a block ID given a block height.
 
             GetBlockId take a default 1 parameter as explained in NXT API Documentation
 
-            Class is working with GET method
+            API is working with GET method
 
             https://nxtwiki.org/wiki/The_Nxt_API#Get_Block_Id
 
             REQUEST
             height : is the block height (N) (optional if block provided)
-            requireBlock : is the block ID of a block that must be present in the blockchain during execution (O)
-            requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (optional)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
             block : is the block ID (S)
@@ -33,33 +32,26 @@ class GetBlockId(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
-                (WP) Wrapper specific parameter
+                (WP) Wrapper Meta-parameter
 
         """
 
         # Required parameters
         self.height = height
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
 
         ## Create data dictionary
-
         self.data["height"] = self.height
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
 
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
-
-        super(GetBlockId, self).__init__(rt="getBlockId", data=self.data)
+        super(GetBlockId, self).__init__(rt="getBlockId", data=self.data, rb=self.rb)
 
     def run(self):
-        super(GetBlockId, self).run()                                         # calls 'BasePost.run()'
+        super(GetBlockId, self).run()                                         # calls 'BaseGet.run()'
 
     def getData(self, key=None):
-        return super(GetBlockId, self).getData(key)                           # calls 'BasePost.getData()'
+        return super(GetBlockId, self).getData(key)                           # calls 'BaseGet.getData()'
