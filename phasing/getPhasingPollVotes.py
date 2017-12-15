@@ -2,7 +2,7 @@
 from base.BaseGet import BaseGet as Parent
 
 class GetPhasingPollVotes(Parent):
-    def __init__(self, transaction=None, firstIndex=None, lastIndex=None, requireBlock=None, requireLastBlock=None ):
+    def __init__(self, transaction=None, ri=None, rb=None ):
         """
             Get all cast phasing poll votes in a phasing poll given a phased transaction ID, if they are still available.
 
@@ -14,10 +14,8 @@ class GetPhasingPollVotes(Parent):
 
             REQUEST
             :param transaction : is the transaction ID of the phasing poll
-            :param firstIndex : is a zero-based index to the first vote to retrieve (O)
-            :param lastIndex : is a zero-based index to the last vote to retrieve (O)
-            :param requireBlock : is the block ID of a block that must be present in the blockchain during execution (O)
-            :param requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (O)
+            :param ri : ri object ( check base/Ri.py) (WP)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
             :return transaction : (S) is the transaction ID of the phasing poll
@@ -51,7 +49,7 @@ class GetPhasingPollVotes(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
                 (WP) Wrapper Meta-parameter
 
@@ -59,10 +57,8 @@ class GetPhasingPollVotes(Parent):
 
         # Required parameters
         self.transaction = transaction
-        self.firstIndex = firstIndex
-        self.lastIndex = lastIndex
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.ri = ri
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -70,17 +66,7 @@ class GetPhasingPollVotes(Parent):
         ## Create data dictionary
         self.data["transaction"] = self.transaction
 
-        if self.firstIndex:
-            self.data["firstIndex"] = self.firstIndex
-        if self.lastIndex:
-            self.data["lastIndex"] = self.lastIndex
-
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
-
-        super(GetPhasingPollVotes, self).__init__(rt="getPhasingPollVotes", data=self.data)
+        super(GetPhasingPollVotes, self).__init__(rt="getPhasingPollVotes", data=self.data, ri=self.ri, rb=self.rb)
 
     def run(self):
         super(GetPhasingPollVotes, self).run()                                         # calls 'BaseGet.run()'

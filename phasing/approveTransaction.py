@@ -2,7 +2,7 @@
 from base.BasePost import BasePost as Parent
 
 class ApproveTransaction(Parent):
-    def __init__(self, transactionFullHash=None, revealedSecret = None, revealedSecretIsText=None, publicKey = None, secretPhrase=None, feeNQT = None, deadline = 0, referencedTransactionFullHash = None, broadcast=True, phasing = None, message=None ):
+    def __init__(self, transactionFullHash=None, revealedSecret = None, revealedSecretIsText=None, publicKey = None, secretPhrase=None, feeNQT = None, deadline = 0, referencedTransactionFullHash = None, broadcast=True, phasing = None, message=None, rec=None ):
         """
             ApproveTransaction approve (vote for) a phased transaction. POST only.
             POST only.
@@ -24,6 +24,7 @@ class ApproveTransaction(Parent):
             :param broadcast : is set to false to prevent broadcasting the transaction to the network (B) (O)
             :param phasing : phasing object ( check base/Phasing.py ) (O) (WP)
             :param message : message object ( check base/message.py ) (O) (WP)
+            :param rec : rec object ( check base/Rec.py) (WP)
 
             RESPONSE
             :return signatureHash : is a SHA-256 hash of the transaction signature (S)
@@ -47,7 +48,7 @@ class ApproveTransaction(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
                 (WP) Wrapper Meta-parameter
 
@@ -76,6 +77,7 @@ class ApproveTransaction(Parent):
 
         self.phasing = phasing
         self.message = message
+        self.rec = rec
 
         # Initialize dictionary
         self.data = {}
@@ -85,8 +87,15 @@ class ApproveTransaction(Parent):
         self.data["revealedSecret"] = self.revealedSecret
         self.data["revealedSecretIsText"] = self.revealedSecretIsText
 
+        self.data["publicKey"] = self.publicKey
+        self.data["secretPhrase"] = self.secretPhrase
+        self.data["referencedTransactionFullHash"] = self.referencedTransactionFullHash
+        self.data["broadcast"] = self.broadcast
+        self.data["feeNQT"] = self.feeNQT
+        self.data["deadline"] = self.deadline
 
-        super(ApproveTransaction, self).__init__(rt="approveTransaction", data=self.data, phasing=self.phasing, message=self.message)
+
+        super(ApproveTransaction, self).__init__(rt="approveTransaction", data=self.data, phasing=self.phasing, message=self.message, rec=self.rec)
 
     def run(self):
         super(ApproveTransaction, self).run()                # calls 'BasePost.run()'

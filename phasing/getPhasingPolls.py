@@ -2,7 +2,7 @@
 from base.BaseGet import BaseGet as Parent
 
 class GetPhasingPolls(Parent):
-    def __init__(self, transactions=None, countVotes=False, requireBlock=None, requireLastBlock=None ):
+    def __init__(self, transactions=None, countVotes=False, rb=None ):
         """
             Get phasing poll details given multiple phased transaction IDs.
 
@@ -15,8 +15,7 @@ class GetPhasingPolls(Parent):
             REQUEST
             :param transactions : is one of multiple currency IDs (WP) (S)
             :param countVotes is true to (B) compute the poll result while the votes are still available (O)
-            :param requireBlock : is the block ID of a block that must be present in the blockchain during execution (O)
-            :param requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (O)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
             :return transaction : (S) is the transaction ID of the phasing poll
@@ -50,7 +49,7 @@ class GetPhasingPolls(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
                 (WP) Wrapper Meta-parameter
 
@@ -62,8 +61,7 @@ class GetPhasingPolls(Parent):
             self.transactions.append(a)
 
         self.countVotes = countVotes
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -73,13 +71,7 @@ class GetPhasingPolls(Parent):
         self.data["transactions"] = self.transactions
         self.data["countVotes"] = self.countVotes
 
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
-
-        super(GetPhasingPolls, self).__init__(rt="getPhasingPolls", data=self.data)
+        super(GetPhasingPolls, self).__init__(rt="getPhasingPolls", data=self.data, rb=self.rb)
 
     def run(self):
         super(GetPhasingPolls, self).run()                                         # calls 'BaseGet.run()'

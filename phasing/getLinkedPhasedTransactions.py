@@ -2,7 +2,7 @@
 from base.BaseGet import BaseGet as Parent
 
 class GetLinkedPhasedTransactions(Parent):
-    def __init__(self, linkedFullHash=None, requireBlock=None, requireLastBlock=None ):
+    def __init__(self, linkedFullHash=None, rb=None ):
         """
             Gets the phased transactions with by-transaction voting model for a given linkedFullHash,
             regardless of their phasing status (pending, approved or rejected).
@@ -17,8 +17,7 @@ class GetLinkedPhasedTransactions(Parent):
 
             REQUEST
             linkedFullHash : is the full hash of the transaction transaction
-            requireBlock : is the block ID of a block that must be present in the blockchain during execution (O)
-            requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (O)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
             :return transactions : (A) is an array of transactions : (refer to Get Transaction for details)
@@ -71,7 +70,7 @@ class GetLinkedPhasedTransactions(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
                 (WP) Wrapper Meta-parameter
 
@@ -80,8 +79,7 @@ class GetLinkedPhasedTransactions(Parent):
 
         # Required parameters
         self.linkedFullHash = linkedFullHash
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -89,12 +87,7 @@ class GetLinkedPhasedTransactions(Parent):
         ## Create data dictionary
         self.data["linkedFullHash"] = self.linkedFullHash
 
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
-
-        super(GetLinkedPhasedTransactions, self).__init__(rt="getLinkedPhasedTransactions", data=self.data)
+        super(GetLinkedPhasedTransactions, self).__init__(rt="getLinkedPhasedTransactions", data=self.data, rb=self.rb)
 
     def run(self):
         super(GetLinkedPhasedTransactions, self).run()                                         # calls 'BaseGet.run()'

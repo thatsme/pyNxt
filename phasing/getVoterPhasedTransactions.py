@@ -2,7 +2,7 @@
 from base.BaseGet import BaseGet as Parent
 
 class GetVoterPhasedTransaction(Parent):
-    def __init__(self, account=None, firstIndex=None, lastIndex=None, requireBlock=None, requireLastBlock=None ):
+    def __init__(self, account=None, ri=None, rb=None ):
         """
             Get pending phased transactions which include a whitelist in reverse chronological creation order.
             These transactions can be considered transaction approval requests.
@@ -15,10 +15,8 @@ class GetVoterPhasedTransaction(Parent):
 
             REQUEST
             :param account is a whitelisted account ID included in the phased transactions
-            :param firstIndex : is a zero-based index to the first vote to retrieve (O)
-            :param lastIndex : is a zero-based index to the last vote to retrieve (O)
-            :param requireBlock : is the block ID of a block that must be present in the blockchain during execution (O)
-            :param requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (O)
+            :param ri : ri object ( check base/Ri.py) (WP)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
             Refer to Get Transaction for details.
@@ -34,7 +32,7 @@ class GetVoterPhasedTransaction(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
                 (WP) Wrapper Meta-parameter
 
@@ -42,10 +40,8 @@ class GetVoterPhasedTransaction(Parent):
 
         # Required parameters
         self.account = account
-        self.firstIndex = firstIndex
-        self.lastIndex = lastIndex
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.ri = ri
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -53,17 +49,7 @@ class GetVoterPhasedTransaction(Parent):
         ## Create data dictionary
         self.data["account"] = self.account
 
-        if self.firstIndex:
-            self.data["firstIndex"] = self.firstIndex
-        if self.lastIndex:
-            self.data["lastIndex"] = self.lastIndex
-
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
-
-        super(GetVoterPhasedTransaction, self).__init__(rt="getVoterPhasedTransaction", data=self.data)
+        super(GetVoterPhasedTransaction, self).__init__(rt="getVoterPhasedTransaction", data=self.data, ri=self.ri, rb=self.rb)
 
     def run(self):
         super(GetVoterPhasedTransaction, self).run()                                         # calls 'BaseGet.run()'

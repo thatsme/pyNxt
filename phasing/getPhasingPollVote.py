@@ -2,7 +2,7 @@
 from base.BaseGet import BaseGet as Parent
 
 class GetPhasingPollVote(Parent):
-    def __init__(self, transaction=None, account=None, requireBlock=None, requireLastBlock=None ):
+    def __init__(self, transaction=None, account=None, rb=None ):
         """
             Get a cast phasing poll vote given a phased transaction ID and an account ID of a voter, if it is still available.
 
@@ -15,8 +15,7 @@ class GetPhasingPollVote(Parent):
             REQUEST
             :param transaction : is the phased transaction ID
             :param account is the account ID of a voter in the poll
-            :param requireBlock : is the block ID of a block that must be present in the blockchain during execution (O)
-            :param requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (O)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
             :return voter : (S) is the account ID of the voter in the poll
@@ -36,7 +35,7 @@ class GetPhasingPollVote(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
                 (WP) Wrapper Meta-parameter
 
@@ -46,8 +45,7 @@ class GetPhasingPollVote(Parent):
         # Required parameters
         self.transaction = transaction
         self.account = account
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -56,12 +54,7 @@ class GetPhasingPollVote(Parent):
         self.data["transaction"] = self.transaction
         self.data["account"] = self.account
 
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
-
-        super(GetPhasingPollVote, self).__init__(rt="getPhasingPollVote", data=self.data)
+        super(GetPhasingPollVote, self).__init__(rt="getPhasingPollVote", data=self.data, rb=self.rb)
 
     def run(self):
         super(GetPhasingPollVote, self).run()                                         # calls 'BaseGet.run()'
