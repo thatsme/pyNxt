@@ -77,7 +77,10 @@ class BaseGet(object):
         if key in self.dataDict:
             return self.dataDict[key]
         else:
-            return self.dataDict
+            if key is None:
+                return self.dataDict
+            else:
+                return "No Key"
 
     def getKeysValues(self):
         for key, value in self.dataDict.items():
