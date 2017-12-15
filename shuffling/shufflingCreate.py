@@ -2,7 +2,7 @@
 from base.BasePost import BasePost as Parent
 
 class ShufflingCreate(Parent):
-    def __init__(self, holding=None, holdingType = None, amount=None, participantCount=0, registrationPeriod=None,  publicKey = None, secretPhrase=None, feeNQT = None, deadline = 0, referencedTransactionFullHash = None, broadcast=True, phasing = None, message=None ):
+    def __init__(self, holding=None, holdingType = None, amount=None, participantCount=0, registrationPeriod=None,  publicKey = None, secretPhrase=None, feeNQT = None, deadline = 0, referencedTransactionFullHash = None, broadcast=True, phasing = None, message=None, rec=None ):
         """
             Creates a new shuffling.
 
@@ -25,6 +25,7 @@ class ShufflingCreate(Parent):
             :param broadcast : is set to false to prevent broadcasting the transaction to the network (B) (O)
             :param phasing : phasing object ( check base/Phasing.py ) (O) (WP)
             :param message : message object ( check base/message.py ) (O) (WP)
+            :param rec : rec object ( check base/Rec.py) (WP)
 
             RESPONSE
             :return signatureHash : is a SHA-256 hash of the transaction signature (S)
@@ -80,6 +81,7 @@ class ShufflingCreate(Parent):
 
         self.phasing = phasing
         self.message = message
+        self.rec = rec
 
         # Initialize dictionary
         self.data = {}
@@ -98,7 +100,7 @@ class ShufflingCreate(Parent):
         self.data["feeNQT"] = self.feeNQT
         self.data["deadline"] = self.deadline
 
-        super(ShufflingCreate, self).__init__(rt="shufflingCreate", data=self.data, phasing=self.phasing, message=self.message)
+        super(ShufflingCreate, self).__init__(rt="shufflingCreate", data=self.data, phasing=self.phasing, message=self.message, rec=self.rec)
 
     def run(self):
         super(ShufflingCreate, self).run()                # calls 'BasePost.run()'

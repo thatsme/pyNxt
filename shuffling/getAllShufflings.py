@@ -3,7 +3,7 @@ from base.BaseGet import BaseGet as Parent
 
 class GetAllShufflings(Parent):
 
-    def __init__(self, includeFinished=False, includeHoldingInfo=False, finishedOnly=False, firstIndex=None, lastIndex=None, adminPassword=None, requireBlock=None, requireLastBlock=None):
+    def __init__(self, includeFinished=False, includeHoldingInfo=False, finishedOnly=False, adminPassword=None, ri=None, rb=None):
         """
             Retrieves info about shufflings for a specific account.
 
@@ -17,11 +17,9 @@ class GetAllShufflings(Parent):
             :param includeFinished : is true to include completed shufflings (B) (O)
             :param includeHoldingInfo is true to include holding info (B) (O)
             :param finishedOnly : is true to omit not yet finished shufflings (B) (O)
-            :param firstIndex is a zero-based index to the first tagged data to retrieve (O)
-            :param lastIndex is a zero-based index to the last tagged data to retrieve (O)
             :param adminPassword is a string with the admin password (O)
-            :param requireBlock : is the block ID of a block that must be present in the blockchain during execution (O)
-            :param requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (O)
+            :param ri : ri object ( check base/Ri.py) (WP)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
             :return shufflings : (A) is an array containing the shuffling object (refer to Get Shuffling)
@@ -48,10 +46,8 @@ class GetAllShufflings(Parent):
         self.includeHoldingInfo = includeHoldingInfo
         self.finishedOnly = finishedOnly
         self.adminPassword = adminPassword
-        self.firstIndex = firstIndex
-        self.lastIndex = lastIndex
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.ri = ri
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -61,21 +57,10 @@ class GetAllShufflings(Parent):
         self.data["includeHoldingInfo"] = self.includeHoldingInfo
         self.data["finishedOnly"] = self.finishedOnly
 
-        if self.firstIndex:
-            self.data["firstIndex"] = self.firstIndex
-        if self.lastIndex:
-            self.data["lastIndex"] = self.lastIndex
-
         if self.adminPassword:
             self.data["adminPassword"] = self.adminPassword
 
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
-
-
-        super(GetAllShufflings, self).__init__(rt = "getAllShufflings", data=self.data)
+        super(GetAllShufflings, self).__init__(rt = "getAllShufflings", data=self.data, ri=self.ri, rb=self.rb)
 
     def run(self):
         super(GetAllShufflings, self).run()                             # calls 'BaseGet.run()'

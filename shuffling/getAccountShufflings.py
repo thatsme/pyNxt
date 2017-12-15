@@ -3,7 +3,7 @@ from base.BaseGet import BaseGet as Parent
 
 class GetAccountShufflings(Parent):
 
-    def __init__(self, account=None, includeFinished=False, includeHoldingInfo=False, firstIndex=None, lastIndex=None, adminPassword=None, requireBlock=None, requireLastBlock=None):
+    def __init__(self, account=None, includeFinished=False, includeHoldingInfo=False, adminPassword=None, ri=None, rb=None):
         """
             Retrieves info about shufflings for a specific account.
 
@@ -16,11 +16,9 @@ class GetAccountShufflings(Parent):
             :param account : is the account ID (S)
             :param includeFinished : is true to include completed shufflings (B) (O)
             :param includeHoldingInfo is true to include holding info (B) (O)
-            :param firstIndex is a zero-based index to the first tagged data to retrieve (O)
-            :param lastIndex is a zero-based index to the last tagged data to retrieve (O)
             :param adminPassword is a string with the admin password (O)
-            :param requireBlock : is the block ID of a block that must be present in the blockchain during execution (O)
-            :param requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (O)
+            :param ri : ri object ( check base/Ri.py) (WP)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
             :return shufflings : (A) is an array containing the shuffling object (refer to Get Shuffling)
@@ -47,10 +45,8 @@ class GetAccountShufflings(Parent):
         self.includeFinished = includeFinished
         self.includeHoldingInfo = includeHoldingInfo
         self.adminPassword = adminPassword
-        self.firstIndex = firstIndex
-        self.lastIndex = lastIndex
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.ri = ri
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -60,21 +56,10 @@ class GetAccountShufflings(Parent):
         self.data["includeFinished"] = self.includeFinished
         self.data["includeHoldingInfo"] = self.includeHoldingInfo
 
-        if self.firstIndex:
-            self.data["firstIndex"] = self.firstIndex
-        if self.lastIndex:
-            self.data["lastIndex"] = self.lastIndex
-
         if self.adminPassword:
             self.data["adminPassword"] = self.adminPassword
 
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
-
-
-        super(GetAccountShufflings, self).__init__(rt = "getAccountShufflings", data=self.data)
+        super(GetAccountShufflings, self).__init__(rt = "getAccountShufflings", data=self.data, ri=self.ri, rb=self.rb)
 
     def run(self):
         super(GetAccountShufflings, self).run()                             # calls 'BaseGet.run()'

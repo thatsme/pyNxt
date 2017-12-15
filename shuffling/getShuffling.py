@@ -3,7 +3,7 @@ from base.BaseGet import BaseGet as Parent
 
 class GetShuffling(Parent):
 
-    def __init__(self, shuffling=None, includeHoldingInfo=False, requireBlock=None, requireLastBlock=None ):
+    def __init__(self, shuffling=None, includeHoldingInfo=False, rb=None ):
         """
             Retrieves info about a shuffling.
 
@@ -15,8 +15,7 @@ class GetShuffling(Parent):
             REQUEST
             :param shuffling : is the shuffling ID
             :param includeHoldingInfo : is true to include holding info (B) (O)
-            :param requireBlock : is the block ID of a block that must be present in the blockchain during execution (O)
-            :param requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (O)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
             :return blocksRemaining : (N) number of blocks remaining until current stage is finished.
@@ -56,8 +55,7 @@ class GetShuffling(Parent):
 
         self.shuffling = shuffling
         self.includeHoldingInfo = includeHoldingInfo
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -66,12 +64,7 @@ class GetShuffling(Parent):
         self.data["shuffling"] = self.shuffling
         self.data["includeHoldingInfo"] = self.includeHoldingInfo
 
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
-
-        super(GetShuffling, self).__init__(rt = "getShuffling", data=self.data)
+        super(GetShuffling, self).__init__(rt = "getShuffling", data=self.data, rb=self.rb)
 
     def run(self):
         super(GetShuffling, self).run()                             # calls 'BaseGet.run()'
