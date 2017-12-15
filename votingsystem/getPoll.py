@@ -3,7 +3,7 @@ from base.BaseGet import BaseGet as Parent
 
 class GetPoll(Parent):
 
-    def __init__(self, poll=None, requireBlock=None, requireLastBlock=None):
+    def __init__(self, poll=None, rb=None):
         """
             Get the details of a poll.
 
@@ -15,8 +15,7 @@ class GetPoll(Parent):
             REQUEST
 
             :param poll is the poll ID
-            :param requireBlock is the block ID of a block that must be present in the blockchain during execution (optional)
-            :param requireLastBlock is the block ID of a block that must be last in the blockchain during execution (optional)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
             :return poll : (S) is the poll ID
@@ -56,8 +55,7 @@ class GetPoll(Parent):
         """
 
         self.poll = poll
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -65,12 +63,7 @@ class GetPoll(Parent):
         ## Create data dictionary
         self.data["poll"] = self.poll
 
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
-
-        super(GetPoll, self).__init__(rt = "getPoll", data=self.data)
+        super(GetPoll, self).__init__(rt = "getPoll", data=self.data, rb=self.rb)
 
     def run(self):
         super(GetPoll, self).run()                             # calls 'BaseGet.run()'

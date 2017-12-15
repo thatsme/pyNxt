@@ -3,7 +3,7 @@ from base.BaseGet import BaseGet as Parent
 
 class SearchPolls(Parent):
 
-    def __init__(self, query=None, includeFinished=False, firstIndex=None, lastIndex=None, requireBlock=None, requireLastBlock=None):
+    def __init__(self, query=None, includeFinished=False, ri=None, rb=None):
         """
             Search for poll details given a name/description query string.
 
@@ -14,11 +14,9 @@ class SearchPolls(Parent):
 
             REQUEST
             :param query : is a full text query on the poll fields name (S) and description (S) in the standard Lucene syntax (O)
-            :param firstIndex : is a zero-based index to the first poll to retrieve (O)
-            :param lastIndex : is a zero-based index to the last poll to retrieve (O)
             :param includeFinished : is true to include completed polls (O)
-            :param requireBlock : is the block ID of a block that must be present in the blockchain during execution (O)
-            :param requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (O)
+            :param ri : ri object ( check base/Ri.py) (WP)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
             :return polls : (A) is an array of polls (refer to Get Poll for details)
@@ -44,10 +42,8 @@ class SearchPolls(Parent):
 
         self.query = query
         self.includeFinished = includeFinished
-        self.firstIndex = firstIndex
-        self.lastIndex = lastIndex
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.ri = ri
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -56,18 +52,7 @@ class SearchPolls(Parent):
         self.data["query"] = self.query
         self.data["includeFinished"] = self.includeFinished
 
-
-        if self.firstIndex:
-            self.data["firstIndex"] = self.firstIndex
-        if self.lastIndex:
-            self.data["lastIndex"] = self.lastIndex
-
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
-
-        super(SearchPolls, self).__init__(rt = "searchPolls", data=self.data)
+        super(SearchPolls, self).__init__(rt = "searchPolls", data=self.data, ri=self.ri, rb=self.rb)
 
     def run(self):
         super(SearchPolls, self).run()                             # calls 'BaseGet.run()'

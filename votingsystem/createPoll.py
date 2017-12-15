@@ -2,7 +2,7 @@
 from base.BasePost import BasePost as Parent
 
 class CreatePoll(Parent):
-    def __init__(self, name=None, description = None, finishHeight=None, votingModel=None, minNumberOfOptions=None, maxNumberOfOptions=None, minRangeValue=None, maxRangeValue=None, minBalance=None, minBalanceModel=None, holding=None, option00=None, option01=None, option02=None, publicKey = None, secretPhrase=None, feeNQT = None, deadline = 0, referencedTransactionFullHash = None, broadcast=True, phasing = None, message=None ):
+    def __init__(self, name=None, description = None, finishHeight=None, votingModel=None, minNumberOfOptions=None, maxNumberOfOptions=None, minRangeValue=None, maxRangeValue=None, minBalance=None, minBalanceModel=None, holding=None, option00=None, option01=None, option02=None, publicKey = None, secretPhrase=None, feeNQT = None, deadline = 0, referencedTransactionFullHash = None, broadcast=True, phasing = None, message=None, rec=None ):
         """
             Create a new poll. POST only.
 
@@ -37,6 +37,7 @@ class CreatePoll(Parent):
             :param broadcast : is set to false to prevent broadcasting the transaction to the network (B) (O)
             :param phasing : phasing object ( check base/Phasing.py ) (O) (WP)
             :param message : message object ( check base/message.py ) (O) (WP)
+            :param rec : rec object ( check base/Rec.py) (WP)
 
             Notes: Up to 100 options (answers) can be specified, but there is an extra fee for each option beyond 20.
             Unlike the API, the NRS client treats a vote of 0 as a nonvote not contributing to the number answers (options) chosen.
@@ -108,6 +109,7 @@ class CreatePoll(Parent):
 
         self.phasing = phasing
         self.message = message
+        self.rec = rec
 
         # Initialize dictionary
         self.data = {}
@@ -136,7 +138,7 @@ class CreatePoll(Parent):
         self.data["deadline"] = self.deadline
 
 
-        super(CreatePoll, self).__init__(rt="createPoll", data=self.data, phasing=self.phasing, message=self.message)
+        super(CreatePoll, self).__init__(rt="createPoll", data=self.data, phasing=self.phasing, message=self.message, rec=self.rec)
 
     def run(self):
         super(CreatePoll, self).run()                # calls 'BasePost.run()'

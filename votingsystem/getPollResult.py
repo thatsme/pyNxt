@@ -3,7 +3,7 @@ from base.BaseGet import BaseGet as Parent
 
 class GetPollResult(Parent):
 
-    def __init__(self, poll=None, votingModel=None, holding=None, minBalance=None, minBalanceModel=None, requireBlock=None, requireLastBlock=None):
+    def __init__(self, poll=None, votingModel=None, holding=None, minBalance=None, minBalanceModel=None, rb=None):
         """
             Get the result of a poll.
 
@@ -18,8 +18,7 @@ class GetPollResult(Parent):
             :param holding (optional, default null)
             :param minBalance (optional, default 0)
             :param minBalanceModel (required if minBalance > 0, must match votingModel when votingModel > 0)
-            :param requireBlock is the block ID of a block that must be present in the blockchain during execution (optional)
-            :param requireLastBlock is the block ID of a block that must be last in the blockchain during execution (optional)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             Note: The votingModel, holding, minBalance and minBalanceModel parameters are optional and default to the original
             values specified when the poll was created (refer to Create Poll). The original values can only be overridden while
@@ -64,8 +63,7 @@ class GetPollResult(Parent):
         self.minBalance = minBalance
         self.minBalanceModel = minBalanceModel
 
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -77,12 +75,7 @@ class GetPollResult(Parent):
         self.data["minBalance"] = self.minBalance
         self.data["minBalanceModel"] = self.minBalanceModel
 
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
-
-        super(GetPollResult, self).__init__(rt = "getPollResult", data=self.data)
+        super(GetPollResult, self).__init__(rt = "getPollResult", data=self.data, rb=self.rb)
 
     def run(self):
         super(GetPollResult, self).run()                             # calls 'BaseGet.run()'

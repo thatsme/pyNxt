@@ -3,7 +3,7 @@ from base.BaseGet import BaseGet as Parent
 
 class GetPollVotes(Parent):
 
-    def __init__(self, poll=None, account=None, includeWeights=False, firstIndex=None, lastIndex=None, requireBlock=None, requireLastBlock=None):
+    def __init__(self, poll=None, account=None, includeWeights=False, ri=None, rb=None):
         """
             Get all votes on a poll in reverse chronological order.
 
@@ -15,10 +15,8 @@ class GetPollVotes(Parent):
             REQUEST
             :param poll : is the poll ID
             :param includeWeights : is true to calculate and return the weight assigned to each vote (B) (O)
-            :param firstIndex is a zero-based index to the first vote to retrieve (O)
-            :param lastIndex is a zero-based index to the last vote to retrieve (O)
-            :param requireBlock is the block ID of a block that must be present in the blockchain during execution (O)
-            :param requireLastBlock is the block ID of a block that must be last in the blockchain during execution (O)
+            :param ri : ri object ( check base/Ri.py) (WP)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
             :return votes : (A) is an array of vote objects (refer to Get Poll Vote for details)
@@ -48,10 +46,8 @@ class GetPollVotes(Parent):
         self.poll = poll
         self.account = account
         self.includeWeights = includeWeights
-        self.firstIndex = firstIndex
-        self.lastIndex = lastIndex
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.ri = ri
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -61,18 +57,7 @@ class GetPollVotes(Parent):
         self.data["account"] = self.account
         self.data["includeWeights"] = self.includeWeights
 
-
-        if self.firstIndex:
-            self.data["firstIndex"] = self.firstIndex
-        if self.lastIndex:
-            self.data["lastIndex"] = self.lastIndex
-
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
-
-        super(GetPollVotes, self).__init__(rt = "getPollVotes", data=self.data)
+        super(GetPollVotes, self).__init__(rt = "getPollVotes", data=self.data, ri=self.ri, rb=self.rb)
 
     def run(self):
         super(GetPollVotes, self).run()                             # calls 'BaseGet.run()'

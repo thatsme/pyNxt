@@ -2,7 +2,7 @@
 from base.BasePost import BasePost as Parent
 
 class CastVote(Parent):
-    def __init__(self, transactionFullHash=None, revealedSecret = None, revealedSecretIsText=None, publicKey = None, secretPhrase=None, feeNQT = None, deadline = 0, referencedTransactionFullHash = None, broadcast=True, phasing = None, message=None ):
+    def __init__(self, transactionFullHash=None, revealedSecret = None, revealedSecretIsText=None, publicKey = None, secretPhrase=None, feeNQT = None, deadline = 0, referencedTransactionFullHash = None, broadcast=True, phasing = None, message=None, rec=None ):
         """
             Cast a vote on a poll. POST only.
 
@@ -24,6 +24,7 @@ class CastVote(Parent):
             :param broadcast : is set to false to prevent broadcasting the transaction to the network (B) (O)
             :param phasing : phasing object ( check base/Phasing.py ) (O) (WP)
             :param message : message object ( check base/message.py ) (O) (WP)
+            :param rec : rec object ( check base/Rec.py) (WP)
 
             Note: The allowed vote values are integers between minRangeValue and maxRangeValue, inclusive.
             This range, along with the minimum and maximum number of options that can and must be voted on are specified
@@ -80,6 +81,7 @@ class CastVote(Parent):
 
         self.phasing = phasing
         self.message = message
+        self.rec = rec
 
         # Initialize dictionary
         self.data = {}
@@ -97,7 +99,7 @@ class CastVote(Parent):
         self.data["deadline"] = self.deadline
 
 
-        super(CastVote, self).__init__(rt="castVote", data=self.data, phasing=self.phasing, message=self.message)
+        super(CastVote, self).__init__(rt="castVote", data=self.data, phasing=self.phasing, message=self.message, rec=self.rec)
 
     def run(self):
         super(CastVote, self).run()                # calls 'BasePost.run()'

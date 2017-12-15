@@ -3,7 +3,7 @@ from base.BaseGet import BaseGet as Parent
 
 class GetPolls(Parent):
 
-    def __init__(self, account=None, timestamp=None, firstIndex=None, lastIndex=None, includeFinished=False, finishedOnly=False, requireBlock=None, requireLastBlock=None):
+    def __init__(self, account=None, timestamp=None, includeFinished=False, finishedOnly=False, ri=None, rb=None):
         """
             Get poll details in reverse creation order.
 
@@ -19,8 +19,8 @@ class GetPolls(Parent):
             :param lastIndex : is a zero-based index to the last poll to retrieve (O)
             :param includeFinished : is true to include completed polls (B) (O)
             :param finishedOnly is true to exclude not yet executed, phased transactions (O)
-            :param requireBlock is the block ID of a block that must be present in the blockchain during execution (O)
-            :param requireLastBlock is the block ID of a block that must be last in the blockchain during execution (O)
+            :param ri : ri object ( check base/Ri.py) (WP)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
             :return polls (A) is an array of polls (refer to Get Poll for details)
@@ -49,9 +49,8 @@ class GetPolls(Parent):
         self.lastIndex = lastIndex
         self.includeFinished = includeFinished
         self.finishedOnly = finishedOnly
-
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.ri = ri
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -62,18 +61,7 @@ class GetPolls(Parent):
         self.data["includeFinished"] = self.includeFinished
         self.data["finishedOnly"] = self.finishedOnly
 
-
-        if self.firstIndex:
-            self.data["firstIndex"] = self.firstIndex
-        if self.lastIndex:
-            self.data["lastIndex"] = self.lastIndex
-
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
-
-        super(GetPolls, self).__init__(rt = "getPolls", data=self.data)
+        super(GetPolls, self).__init__(rt = "getPolls", data=self.data, ri=self.ri, rb=self.rb)
 
     def run(self):
         super(GetPolls, self).run()                             # calls 'BaseGet.run()'

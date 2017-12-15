@@ -3,7 +3,7 @@ from base.BaseGet import BaseGet as Parent
 
 class GetPollVote(Parent):
 
-    def __init__(self, poll=None, account=None, includeWeights=False, requireBlock=None, requireLastBlock=None):
+    def __init__(self, poll=None, account=None, includeWeights=False, rb=None):
         """
             Get a poll vote given a poll ID and an account ID.
 
@@ -16,8 +16,7 @@ class GetPollVote(Parent):
             :param poll : is the poll ID
             :param account : is the account ID
             :param includeWeights : is true to calculate and return the weight assigned to each vote (B) (O)
-            :param requireBlock : is the block ID of a block that must be present in the blockchain during execution (N) (O)
-            :param requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (N) (O)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
             :return votes : (A) is an array of votes, the range values (S) corresponding to each option (answer) with empty strings for non-votes
@@ -48,8 +47,7 @@ class GetPollVote(Parent):
         self.poll = poll
         self.account = account
         self.includeWeights = includeWeights
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -58,11 +56,6 @@ class GetPollVote(Parent):
         self.data["poll"] = self.poll
         self.data["account"] = self.account
         self.data["includeWeights"] = self.includeWeights
-
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
 
         super(GetPollVote, self).__init__(rt = "getPollVote", data=self.data)
 
