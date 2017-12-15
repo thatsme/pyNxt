@@ -80,7 +80,7 @@ class BaseGet(object):
             if key is None:
                 return self.dataDict
             else:
-                return "No Key"
+                return None
 
     def getKeysValues(self):
         for key, value in self.dataDict.items():
