@@ -2,9 +2,9 @@
 from base.BasePost import BasePost as Parent
 
 class CurrencyReserveIncrease(Parent):
-    def __init__(self, currency=None, amountPerUnitNQT=0, publicKey=None, secretPhrase=None, feeNQT=0, deadline=0, referencedTransactionFullHash=None, broadcast=True, phasing=None, message=None):
+    def __init__(self, currency=None, amountPerUnitNQT=0, publicKey=None, secretPhrase=None, feeNQT=0, deadline=0, referencedTransactionFullHash=None, broadcast=True, phasing=None, message=None, rec=None):
         """
-            Claim currency reserve. POST only.
+            Increase the currency reserve of an unissued reservable currency. POST only.
 
             CurrencyReserveIncrease take a default 1 parameter as explained in NXT API Documentation
 
@@ -22,6 +22,7 @@ class CurrencyReserveIncrease(Parent):
             :param broadcast : is set to false to prevent broadcasting the transaction to the network (B) (O)
             :param phasing : phasing object ( check base/Phasing.py ) (O) (WP)
             :param message : message object ( check base/message.py ) (O) (WP)
+            :param rec : rec object ( check base/Rec.py) (WP)
 
             Note: An additional amountPerUnitNQT * reserveSupply NQT (beyond what has previously been reserved)
             will be locked until the issuanceHeight is reached. Upon issuance, if the currency is claimable the NQT
@@ -51,7 +52,7 @@ class CurrencyReserveIncrease(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
                 (WP) Wrapper Meta-parameter
 
@@ -76,6 +77,7 @@ class CurrencyReserveIncrease(Parent):
         self.broadcast = broadcast
         self.phasing = phasing
         self.message = message
+        self.rec = rec
 
         # Initialize dictionary
         self.data = {}
@@ -95,7 +97,7 @@ class CurrencyReserveIncrease(Parent):
         self.data["broadcast"] = self.broadcast
 
 
-        super(CurrencyReserveIncrease, self).__init__(rt="currencyReserveIncrease", data=self.data, phasing=self.phasing, message=self.message)
+        super(CurrencyReserveIncrease, self).__init__(rt="currencyReserveIncrease", data=self.data, phasing=self.phasing, message=self.message, rec=self.rec)
 
     def run(self):
         super(CurrencyReserveIncrease, self).run()                # calls 'BasePost.run()'

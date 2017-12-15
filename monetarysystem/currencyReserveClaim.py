@@ -2,7 +2,7 @@
 from base.BasePost import BasePost as Parent
 
 class CurrencyReserveClaim(Parent):
-    def __init__(self, currency=None, unit=0, publicKey=None, secretPhrase=None, feeNQT=0, deadline=0, referencedTransactionFullHash=None, broadcast=True, phasing=None, message=None):
+    def __init__(self, currency=None, unit=0, publicKey=None, secretPhrase=None, feeNQT=0, deadline=0, referencedTransactionFullHash=None, broadcast=True, phasing=None, message=None, rec=None):
         """
             Claim currency reserve. POST only.
 
@@ -22,6 +22,7 @@ class CurrencyReserveClaim(Parent):
             :param broadcast : is set to false to prevent broadcasting the transaction to the network (B) (O)
             :param phasing : phasing object ( check base/Phasing.py ) (O) (WP)
             :param message : message object ( check base/message.py ) (O) (WP)
+            :param rec : rec object ( check base/Rec.py) (WP)
 
             Note: Holders of a claimable currency may claim the locked NQT backing their units, thus reducing the supply of the currency.
 
@@ -47,7 +48,7 @@ class CurrencyReserveClaim(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
                 (WP) Wrapper Meta-parameter
 
@@ -72,15 +73,14 @@ class CurrencyReserveClaim(Parent):
         self.broadcast = broadcast
         self.phasing = phasing
         self.message = message
+        self.rec = rec
 
         # Initialize dictionary
         self.data = {}
 
         ## Create data dictionary
         self.data["currency"] = self.currency
-        self.data["nonce"] = self.nonce
         self.data["unit"] = self.unit
-        self.data["counter"] = self.counter
         if publicKey:
             self.data["publicKey"] = self.publicKey
         if secretPhrase:
@@ -92,8 +92,7 @@ class CurrencyReserveClaim(Parent):
         self.data["deadline"] = self.deadline
         self.data["broadcast"] = self.broadcast
 
-
-        super(CurrencyReserveClaim, self).__init__(rt="currencyReserveClaim", data=self.data, phasing=self.phasing, message=self.message)
+        super(CurrencyReserveClaim, self).__init__(rt="currencyReserveClaim", data=self.data, phasing=self.phasing, message=self.message, rec=self.rec)
 
     def run(self):
         super(CurrencyReserveClaim, self).run()                # calls 'BasePost.run()'

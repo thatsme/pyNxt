@@ -2,7 +2,7 @@
 from base.BasePost import BasePost as Parent
 
 class CurrencyMint(Parent):
-    def __init__(self, currency=None, nonce=0, unit=0, counter=0, publicKey=None, secretPhrase=None, feeNQT=0, deadline=0, referencedTransactionFullHash=None, broadcast=True, phasing=None, message=None):
+    def __init__(self, currency=None, nonce=0, unit=0, counter=0, publicKey=None, secretPhrase=None, feeNQT=0, deadline=0, referencedTransactionFullHash=None, broadcast=True, phasing=None, message=None, rec=None):
         """
             Submit a valid computed nonce to the blockchain in return for newly minted currency. POST only.
 
@@ -24,6 +24,7 @@ class CurrencyMint(Parent):
             :param broadcast : is set to false to prevent broadcasting the transaction to the network (B) (O)
             :param phasing : phasing object ( check base/Phasing.py ) (O) (WP)
             :param message : message object ( check base/message.py ) (O) (WP)
+            :param rec : rec object ( check base/Rec.py) (WP)
 
             Note: The hash of nonce must be less than targetBytes provided by Get Minting Target for given
             units and counter. counter must be increased with each submission.
@@ -50,7 +51,7 @@ class CurrencyMint(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
                 (WP) Wrapper Meta-parameter
 
@@ -77,6 +78,7 @@ class CurrencyMint(Parent):
         self.broadcast = broadcast
         self.phasing = phasing
         self.message = message
+        self.rec = rec
 
         # Initialize dictionary
         self.data = {}
@@ -97,8 +99,7 @@ class CurrencyMint(Parent):
         self.data["deadline"] = self.deadline
         self.data["broadcast"] = self.broadcast
 
-
-        super(CurrencyMint, self).__init__(rt="currencyMint", data=self.data, phasing=self.phasing, message=self.message)
+        super(CurrencyMint, self).__init__(rt="currencyMint", data=self.data, phasing=self.phasing, message=self.message, rec=self.rec)
 
     def run(self):
         super(CurrencyMint, self).run()                # calls 'BasePost.run()'

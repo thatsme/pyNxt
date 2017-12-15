@@ -2,7 +2,7 @@
 from base.BasePost import BasePost as Parent
 
 class CurrencyBuy(Parent):
-    def __init__(self, currency=None, rateNQT=0, unit=0):
+    def __init__(self, currency=None, rateNQT=0, unit=0, secretPhrase=None,  publicKey = None, feeNQT = None, deadline = 0, referencedTransactionFullHash = None, broadcast=False, phasing = None, message=None, rec=None ):
         """
             Make an exchange request to buy or sell an exchangeable currency. POST only.
 
@@ -23,6 +23,7 @@ class CurrencyBuy(Parent):
             :param broadcast : is set to false to prevent broadcasting the transaction to the network (B) (O)
             :param phasing : phasing object ( check base/Phasing.py ) (O) (WP)
             :param message : message object ( check base/message.py ) (O) (WP)
+            :param rec : rec object ( check base/Rec.py) (WP)
 
             Note: An exchange request is immediately executed once accepted onto the blockchain based only on currently
             available offers (refer to Publish Exchange Offer). The request then expires, regardless of the amount of
@@ -51,7 +52,7 @@ class CurrencyBuy(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
                 (WP) Wrapper Meta-parameter
 
@@ -61,6 +62,25 @@ class CurrencyBuy(Parent):
         self.currency = currency
         self.rateNQT = rateNQT
         self.unit = unit
+        self.publicKey = publicKey
+        self.secretPhrase = secretPhrase
+        if feeNQT == 0:
+            self.feeNQT = 100000000
+        else:
+            self.feeNQT = feeNQT
+
+        # Optional parameters
+        self.referencedTransactionFullHash = referencedTransactionFullHash
+        self.broadcast = broadcast
+
+        if deadline == 0:
+            self.deadline = 60
+        else:
+            self.deadline = deadline
+
+        self.phasing = phasing
+        self.message = message
+        self.rec = rec
 
         # Initialize dictionary
         self.data = {}
@@ -70,7 +90,18 @@ class CurrencyBuy(Parent):
         self.data["rateNQT"] = self.rateNQT
         self.data["unit"] = self.unit
 
-        super(CurrencyBuy, self).__init__(rt="currencyBuy", data=self.data)
+        if publicKey:
+            self.data["publicKey"] = self.publicKey
+        if secretPhrase:
+            self.data["secretPhrase"] = self.secretPhrase
+        self.data["feeNQT"] = self.feeNQT
+        self.data["deadline"] = self.deadline
+        if self.referencedTransactionFullHash:
+            self.data["referencedTransactionFullHash"] = self.referencedTransactionFullHash
+        if self.broadcast:
+            self.data["broadcast"] = self.broadcast
+
+        super(CurrencyBuy, self).__init__(rt="currencyBuy", data=self.data, phasing=self.phasing, message=self.message, rec=self.rec)
 
     def run(self):
         super(CurrencyBuy, self).run()                # calls 'BasePost.run()'

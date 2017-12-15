@@ -3,20 +3,19 @@ from base.BaseGet import BaseGet as Parent
 
 class CanDeleteCurrency(Parent):
 
-    def __init__(self, account=None, currency=None, requireBlock = None, requireLastBlock=None ):
+    def __init__(self, account=None, currency=None, rb=None ):
         """
             Decrypt an AES-encrypted message.
 
             CanDeleteCurrency take a default 1 parameter as explained in NXT API Documentation
-            Class is working with GET method
+            API is working with GET method
 
             https://nxtwiki.org/wiki/The_Nxt_API#Can_Delete_Currency
 
             REQUEST
             :param account : is the account ID (S)
             :param currency : is the currency ID (S)
-            :param requireBlock : is the block ID of a block that must be present in the blockchain during execution (O)
-            :param requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (O)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
             :return canDelete (B) is true if the currency can be deleted, false otherwise
@@ -34,7 +33,7 @@ class CanDeleteCurrency(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
                 (WP) Wrapper Meta-parameter
 
@@ -42,8 +41,7 @@ class CanDeleteCurrency(Parent):
 
         self.account = account
         self.currency = currency
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -52,13 +50,7 @@ class CanDeleteCurrency(Parent):
         self.data["accounts"] = self.account
         self.data["currency"] = self.currency
 
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
-
-        super(CanDeleteCurrency, self).__init__(rt = "canDeleteCurrency", data=self.data)
+        super(CanDeleteCurrency, self).__init__(rt = "canDeleteCurrency", data=self.data, rb=self.rb)
 
     def run(self):
         super(CanDeleteCurrency, self).run()                           # calls 'BaseGet.run()'

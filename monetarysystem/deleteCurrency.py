@@ -2,7 +2,7 @@
 from base.BasePost import BasePost as Parent
 
 class DeleteCurrency(Parent):
-    def __init__(self, currency=None):
+    def __init__(self, currency=None, secretPhrase=None,  publicKey = None, feeNQT = None, deadline = 0, referencedTransactionFullHash = None, broadcast=False, phasing = None, message=None, rec=None):
         """
             Delete a deletable currency (refer to Can Delete Currency). POST only.
 
@@ -12,6 +12,16 @@ class DeleteCurrency(Parent):
 
             REQUEST
             :param currency : is the currency ID (S)
+            :param publicKey *: publicKey of sender accounts ( does not get in broadcast )
+            :param secretPhrase **: secret Phrase of sender accounts
+            :param feeNQT : fee for sending transaction (R) if 0 minimum is set ( 100000000 NQT )
+            :param deadLine : is the deadline (in minutes) for the transaction to be confirmed, 32767 minutes maximum ( if 0, 60 )
+            :param referencedTransactionFullHash : creates a chained transaction, meaning that the current transaction cannot be confirmed
+                                            unless the referenced transaction is also confirmed (O)
+            :param broadcast : is set to false to prevent broadcasting the transaction to the network (B) (O)
+            :param phasing : phasing object ( check base/Phasing.py ) (O) (WP)
+            :param message : message object ( check base/message.py ) (O) (WP)
+            :param rec : rec object ( check base/Rec.py) (WP)
 
             Note: An exchange request is immediately executed once accepted onto the blockchain based only on currently
             available offers (refer to Publish Exchange Offer). The request then expires, regardless of the amount of
@@ -40,7 +50,7 @@ class DeleteCurrency(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
                 (WP) Wrapper Meta-parameter
 
@@ -48,14 +58,52 @@ class DeleteCurrency(Parent):
 
         # Required parameters
         self.currency = currency
+        self.publicKey = publicKey
+        self.secretPhrase = secretPhrase
+        if feeNQT == 0:
+            self.feeNQT = 100000000
+        else:
+            self.feeNQT = feeNQT
+
+        # Optional parameters
+        self.referencedTransactionFullHash = referencedTransactionFullHash
+        self.broadcast = broadcast
+
+        if deadline == 0:
+            self.deadline = 60
+        else:
+            self.deadline = deadline
+
+        self.phasing = phasing
+        self.message = message
+        self.rec = rec
 
         # Initialize dictionary
         self.data = {}
 
         ## Create data dictionary
         self.data["currency"] = self.currency
+        self.publicKey = publicKey
+        self.secretPhrase = secretPhrase
+        if feeNQT == 0:
+            self.feeNQT = 100000000
+        else:
+            self.feeNQT = feeNQT
 
-        super(DeleteCurrency, self).__init__(rt="deleteCurrency", data=self.data)
+        # Optional parameters
+        self.referencedTransactionFullHash = referencedTransactionFullHash
+        self.broadcast = broadcast
+
+        if deadline == 0:
+            self.deadline = 60
+        else:
+            self.deadline = deadline
+
+        self.phasing = phasing
+        self.message = message
+        self.rec = rec
+
+        super(DeleteCurrency, self).__init__(rt="deleteCurrency", data=self.data, phasing=self.phasing, message=self.message, rec=self.rec)
 
     def run(self):
         super(DeleteCurrency, self).run()                # calls 'BasePost.run()'
