@@ -4,7 +4,7 @@ from base.BaseGet import BaseGet as Parent
 class SignTransaction(Parent):
 
 
-    def __init__(self, unsignedTransactionJSON=None, unsignedTransactionBytes=None, prunableAttachmentJSON=None, secretPhrase=None, validate=False, requireBlock=None, requireLastBlock=None):
+    def __init__(self, unsignedTransactionJSON=None, unsignedTransactionBytes=None, prunableAttachmentJSON=None, secretPhrase=None, validate=False, rb=None):
         """
             SignTransaction take a default 1 parameter as explained in NXT API Documentation ( is deadLine requested or not ? )
 
@@ -19,8 +19,7 @@ class SignTransaction(Parent):
                             (optional if the transaction has already been broadcast and the prunable message can still be retrieved from the database)
             :param secretPhrase is the secret passphrase of the signing account
             :param validate is false to skip validation of the transaction bytes being signed (useful on nodes where the full blockchain is not downloaded)
-            :param requireBlock is the block ID of a block that must be present in the blockchain during execution (optional)
-            :param requireLastBlock is the block ID of a block that must be last in the blockchain during execution (optional)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
             :return signatureHash : (S) is a SHA-256 hash of the transaction signature, used in escrow transactions
@@ -59,8 +58,7 @@ class SignTransaction(Parent):
         self.prunableAttachmentJSON = prunableAttachmentJSON
         self.secretPhrase = secretPhrase
         self.validate = validate
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -76,12 +74,7 @@ class SignTransaction(Parent):
         if self.prunableAttachmentJSON:
             self.data["prunableAttachmentJSON"] = self.prunableAttachmentJSON
 
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
-
-        super(SignTransaction, self).__init__(rt = "signTransaction", data=self.data)
+        super(SignTransaction, self).__init__(rt = "signTransaction", data=self.data, rb=self.rb)
 
     def run(self):
         """

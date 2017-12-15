@@ -2,7 +2,7 @@
 from base.BasePost import BasePost as Parent
 
 class BroadcastTransaction(Parent):
-    def __init__(self, transactionBytes = None, transactionJSON=None, prunableAttachmentJSON= None,  phasing = None, message=None ):
+    def __init__(self, transactionBytes = None, transactionJSON=None, prunableAttachmentJSON= None):
         """
             BroadcastTransaction take a default 5 parameter as explained in NXT API Documentation
 
@@ -44,9 +44,6 @@ class BroadcastTransaction(Parent):
         self.transactionJSON = transactionJSON
         self.prunableAttachmentJSON = prunableAttachmentJSON
 
-        self.phasing = phasing
-        self.message = message
-
         # Initialize dictionary
         self.data = {}
 
@@ -59,7 +56,7 @@ class BroadcastTransaction(Parent):
             self.data["prunableAttachmentJSON"] = self.prunableAttachmentJSON
 
 
-        super(BroadcastTransaction, self).__init__(rt="broadcastTransaction", data=self.data, phasing=self.phasing, message=self.message)
+        super(BroadcastTransaction, self).__init__(rt="broadcastTransaction", data=self.data)
 
     def run(self):
         super(BroadcastTransaction, self).run()                # calls 'BasePost.run()'

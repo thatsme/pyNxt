@@ -3,7 +3,7 @@ from base.BaseGet import BaseGet as Parent
 
 class GetUnconfirmedTransactions(Parent):
 
-    def __init__(self,account=None, firstIndex=None, lastIndex=None, requireBlock=None, requireLastBlock=None ):
+    def __init__(self,account=None, ri=None, rb=None ):
         """
             Get a list of unconfirmed transaction IDs associated with an account.
 
@@ -14,10 +14,8 @@ class GetUnconfirmedTransactions(Parent):
 
             REQUEST
             :param account : is array (A) of accounts ID's (S) / Multiaccount parameters (3)
-            :param firstIndex is a zero-based index to the first transaction ID to retrieve (optional)
-            :param lastIndex is a zero-based index to the last transaction ID to retrieve (optional)
-            :param requireBlock : is the block ID of a block that must be present in the blockchain during execution (O)
-            :param requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (O)
+            :param ri : ri object ( check base/Ri.py) (WP)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
             :return unconfirmedTransactions : (A) is an array of unconfirmed transactions (refer to Get Transaction for details)
@@ -44,12 +42,8 @@ class GetUnconfirmedTransactions(Parent):
         self.accounts = [None]*3
         for a in account[:3]:
             self.accounts.append(a)
-
-        self.firstIndex = firstIndex
-        self.lastIndex = lastIndex
-
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.ri = ri
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -58,17 +52,7 @@ class GetUnconfirmedTransactions(Parent):
         for a in self.accounts:
             self.data["accounts"] = a
 
-        if self.firstIndex:
-            self.data["firstIndex"] = self.firstIndex
-        if self.lastIndex:
-            self.data["lastIndex"] = self.lastIndex
-
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
-
-        super(GetUnconfirmedTransactions, self).__init__(rt = "getUnconfirmedTransactions", data=self.data)
+        super(GetUnconfirmedTransactions, self).__init__(rt = "getUnconfirmedTransactions", data=self.data, ri=self.ri, rb=self.rb)
 
     def run(self):
         super(GetUnconfirmedTransactions, self).run()               # calls 'BaseGet.run()'

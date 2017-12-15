@@ -76,7 +76,7 @@ class RetrievePrunedTransaction(Parent):
 
         self.data["transaction"] = self.transaction
 
-        super(RetrievePrunedTransaction, self).__init__(rt="retrievePrunedTransaction", data=self.data, phasing=self.phasing, message=self.message)
+        super(RetrievePrunedTransaction, self).__init__(rt="retrievePrunedTransaction", data=self.data)
 
     def run(self):
         super(RetrievePrunedTransaction, self).run()                # calls 'BasePost.run()'

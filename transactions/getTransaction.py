@@ -3,7 +3,7 @@ from base.BaseGet import BaseGet as Parent
 
 class GetTransaction(Parent):
 
-    def __init__(self,transaction=None, fullHash = None, includePhasingResult = False, requireBlock=None, requireLastBlock=None ):
+    def __init__(self,transaction=None, fullHash = None, includePhasingResult = False, rb=None ):
         """
             Get a transaction object given a transaction ID.
 
@@ -16,8 +16,7 @@ class GetTransaction(Parent):
             :param transaction : is the transaction ID (S) (O)
             :param fullHash : is the full hash of the transaction (optional if transaction ID is provided)
             :param includePhasingResult : is true to retrieve execution status of each phased transaction (B) (O)
-            :param requireBlock : is the block ID of a block that must be present in the blockchain during execution (O)
-            :param requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (O)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
             :return sender : (S) is the account ID of the sender
@@ -75,8 +74,7 @@ class GetTransaction(Parent):
         self.transaction = transaction
         self.fullHash = fullHash
         self.includePhasingResult = includePhasingResult
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -86,12 +84,7 @@ class GetTransaction(Parent):
         self.data["fullHash"]  = self.fullHash
         self.data["includePhasingResult"] = self.includePhasingResult
 
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
-
-        super(GetTransaction, self).__init__(rt = "getTransaction", data=self.data)
+        super(GetTransaction, self).__init__(rt = "getTransaction", data=self.data, rb=self.rb)
 
     def run(self):
         super(GetTransaction, self).run()               # calls 'BaseGet.run()'

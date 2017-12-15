@@ -4,7 +4,7 @@ from base.BaseGet import BaseGet as Parent
 class ParseTransaction(Parent):
 
 
-    def __init__(self, transactionBytes=None, transactionJSON=None, requireBlock=None, requireLastBlock=None):
+    def __init__(self, transactionBytes=None, transactionJSON=None, rb=None):
         """
             Get a transaction object given a (signed or unsigned) transaction bytecode, or re-parse a transaction object. Verify the signature.
 
@@ -17,8 +17,7 @@ class ParseTransaction(Parent):
             REQUEST
             :param transactionBytes : is the signed or unsigned bytecode of the transaction (O)
             :param transactionJSON : is the transaction object (optional if transactionBytes is included)
-            :param requireBlock : is the block ID of a block that must be present in the blockchain during execution (O)
-            :param requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (O)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
             :return verify (B) is true if the signature is verified, false otherwise
@@ -46,8 +45,7 @@ class ParseTransaction(Parent):
 
         self.transactionBytes = transactionBytes
         self.transactionJSON = transactionJSON
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -56,12 +54,7 @@ class ParseTransaction(Parent):
         self.data["transactionBytes"] = self.transactionBytes
         self.data["transactionJSON"] = self.transactionJSON
 
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
-
-        super(ParseTransaction, self).__init__(rt = "parseTransaction", data=self.data)
+        super(ParseTransaction, self).__init__(rt = "parseTransaction", data=self.data, rb=self.rb)
 
     def run(self):
         """

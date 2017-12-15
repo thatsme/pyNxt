@@ -3,7 +3,7 @@ from base.BaseGet import BaseGet as Parent
 
 class GetReferencingTransactions(Parent):
 
-    def __init__(self,transaction=None, firstIndex=None, lastIndex=None, requireBlock=None, requireLastBlock=None ):
+    def __init__(self,transaction=None, ri=None, rb=None ):
         """
             Gets the transactions referencing a given transaction id.
 
@@ -14,10 +14,8 @@ class GetReferencingTransactions(Parent):
 
             REQUEST
             :param transaction : is one transaction ID (S)
-            :param firstIndex : is a zero-based index to the first block ID to retrieve (N) (O)
-            :param lastIndex : is a zero-based index to the last block ID to retrieve (N) (O)
-            :param requireBlock : is the block ID of a block that must be present in the blockchain during execution (O)
-            :param requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (O)
+            :param ri : ri object ( check base/Ri.py) (WP)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
             :return expectedTransactions : (A) is an array of expected transactions (refer to Get Transaction for details)
@@ -41,10 +39,8 @@ class GetReferencingTransactions(Parent):
         """
 
         self.transaction = transaction
-        self.firstIndex = firstIndex
-        self.lastIndex = lastIndex
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.ri = ri
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -52,17 +48,7 @@ class GetReferencingTransactions(Parent):
         ## Create data dictionary
         self.data["transaction"]  = self.transaction
 
-        if self.firstIndex:
-            self.data["firstIndex"] = self.firstIndex
-        if self.lastIndex:
-            self.data["lastIndex"] = self.lastIndex
-
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
-
-        super(GetReferencingTransactions, self).__init__(rt = "getReferencingTransactions", data=self.data)
+        super(GetReferencingTransactions, self).__init__(rt = "getReferencingTransactions", data=self.data, ri=self.ri, rb=self.rb)
 
     def run(self):
         super(GetReferencingTransactions, self).run()               # calls 'BaseGet.run()'

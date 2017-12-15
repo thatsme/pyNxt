@@ -3,7 +3,7 @@ from base.BaseGet import BaseGet as Parent
 
 class GetExpectedTransactions(Parent):
 
-    def __init__(self,account=None, requireBlock=None, requireLastBlock=None ):
+    def __init__(self,account=None, rb=None ):
         """
             Returns the non-phased unconfirmed transactions expected to be included in the next block (only),
             plus the phased transactions scheduled to finish in that block (whether approved or not).
@@ -15,8 +15,7 @@ class GetExpectedTransactions(Parent):
 
             REQUEST
             :param account : is array (A) of accounts ID's (S) / Multiaccount parameters (3)
-            :param requireBlock : is the block ID of a block that must be present in the blockchain during execution (O)
-            :param requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (O)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
             :return expectedTransactions : (A) is an array of expected transactions (refer to Get Transaction for details)
@@ -43,8 +42,7 @@ class GetExpectedTransactions(Parent):
         for a in account[:3]:
             self.accounts.append(a)
 
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -53,12 +51,7 @@ class GetExpectedTransactions(Parent):
         for a in self.accounts:
             self.data["accounts"] = a
 
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
-
-        super(GetExpectedTransactions, self).__init__(rt = "getExpectedTransactions", data=self.data)
+        super(GetExpectedTransactions, self).__init__(rt = "getExpectedTransactions", data=self.data, rb=self.rb)
 
     def run(self):
         super(GetExpectedTransactions, self).run()               # calls 'BaseGet.run()'

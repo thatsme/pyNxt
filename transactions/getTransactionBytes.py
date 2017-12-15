@@ -3,7 +3,7 @@ from base.BaseGet import BaseGet as Parent
 
 class GetTransactionBytes(Parent):
 
-    def __init__(self, transaction=None, requireBlock=None, requireLastBlock=None ):
+    def __init__(self, transaction=None, rb=None ):
         """
             Get a transaction object given a transaction ID.
 
@@ -14,8 +14,7 @@ class GetTransactionBytes(Parent):
 
             REQUEST
             :param transaction : is the transaction ID (S)
-            :param requireBlock : is the block ID of a block that must be present in the blockchain during execution (O)
-            :param requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (O)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
             :return confirmations : (N) is the number of transaction confirmations
@@ -43,8 +42,7 @@ class GetTransactionBytes(Parent):
         """
 
         self.transaction = transaction
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self.rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -52,12 +50,7 @@ class GetTransactionBytes(Parent):
         ## Create data dictionary
         self.data["transaction"]  = self.transaction
    
-        if self.requireBlock:
-            self.data["requireBlock"] = self.requireBlock
-        if self.requireLastBlock:
-            self.data["requireLastBlock"] = self.requireLastBlock
-
-        super(GetTransactionBytes, self).__init__(rt = "getTransactionBytes", data=self.data)
+        super(GetTransactionBytes, self).__init__(rt = "getTransactionBytes", data=self.data, rb=self.rb)
 
     def run(self):
         super(GetTransactionBytes, self).run()               # calls 'BaseGet.run()'
