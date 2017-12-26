@@ -74,17 +74,14 @@ class GetAccount(Parent):
                 (WP) Wrapper Meta-parameter
         """
 
-
-
-
         # is the block ID of a block that must be present in the blockchain during execution (optional)
 
-        self.account = account
-        self.includeLessors = includeLessors
-        self.includeAssets = includeAssets
-        self.includeCurrencies = includeCurrencies
-        self.includeEffectiveBalance = includeEffectiveBalance
-        self.rb = rb
+        self._account = account
+        self._includeLessors = includeLessors
+        self._includeAssets = includeAssets
+        self._includeCurrencies = includeCurrencies
+        self._includeEffectiveBalance = includeEffectiveBalance
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -101,6 +98,55 @@ class GetAccount(Parent):
             self.data["includeEffectiveBalace"] = self.includeEffectiveBalance
 
         super(GetAccount, self).__init__(rt = "getAccount", data=self.data, rb=self.rb)
+
+    @property
+    def account(self):
+        return self._account
+
+    @account.setter
+    def account(self, value):
+        self._account = value
+
+    @property
+    def includeLessors(self):
+        return self._includeLessors
+
+    @includeLessors.setter
+    def includeLessors(self, value):
+        self._includeLessors = value
+
+    @property
+    def includeAssets(self):
+        return self._includeAssets
+
+    @includeAssets.setter
+    def includeAssets(self, value):
+        self._includeAssets = value
+
+    @property
+    def includeCurrencies(self):
+        return self._includeCurrencies
+
+    @includeCurrencies.setter
+    def includeCurrencies(self, value):
+        self._includeCurrencies = value
+
+    @property
+    def includeEffectiveBalance(self):
+        return self._includeEffectiveBalance
+
+    @includeEffectiveBalance.setter
+    def includeEffectiveBalance(self, value):
+        self._includeEffectiveBalance = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
+
 
     def run(self):
         """

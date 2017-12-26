@@ -57,11 +57,11 @@ class GetAccountExchangeRequests(Parent):
 
         """
 
-        self.account = account
-        self.currency = currency
-        self.includeCurrencyInfo = includeCurrencyInfo
-        self.ri = ri
-        self.rb = rb
+        self._account = account
+        self._currency = currency
+        self._includeCurrencyInfo = includeCurrencyInfo
+        self._ri = ri
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -74,6 +74,46 @@ class GetAccountExchangeRequests(Parent):
             self.data["includeCurrencyInfo"] = self.includeCurrencyInfo
 
         super(GetAccountExchangeRequests, self).__init__(rt = "getAccountExchangeRequests", data=self.data, ri=self.ri, rb=self.rb)
+
+    @property
+    def account(self):
+        return self._account
+
+    @account.setter
+    def account(self, value):
+        self._account = value
+
+    @property
+    def currency(self):
+        return self._currency
+
+    @currency.setter
+    def currency(self, value):
+        self._currency = value
+
+    @property
+    def includeCurrencyInfo(self):
+        return self._includeCurrencyInfo
+
+    @includeCurrencyInfo.setter
+    def includeCurrencyInfo(self, value):
+        self._includeCurrencyInfo = value
+
+    @property
+    def ri(self):
+        return self._ri
+
+    @ri.setter
+    def ri(self, value):
+        self._ri = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetAccountExchangeRequests, self).run()               # calls 'BaseGet.run()'

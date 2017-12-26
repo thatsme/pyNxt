@@ -38,8 +38,8 @@ class GetAccountPhasedTransactionCount(Parent):
 
         """
 
-        self.account = account
-        self.rb = rb
+        self._account = account
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -48,6 +48,22 @@ class GetAccountPhasedTransactionCount(Parent):
         self.data["accounts"] = self.account
 
         super(GetAccountPhasedTransactionCount, self).__init__(rt = "getAccountPhasedTransactionCount", data=self.data, rb=self.rb)
+
+    @property
+    def account(self):
+        return self._account
+
+    @account.setter
+    def account(self, value):
+        self._account = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetAccountPhasedTransactionCount, self).run()                     # calls 'BaseGet.run()'

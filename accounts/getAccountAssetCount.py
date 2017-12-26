@@ -38,9 +38,9 @@ class GetAccountAssetCount(Parent):
 
         """
 
-        self.account = account
-        self.height = height
-        self.rb = rb
+        self._account = account
+        self._height = height
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -51,6 +51,30 @@ class GetAccountAssetCount(Parent):
             self.data["height"] = self.height
 
         super(GetAccountAssetCount, self).__init__(rt = "getAccountAssetCount", data=self.data, rb=self.rb)
+
+    @property
+    def account(self):
+        return self._account
+
+    @account.setter
+    def account(self, value):
+        self._account = value
+
+    @property
+    def height(self):
+        return self._height
+
+    @height.setter
+    def height(self, value):
+        self._height = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         """

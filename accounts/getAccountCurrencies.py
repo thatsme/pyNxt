@@ -50,11 +50,11 @@ class GetAccountCurrencies(Parent):
 
         """
 
-        self.account = account
-        self.currency = currency
-        self.height = height
-        self.includeCurrencyInfo = includeCurrencyInfo
-        self.rb = rb
+        self._account = account
+        self._currency = currency
+        self._height = height
+        self._includeCurrencyInfo = includeCurrencyInfo
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -69,6 +69,46 @@ class GetAccountCurrencies(Parent):
             self.data["height"] = self.height
 
         super(GetAccountCurrencies, self).__init__(rt = "getAccountCurrencies", data=self.data, rb=self.rb)
+
+    @property
+    def account(self):
+        return self._account
+
+    @account.setter
+    def account(self, value):
+        self._account = value
+
+    @property
+    def currency(self):
+        return self._currency
+
+    @currency.setter
+    def currency(self, value):
+        self._currency = value
+
+    @property
+    def height(self):
+        return self._height
+
+    @height.setter
+    def height(self, value):
+        self._height = value
+
+    @property
+    def includeCurrencyInfo(self):
+        return self._includeCurrencyInfo
+
+    @includeCurrencyInfo.setter
+    def includeCurrencyInfo(self, value):
+        self._includeCurrencyInfo = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetAccountCurrencies, self).run()                             # calls 'BaseGet.run()'

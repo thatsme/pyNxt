@@ -50,9 +50,9 @@ class GetAccountLedgerEntry(Parent):
 
         """
 
-        self.ledgerId = ledgerId
-        self.includeTransaction = includeTransaction
-        self.includeHoldingInfo = includeHoldingInfo
+        self._ledgerId = ledgerId
+        self._includeTransaction = includeTransaction
+        self._includeHoldingInfo = includeHoldingInfo
 
         # Initialize dictionary
         self.data = {}
@@ -65,6 +65,30 @@ class GetAccountLedgerEntry(Parent):
             self.data["includeHoldingInfo"] = self.includeHoldingInfo
 
         super(GetAccountLedgerEntry, self).__init__(rt="getAccountLedgerEntry", data=self.data)
+
+    @property
+    def ledgerId(self):
+        return self._ledgerId
+
+    @ledgerId.setter
+    def ledgerId(self, value):
+        self._ledgerId = value
+
+    @property
+    def includeTransactions(self):
+        return self._includeTransactions
+
+    @includeTransactions.setter
+    def includeTransactions(self, value):
+        self._includeTransactions = value
+
+    @property
+    def includeHoldingInfo(self):
+        return self._includeHoldingInfo
+
+    @includeHoldingInfo.setter
+    def includeHoldingInfo(self, value):
+        self._includeHoldingInfo = value
 
     def run(self):
         super(GetAccountLedgerEntry, self).run()                        # calls 'BaseGet.run()'

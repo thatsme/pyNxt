@@ -39,8 +39,8 @@ class GetAccountId(Parent):
 
         """
 
-        self.publicKey = publicKey
-        self.secretPhrase = secretPhrase
+        self._publicKey = publicKey
+        self._secretPhrase = secretPhrase
 
         # Initialize dictionary
         self.data = {}
@@ -50,6 +50,22 @@ class GetAccountId(Parent):
         self.data["secretPhrase"] = self.secretPhrase
 
         super(GetAccountId, self).__init__(rt = "getAccountId", data=self.data)
+
+    @property
+    def publicKey(self):
+        return self._publicKey
+
+    @publicKey.setter
+    def publicKey(self, value):
+        self._publicKey = value
+
+    @property
+    def secretPhrase(self):
+        return self._secretPhrase
+
+    @secretPhrase.setter
+    def secretPhrase(self, value):
+        self._secretPhrase = value
 
     def run(self):
         super(GetAccountId, self).run()                     # calls 'BaseGet.run()'

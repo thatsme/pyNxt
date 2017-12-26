@@ -2,7 +2,7 @@
 from base.BasePost import BasePost as Parent
 
 class DeleteScheduledTransaction(Parent):
-    def __init__(self, transaction = None):
+    def __init__(self, transaction = None, phasing = None, message=None,):
         """
             DeleteScheduledTransaction take a default 1 parameter as explained in NXT API Documentation
 
@@ -11,6 +11,8 @@ class DeleteScheduledTransaction(Parent):
 
             REQUEST
             :param transaction : is the name of the transaction (S) (R)
+            :param phasing : phasing object ( check base/Phasing.py ) (WP)
+            :param message : message object ( check base/Message.py ) (WP)
 
             RESPONSE
 
@@ -32,9 +34,9 @@ class DeleteScheduledTransaction(Parent):
         """
 
         # Required parameters
-        self.transaction = transaction
-        self.phasing = None
-        self.message = None
+        self._transaction = transaction
+        self._phasing = None
+        self._message = None
 
         # Initialize dictionary
         self.data = {}
@@ -44,6 +46,30 @@ class DeleteScheduledTransaction(Parent):
         self.data["transaction"] = self.transaction
 
         super(DeleteScheduledTransaction, self).__init__(rt="deleteScheduledTransaction", data=self.data, phasing=self.phasing, message=self.message)
+
+    @property
+    def transaction(self):
+        return self._transaction
+
+    @transaction.setter
+    def transaction(self, value):
+        self._transaction = value
+
+    @property
+    def phasing(self):
+        return self._phasing
+
+    @phasing.setter
+    def phasing(self, value):
+        self._phasing = value
+
+    @property
+    def message(self):
+        return self._message
+
+    @message.setter
+    def message(self, value):
+        self._message = value
 
     def run(self):
         super(DeleteScheduledTransaction, self).run()                # calls 'BasePost.run()'

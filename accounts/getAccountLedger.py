@@ -57,17 +57,15 @@ class GetAccountLedger(Parent):
 
         """
 
-        self.account = account
-        self.event = event
-        self.eventType = eventType
-        self.holding = holding
-        self.holdingType = holdingType
-
-        self.includeTransactions = includeTransactions
-        self.includeHoldingInfo = includeHoldingInfo
-
-        self.ri = ri
-        self.rb = rb
+        self._account = account
+        self._event = event
+        self._eventType = eventType
+        self._holding = holding
+        self._holdingType = holdingType
+        self._includeTransactions = includeTransactions
+        self._includeHoldingInfo = includeHoldingInfo
+        self._ri = ri
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -89,6 +87,78 @@ class GetAccountLedger(Parent):
             self.data["includeHoldingInfo"] = self.includeHoldingInfo
 
         super(GetAccountLedger, self).__init__(rt = "getAccountLedger", data=self.data, ri=self.ri, rb=self.rb)
+
+    @property
+    def account(self):
+        return self._account
+
+    @account.setter
+    def account(self, value):
+        self._account = value
+
+    @property
+    def event(self):
+        return self._event
+
+    @event.setter
+    def event(self, value):
+        self._event = value
+
+    @property
+    def eventType(self):
+        return self._eventType
+
+    @eventType.setter
+    def eventType(self, value):
+        self._eventType = value
+
+    @property
+    def holding(self):
+        return self._holding
+
+    @holding.setter
+    def holding(self, value):
+        self._holding = value
+
+    @property
+    def holdingType(self):
+        return self._holdingType
+
+    @holdingType.setter
+    def holdingType(self, value):
+        self._holdingType = value
+
+    @property
+    def includeTransactions(self):
+        return self._includeTransactions
+
+    @includeTransactions.setter
+    def includeTransactions(self, value):
+        self._includeTransactions = value
+
+    @property
+    def includeHoldingInfo(self):
+        return self._includeHoldingInfo
+
+    @includeHoldingInfo.setter
+    def includeHoldingInfo(self, value):
+        self._includeHoldingInfo = value
+
+    @property
+    def ri(self):
+        return self._ri
+
+    @ri.setter
+    def ri(self, value):
+        self._ri = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetAccountLedger, self).run()               # calls 'BaseGet.run()'
