@@ -18,21 +18,9 @@ class tokenMap:
                     sval = str(val).zfill(4)
                     pointer = k + "_" + sval
                     if isinstance(a, str) or isinstance(a, int):
-                        print("opppppsssss")
                         self.__dict__[pointer] = v
                     else:
                         self.__dict__[pointer] = tokenMap(**a)
             else:
                 self.__dict__[k] = v
 
-
-    def __iter__(self):
-        return self
-
-    def __next__(self):
-        try:
-            result = self.__dict__[self.index]
-        except IndexError:
-            raise StopIteration
-        self.index += 1
-        return result
