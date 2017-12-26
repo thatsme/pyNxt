@@ -67,7 +67,7 @@ class GetBlockchainTransactions(Parent):
         self.data = {}
 
         ## Create data dictionary
-        self.data["accounts"] = self.account
+        self.data["account"] = self.account
         self.data["timestamp"] = self.timestamp
         self.data["numberOfConfirmations"] = self.numberOfConfirmations
         if self.type:
