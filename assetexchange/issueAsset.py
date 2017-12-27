@@ -131,12 +131,12 @@ class IssueAsset(Parent):
         self._quantityQNT = value
 
     @property
-    def decimal(self):
-        return self._decimal
+    def decimals(self):
+        return self._decimals
 
-    @decimal.setter
-    def decimal(self, value):
-        self._decimal = value
+    @decimals.setter
+    def decimals(self, value):
+        self._decimals = value
 
     @property
     def publicKey(self):
@@ -161,6 +161,14 @@ class IssueAsset(Parent):
     @referencedTransactionFullHash.setter
     def referencedTransactionFullHash(self, value):
         self._referencedTransactionFullHash = value
+
+    @property
+    def broadcast(self):
+        return self._broadcast
+
+    @broadcast.setter
+    def broadcast(self, value):
+        self._broadcast = value
 
     @property
     def feeNQT(self):
