@@ -3,7 +3,7 @@ from base.BaseGet import BaseGet as Parent
 
 class DecryptFrom(Parent):
 
-    def __init__(self, secretPhrase=None, account=None, data=None, nonce=None, decryptedMessageIsText=False, uncompressDecryptedMessage=False ):
+    def __init__(self, secretPhrase=None, account=None, idata=None, nonce=None, decryptedMessageIsText=False, uncompressDecryptedMessage=False ):
         """
             Decrypt an AES-encrypted message.
 
@@ -15,7 +15,7 @@ class DecryptFrom(Parent):
             REQUEST
             :param secretPhrase : is the secret passphrase of the recipient (S)
             :param accounts : is the accounts ID of the recipient (S)
-            :param data : is AES-encrypted data
+            :param idata : is AES-encrypted data
             :param nonce : is the unique nonce associated with the encrypted data
             :param decryptedMessageIsText is false if the decrypted message is a hex string, otherwise the decrypted message is text (S) (O)
             :param uncompressDecryptedMessage : is false to prevent gzip uncompression after decryption (B) (O)
@@ -41,12 +41,12 @@ class DecryptFrom(Parent):
 
         """
 
-        self.account = account
-        self.secretPhrase = secretPhrase
-        self.data = data
-        self.nonce = nonce
-        self.decryptedMessageIsText = decryptedMessageIsText
-        self.uncompressDectyptedMessage = uncompressDecryptedMessage
+        self._account = account
+        self._secretPhrase = secretPhrase
+        self._idata = idata
+        self._nonce = nonce
+        self._decryptedMessageIsText = decryptedMessageIsText
+        self._uncompressDectyptedMessage = uncompressDecryptedMessage
 
         # Initialize dictionary
         self.data = {}
@@ -54,12 +54,60 @@ class DecryptFrom(Parent):
         ## Create data dictionary
         self.data["accounts"] = self.account
         self.data["secretPhrase"] = self.secretPhrase
-        self.data["data"] = self.data
+        self.data["data"] = self.idata
         self.data["nonce"] = self.nonce
         self.data["decryptedMessageIsText"] = self.decryptedMessageIsText
         self.data["uncompressDecryptedMessage"] = self.uncompressDectyptedMessage
 
         super(DecryptFrom, self).__init__(rt = "decryptFrom", data=self.data)
+
+    @property
+    def account(self):
+        return self._account
+
+    @account.setter
+    def account(self, value):
+        self._account = value
+
+    @property
+    def secretPhrase(self):
+        return self._secretPhrase
+
+    @secretPhrase.setter
+    def secretPhrase(self, value):
+        self._secretPhrase = value
+
+    @property
+    def idata(self):
+        return self._idata
+
+    @idata.setter
+    def idata(self, value):
+        self._idata = value
+
+    @property
+    def nonce(self):
+        return self._nonce
+
+    @nonce.setter
+    def nonce(self, value):
+        self._nonce = value
+
+    @property
+    def decryptedMessageIsText(self):
+        return self._decryptedMessageIsText
+
+    @decryptedMessageIsText.setter
+    def decryptedMessageIsText(self, value):
+        self._decryptedMessageIsText = value
+
+    @property
+    def uncompressDectyptedMessage(self):
+        return self._uncompressDectyptedMessage
+
+    @uncompressDectyptedMessage.setter
+    def uncompressDectyptedMessage(self, value):
+        self._uncompressDectyptedMessage = value
 
     def run(self):
         super(DecryptFrom, self).run()                           # calls 'BaseGet.run()'

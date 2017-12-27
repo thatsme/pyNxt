@@ -39,9 +39,9 @@ class GetAllPrunableMessages(Parent):
 
         """
 
-        self.timestamp = timestamp
-        self.ri = ri
-        self.rb = rb
+        self._timestamp = timestamp
+        self._ri = ri
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -50,6 +50,30 @@ class GetAllPrunableMessages(Parent):
         self.data["timestamp"] = self.timestamp
 
         super(GetAllPrunableMessages, self).__init__(rt = "getAllPrunableMessages", data=self.data, ri=self.ri, rb=self.rb)
+
+    @property
+    def timestamp(self):
+        return self._timestamp
+
+    @timestamp.setter
+    def timestamp(self, value):
+        self._timestamp = value
+
+    @property
+    def ri(self):
+        return self._ri
+
+    @ri.setter
+    def ri(self, value):
+        self._ri = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetAllPrunableMessages, self).run()                           # calls 'BaseGet.run()'

@@ -55,11 +55,11 @@ class GetPrunableMessage(Parent):
 
         """
 
-        self.transaction = transaction
-        self.secretPhrase = secretPhrase
-        self.sharedKey = sharedKey
-        self.retrieve = retrieve
-        self.rb = rb
+        self._transaction = transaction
+        self._secretPhrase = secretPhrase
+        self._sharedKey = sharedKey
+        self._retrieve = retrieve
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -72,6 +72,46 @@ class GetPrunableMessage(Parent):
             self.data["retrieve"] = self.retrieve
 
         super(GetPrunableMessage, self).__init__(rt = "getPrunableMessage", data=self.data, rb=self.rb)
+
+    @property
+    def transaction(self):
+        return self._transaction
+
+    @transaction.setter
+    def transaction(self, value):
+        self._transaction = value
+
+    @property
+    def secretPhrase(self):
+        return self._secretPhrase
+
+    @secretPhrase.setter
+    def secretPhrase(self, value):
+        self._secretPhrase = value
+
+    @property
+    def sharedKey(self):
+        return self._sharedKey
+
+    @sharedKey.setter
+    def sharedKey(self, value):
+        self._sharedKey = value
+
+    @property
+    def retrieve(self):
+        return self._retrieve
+
+    @retrieve.setter
+    def retrieve(self, value):
+        self._retrieve = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetPrunableMessage, self).run()                           # calls 'BaseGet.run()'

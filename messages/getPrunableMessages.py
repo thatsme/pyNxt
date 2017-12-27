@@ -43,12 +43,12 @@ class GetPrunableMessages(Parent):
 
         """
 
-        self.account = account
-        self.otherAccount = otherAccount
-        self.secretPhrase = secretPhrase
-        self.timestamp = timestamp
-        self.ri = ri
-        self.rb = rb
+        self._account = account
+        self._otherAccount = otherAccount
+        self._secretPhrase = secretPhrase
+        self._timestamp = timestamp
+        self._ri = ri
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -62,6 +62,54 @@ class GetPrunableMessages(Parent):
         self.data["timestamp"] = self.timestamp
 
         super(GetPrunableMessages, self).__init__(rt = "getPrunableMessages", data=self.data, ri=self.ri, rb=self.rb)
+
+    @property
+    def account(self):
+        return self._account
+
+    @account.setter
+    def account(self, value):
+        self._account = value
+
+    @property
+    def otherAccount(self):
+        return self._otherAccount
+
+    @otherAccount.setter
+    def otherAccount(self, value):
+        self._otherAccount = value
+
+    @property
+    def secretPhrase(self):
+        return self._secretPhrase
+
+    @secretPhrase.setter
+    def secretPhrase(self, value):
+        self._secretPhrase = value
+
+    @property
+    def timestamp(self):
+        return self._timestamp
+
+    @timestamp.setter
+    def timestamp(self, value):
+        self._timestamp = value
+
+    @property
+    def ri(self):
+        return self._ri
+
+    @ri.setter
+    def ri(self, value):
+        self._ri = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetPrunableMessages, self).run()                           # calls 'BaseGet.run()'

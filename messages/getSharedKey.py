@@ -38,9 +38,9 @@ class GetSharedKey(Parent):
 
         """
 
-        self.account = account
-        self.secretPhrase = secretPhrase
-        self.nonce = nonce
+        self._account = account
+        self._secretPhrase = secretPhrase
+        self._nonce = nonce
 
         # Initialize dictionary
         self.data = {}
@@ -51,6 +51,30 @@ class GetSharedKey(Parent):
         self.data["nonce"] = self.nonce
 
         super(GetSharedKey, self).__init__(rt = "getSharedKey", data=self.data)
+
+    @property
+    def account(self):
+        return self._account
+
+    @account.setter
+    def account(self, value):
+        self._account = value
+
+    @property
+    def secretPhrase(self):
+        return self._secretPhrase
+
+    @secretPhrase.setter
+    def secretPhrase(self, value):
+        self._secretPhrase = value
+
+    @property
+    def nonce(self):
+        return self._nonce
+
+    @nonce.setter
+    def nonce(self, value):
+        self._nonce = value
 
     def run(self):
         super(GetSharedKey, self).run()                           # calls 'BaseGet.run()'

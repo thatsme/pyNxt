@@ -43,11 +43,11 @@ class EncryptTo(Parent):
 
         """
 
-        self.recipient = recipient
-        self.secretPhrase = secretPhrase
-        self.messageToEncrypt = messageToEncrypt
-        self.messageToEncryptIsText = messageToEncryptIsText
-        self.compressMessageToEncrypt = compressMessageToEncrypt
+        self._recipient = recipient
+        self._secretPhrase = secretPhrase
+        self._messageToEncrypt = messageToEncrypt
+        self._messageToEncryptIsText = messageToEncryptIsText
+        self._compressMessageToEncrypt = compressMessageToEncrypt
 
         # Initialize dictionary
         self.data = {}
@@ -62,6 +62,46 @@ class EncryptTo(Parent):
 
 
         super(EncryptTo, self).__init__(rt = "encryptTo", data=self.data)
+
+    @property
+    def recipient(self):
+        return self._recipient
+
+    @recipient.setter
+    def recipient(self, value):
+        self._recipient = value
+
+    @property
+    def secretPhrase(self):
+        return self._secretPhrase
+
+    @secretPhrase.setter
+    def secretPhrase(self, value):
+        self._secretPhrase = value
+
+    @property
+    def messageToEncrypt(self):
+        return self._messageToEncrypt
+
+    @messageToEncrypt.setter
+    def messageToEncrypt(self, value):
+        self._messageToEncrypt = value
+
+    @property
+    def messageToEncryptIsText(self):
+        return self._messageToEncryptIsText
+
+    @messageToEncryptIsText.setter
+    def messageToEncryptIsText(self, value):
+        self._messageToEncryptIsText = value
+
+    @property
+    def compressMessageToEncrypt(self):
+        return self._compressMessageToEncrypt
+
+    @compressMessageToEncrypt.setter
+    def compressMessageToEncrypt(self, value):
+        self._compressMessageToEncrypt = value
 
     def run(self):
         super(EncryptTo, self).run()                           # calls 'BaseGet.run()'

@@ -57,13 +57,13 @@ class VerifyPrunableMessage(Parent):
 
         """
 
-        self.message = message
-        self.messageIsText = messageIsText
-        self.encryptedMessageData = encryptedMessageData
-        self.encryptedMessageNonce = encryptedMessageNonce
-        self.messageToEncryptIsText = messageToEncryptIsText
-        self.compressMessageToEncrypt = compressMessageToEncrypt
-        self.rb = rb
+        self._message = message
+        self._messageIsText = messageIsText
+        self._encryptedMessageData = encryptedMessageData
+        self._encryptedMessageNonce = encryptedMessageNonce
+        self._messageToEncryptIsText = messageToEncryptIsText
+        self._compressMessageToEncrypt = compressMessageToEncrypt
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -94,6 +94,62 @@ class VerifyPrunableMessage(Parent):
             self.data["requireLastBlock"] = self.requireLastBlock
 
         super(VerifyPrunableMessage, self).__init__(rt = "verifyPrunableMessage", data=self.data, rb=self.rb)
+
+    @property
+    def message(self):
+        return self._message
+
+    @message.setter
+    def message(self, value):
+        self._message = value
+
+    @property
+    def messageIsText(self):
+        return self._messageIsText
+
+    @messageIsText.setter
+    def messageIsText(self, value):
+        self._messageIsText = value
+
+    @property
+    def encryptedMessageData(self):
+        return self._encryptedMessageData
+
+    @encryptedMessageData.setter
+    def encryptedMessageData(self, value):
+        self._encryptedMessageData = value
+
+    @property
+    def encryptedMessageNonce(self):
+        return self._encryptedMessageNonce
+
+    @encryptedMessageNonce.setter
+    def encryptedMessageNonce(self, value):
+        self._encryptedMessageNonce = value
+
+    @property
+    def messageToEncryptIsText(self):
+        return self._messageToEncryptIsText
+
+    @messageToEncryptIsText.setter
+    def messageToEncryptIsText(self, value):
+        self._messageToEncryptIsText = value
+
+    @property
+    def compressMessageToEncrypt(self):
+        return self._compressMessageToEncrypt
+
+    @compressMessageToEncrypt.setter
+    def compressMessageToEncrypt(self, value):
+        self._compressMessageToEncrypt = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(VerifyPrunableMessage, self).run()                           # calls 'BaseGet.run()'

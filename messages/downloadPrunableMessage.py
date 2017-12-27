@@ -41,11 +41,11 @@ class DownloadPrunableMessage(Parent):
 
         """
 
-        self.transaction = transaction
-        self.secretPhrase = secretPhrase
-        self.sharedKey = sharedKey
-        self.retrieve = retrieve
-        self.rb = rb
+        self._transaction = transaction
+        self._secretPhrase = secretPhrase
+        self._sharedKey = sharedKey
+        self._retrieve = retrieve
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -58,6 +58,47 @@ class DownloadPrunableMessage(Parent):
             self.data["retrieve"] = self.retrieve
 
         super(DownloadPrunableMessage, self).__init__(rt = "downloadPrunableMessage", data=self.data, rb=self.rb)
+
+    @property
+    def transaction(self):
+        return self._transaction
+
+    @transaction.setter
+    def transaction(self, value):
+        self._transaction = value
+
+    @property
+    def secretPhrase(self):
+        return self._secretPhrase
+
+    @secretPhrase.setter
+    def secretPhrase(self, value):
+        self._secretPhrase = value
+
+    @property
+    def sharedKey(self):
+        return self._sharedKey
+
+    @sharedKey.setter
+    def sharedKey(self, value):
+        self._sharedKey = value
+
+    @property
+    def retrieve(self):
+        return self._retrieve
+
+    @retrieve.setter
+    def retrieve(self, value):
+        self._retrieve = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
+
 
     def run(self):
         super(DownloadPrunableMessage, self).run()                           # calls 'BaseGet.run()'
