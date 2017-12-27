@@ -13,18 +13,18 @@ class GetECBlock(Parent):
             https://nxtwiki.org/wiki/The_Nxt_API#Get_ECBlock
 
             REQUEST
-            timestamp : is the timestamp (in seconds since the genesis block) of the EC block
+            :param timestamp : is the timestamp (in seconds since the genesis block) of the EC block
                         (optional, default (or zero) is the current timestamp)
             :param rb : rb object ( check base/Rb.py) (WP)
 
             Note: If timestamp is more than 15 seconds before the timestamp of the last block on the blockchain, errorCode 4 is returned.
 
             RESPONSE
-            ecBlockHeight (N) is the EC block height
-            ecBlockId (S) is the EC block ID
-            timestamp : is the timestamp (in seconds since the genesis block) of the EC block (N)
-            lastBlock : is the last block ID on the blockchain (S) (applies if requireBlock is provided but not requireLastBlock)
-            requestProcessingTime : is the API request processing time (in millisec) (N)
+            :return ecBlockHeight (N) is the EC block height
+            :return ecBlockId (S) is the EC block ID
+            :return timestamp : is the timestamp (in seconds since the genesis block) of the EC block (N)
+            :return lastBlock : is the last block ID on the blockchain (S) (applies if requireBlock is provided but not requireLastBlock)
+            :return requestProcessingTime : is the API request processing time (in millisec) (N)
 
             Legenda :
                 ° the parameter are interchangeable on
@@ -44,10 +44,8 @@ class GetECBlock(Parent):
         """
 
         # Required parameters
-        self.timestamp = timestamp
-
-        # Optional parameter
-        self.rb = rb
+        self._timestamp = timestamp
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -57,6 +55,22 @@ class GetECBlock(Parent):
         self.data["timestamp"] = self.timestamp
 
         super(GetECBlock, self).__init__(rt="getECBlock", data=self.data, rb=self.rb)
+
+    @property
+    def timestamp(self):
+        return self._timestamp
+
+    @timestamp.setter
+    def timestamp(self, value):
+        self._timestamp = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetECBlock, self).run()                                         # calls 'BaseGet.run()'

@@ -65,12 +65,12 @@ class GetBlock(Parent):
         """
 
         # Required parameters
-        self.block = block
-        self.height = height
-        self.timestamp = timestamp
-        self.includeTransactions = includeTransactions
-        self.includeExecutedPhased = includeExecutedPhased
-        self.rb = rb
+        self._block = block
+        self._height = height
+        self._timestamp = timestamp
+        self._includeTransactions = includeTransactions
+        self._includeExecutedPhased = includeExecutedPhased
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -88,6 +88,54 @@ class GetBlock(Parent):
             self.data["includeExecutedPhased"] = self.includeExecutedPhased
 
         super(GetBlock, self).__init__(rt="getBlock", data=self.data, rb=self.rb)
+
+    @property
+    def block(self):
+        return self._block
+
+    @block.setter
+    def block(self, value):
+        self._block = value
+
+    @property
+    def height(self):
+        return self._height
+
+    @height.setter
+    def height(self, value):
+        self._height = value
+
+    @property
+    def timestamp(self):
+        return self._timestamp
+
+    @timestamp.setter
+    def timestamp(self, value):
+        self._timestamp = value
+
+    @property
+    def includeTransactions(self):
+        return self._includeTransactions
+
+    @includeTransactions.setter
+    def includeTransactions(self, value):
+        self._includeTransactions = value
+
+    @property
+    def includeExecutedPhased(self):
+        return self._includeExecutedPhased
+
+    @includeExecutedPhased.setter
+    def includeExecutedPhased(self, value):
+        self._includeExecutedPhased = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetBlock, self).run()                                         # calls 'BaseGet.run()'

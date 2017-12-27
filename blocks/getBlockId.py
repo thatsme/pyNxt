@@ -13,13 +13,13 @@ class GetBlockId(Parent):
             https://nxtwiki.org/wiki/The_Nxt_API#Get_Block_Id
 
             REQUEST
-            height : is the block height (N) (optional if block provided)
+            :param height : is the block height (N) (optional if block provided)
             :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
-            block : is the block ID (S)
-            lastBlock : is the last block ID on the blockchain (S) (applies if requireBlock is provided but not requireLastBlock)
-            requestProcessingTime : is the API request processing time (in millisec) (N)
+            :return block : is the block ID (S)
+            :return lastBlock : is the last block ID on the blockchain (S) (applies if requireBlock is provided but not requireLastBlock)
+            :return requestProcessingTime : is the API request processing time (in millisec) (N)
 
             Legenda :
                 ° the parameter are interchangeable on
@@ -39,8 +39,8 @@ class GetBlockId(Parent):
         """
 
         # Required parameters
-        self.height = height
-        self.rb = rb
+        self._height = height
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -49,6 +49,22 @@ class GetBlockId(Parent):
         self.data["height"] = self.height
 
         super(GetBlockId, self).__init__(rt="getBlockId", data=self.data, rb=self.rb)
+
+    @property
+    def height(self):
+        return self._height
+
+    @height.setter
+    def height(self, value):
+        self._height = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetBlockId, self).run()                                         # calls 'BaseGet.run()'

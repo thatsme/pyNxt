@@ -42,11 +42,11 @@ class GetBlocks(Parent):
         """
 
         # Required parameters
-        self.timestamp = timestamp
-        self.includeTransactions = includeTransactions
-        self.includeExecutedPhased = includeExecutedPhased
-        self.ri = ri
-        self.rb = rb
+        self._timestamp = timestamp
+        self._includeTransactions = includeTransactions
+        self._includeExecutedPhased = includeExecutedPhased
+        self._ri = ri
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -60,6 +60,46 @@ class GetBlocks(Parent):
             self.data["includeExecutedPhased"] = self.includeExecutedPhased
 
         super(GetBlocks, self).__init__(rt="getBlocks", data=self.data, ri=self.ri, rb=self.rb)
+
+    @property
+    def timestamp(self):
+        return self._timestamp
+
+    @timestamp.setter
+    def timestamp(self, value):
+        self._timestamp = value
+
+    @property
+    def includeTransactions(self):
+        return self._includeTransactions
+
+    @includeTransactions.setter
+    def includeTransactions(self, value):
+        self._includeTransactions = value
+
+    @property
+    def includeExecutedPhased(self):
+        return self._includeExecutedPhased
+
+    @includeExecutedPhased.setter
+    def includeExecutedPhased(self, value):
+        self._includeExecutedPhased = value
+
+    @property
+    def ri(self):
+        return self._ri
+
+    @ri.setter
+    def ri(self, value):
+        self._ri = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetBlocks, self).run()                                         # calls 'BaseGet.run()'
