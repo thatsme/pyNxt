@@ -61,31 +61,24 @@ class DgsDelivery(Parent):
         """
 
         # Required parameters
-        self.purchase = purchase
-        self.discountNQT = discountNQT
-        self.goodsToEncrypt = goodsToEncrypt
-        self.goodsIsText = goodsIsText
-        self.goodsData = goodsData
-        self.goodsNonce = goodsNonce
-        self.publicKey = publicKey
-        self.secretPhrase = secretPhrase
-        if feeNQT == 0:
-            self.feeNQT = 100000000
-        else:
-            self.feeNQT = feeNQT
+        self._purchase = purchase
+        self._discountNQT = discountNQT
+        self._goodsToEncrypt = goodsToEncrypt
+        self._goodsIsText = goodsIsText
+        self._goodsData = goodsData
+        self._goodsNonce = goodsNonce
+        self._publicKey = publicKey
+        self._secretPhrase = secretPhrase
+        self._feeNQT = feeNQT
+        self._deadline = deadline
 
         # Optional parameters
-        self.referencedTransactionFullHash = referencedTransactionFullHash
-        self.broadcast = broadcast
+        self._referencedTransactionFullHash = referencedTransactionFullHash
+        self._broadcast = broadcast
 
-        if deadline == 0:
-            self.deadline = 60
-        else:
-            self.deadline = deadline
-
-        self.phasing = phasing
-        self.message = message
-        self.rec = rec
+        self._phasing = phasing
+        self._message = message
+        self._rec = rec
 
         # Initialize dictionary
         self.data = {}
@@ -114,6 +107,132 @@ class DgsDelivery(Parent):
             self.data["broadcast"] = self.broadcast
 
         super(DgsDelivery, self).__init__(rt="dgsDelivery", data=self.data, phasing=self.phasing, message=self.message, rec=self.rec)
+
+    @property
+    def purchase(self):
+        return self._purchase
+
+    @purchase.setter
+    def purchase(self, value):
+        self._purchase = value
+
+    @property
+    def discountNQT(self):
+        return self._discountNQT
+
+    @discountNQT.setter
+    def discountNQT(self, value):
+        self._discountNQT = value
+
+    @property
+    def goodsToEncrypt(self):
+        return self._goodsToEncrypt
+
+    @goodsToEncrypt.setter
+    def goodsToEncrypt(self, value):
+        self._goodsToEncrypt = value
+
+    @property
+    def goodsIsText(self):
+        return self._goodsIsText
+
+    @goodsIsText.setter
+    def goodsIsText(self, value):
+        self._goodsIsText = value
+
+    @property
+    def goodsData(self):
+        return self._goodsData
+
+    @goodsData.setter
+    def goodsData(self, value):
+        self._goodsData = value
+
+    @property
+    def goodsNonce(self):
+        return self._goodsNonce
+
+    @goodsNonce.setter
+    def goodsNonce(self, value):
+        self._goodsNonce = value
+
+    @property
+    def publicKey(self):
+        return self._publicKey
+
+    @publicKey.setter
+    def publicKey(self, value):
+        self._publicKey = value
+
+    @property
+    def secretPhrase(self):
+        return self._secretPhrase
+
+    @secretPhrase.setter
+    def secretPhrase(self, value):
+        self._secretPhrase = value
+
+    @property
+    def referencedTransactionFullHash(self):
+        return self._referencedTransactionFullHash
+
+    @referencedTransactionFullHash.setter
+    def referencedTransactionFullHash(self, value):
+        self._referencedTransactionFullHash = value
+
+    @property
+    def broadcast(self):
+        return self._broadcast
+
+    @broadcast.setter
+    def broadcast(self, value):
+        self._broadcast = value
+
+    @property
+    def feeNQT(self):
+        return self._feeNQT
+
+    @feeNQT.setter
+    def feeNQT(self, value):
+        if value == 0:
+            self._feeNQT = 100000000
+        else:
+            self._feeNQT = value
+
+    @property
+    def deadline(self):
+        return self._deadline
+
+    @deadline.setter
+    def deadline(self, value):
+        if value == 0:
+            self._deadline = 60
+        else:
+            self._deadline = value
+
+    @property
+    def phasing(self):
+        return self._phasing
+
+    @phasing.setter
+    def phasing(self, value):
+        self._phasing = value
+
+    @property
+    def message(self):
+        return self._message
+
+    @message.setter
+    def message(self, value):
+        self._message = value
+
+    @property
+    def rec(self):
+        return self._rec
+
+    @rec.setter
+    def rec(self, value):
+        self._rec = value
 
     def run(self):
         super(DgsDelivery, self).run()                # calls 'BasePost.run()'

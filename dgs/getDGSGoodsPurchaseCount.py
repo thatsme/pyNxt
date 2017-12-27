@@ -43,10 +43,10 @@ class GetDGSGoodsPurchaseCount(Parent):
 
         """
 
-        self.goods = goods
-        self.withPublicFeedbacksOnly = withPublicFeedbacksOnly
-        self.completed = completed
-        self.rb = rb
+        self._goods = goods
+        self._withPublicFeedbacksOnly = withPublicFeedbacksOnly
+        self._completed = completed
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -60,6 +60,38 @@ class GetDGSGoodsPurchaseCount(Parent):
             self.data["completed"] = completed
 
         super(GetDGSGoodsPurchaseCount, self).__init__(rt = "getDGSGoodsPurchaseCount", data=self.data, rb=self.rb)
+
+    @property
+    def goods(self):
+        return self._goods
+
+    @goods.setter
+    def goods(self, value):
+        self._goods = value
+
+    @property
+    def withPublicFeedbacksOnly(self):
+        return self._withPublicFeedbacksOnly
+
+    @withPublicFeedbacksOnly.setter
+    def withPublicFeedbacksOnly(self, value):
+        self._withPublicFeedbacksOnly = value
+
+    @property
+    def completed(self):
+        return self._completed
+
+    @completed.setter
+    def completed(self, value):
+        self._completed = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetDGSGoodsPurchaseCount, self).run()                           # calls 'BaseGet.run()'

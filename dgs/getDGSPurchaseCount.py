@@ -41,11 +41,11 @@ class GetDGSPurchaseCount  (Parent):
 
         """
 
-        self.seller = seller
-        self.buyer = buyer
-        self.withPublicFeedbacksOnly = withPublicFeedbacksOnly
-        self.completed = completed
-        self.rb = rb
+        self._seller = seller
+        self._buyer = buyer
+        self._withPublicFeedbacksOnly = withPublicFeedbacksOnly
+        self._completed = completed
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -60,6 +60,46 @@ class GetDGSPurchaseCount  (Parent):
             self.data["completed"] = completed
 
         super(GetDGSPurchaseCount, self).__init__(rt = "getDGSPurchaseCount", data=self.data, rb=self.rb)
+
+    @property
+    def seller(self):
+        return self._seller
+
+    @seller.setter
+    def seller(self, value):
+        self._seller = value
+
+    @property
+    def buyer(self):
+        return self._buyer
+
+    @buyer.setter
+    def buyer(self, value):
+        self._buyer = value
+
+    @property
+    def withPublicFeedbacksOnly(self):
+        return self._withPublicFeedbacksOnly
+
+    @withPublicFeedbacksOnly.setter
+    def withPublicFeedbacksOnly(self, value):
+        self._withPublicFeedbacksOnly = value
+
+    @property
+    def completed(self):
+        return self._completed
+
+    @completed.setter
+    def completed(self, value):
+        self._completed = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetDGSPurchaseCount, self).run()                           # calls 'BaseGet.run()'

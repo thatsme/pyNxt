@@ -47,14 +47,14 @@ class SearchDGSGoods(Parent):
                 (WP) Wrapper Meta-parameter
 
         """
-        self.query = query
-        self.tag = tag
-        self.seller = seller
-        self.inStockOnly = inStockOnly
-        self.hideDelisted = hideDelisted
-        self.includeCounts = includeCounts
-        self.ri = ri
-        self.rb = rb
+        self._query = query
+        self._tag = tag
+        self._seller = seller
+        self._inStockOnly = inStockOnly
+        self._hideDelisted = hideDelisted
+        self._includeCounts = includeCounts
+        self._ri = ri
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -71,6 +71,70 @@ class SearchDGSGoods(Parent):
             self.data["includeCounts"] = includeCounts
 
         super(SearchDGSGoods, self).__init__(rt = "searchDGSGoods", data=self.data, ri=self.ri, rb=self.rb)
+
+    @property
+    def query(self):
+        return self._query
+
+    @query.setter
+    def query(self, value):
+        self._query = value
+
+    @property
+    def tag(self):
+        return self._tag
+
+    @tag.setter
+    def tag(self, value):
+        self._tag = value
+
+    @property
+    def seller(self):
+        return self._seller
+
+    @seller.setter
+    def seller(self, value):
+        self._seller = value
+
+    @property
+    def inStockOnly(self):
+        return self._inStockOnly
+
+    @inStockOnly.setter
+    def inStockOnly(self, value):
+        self._inStockOnly = value
+
+    @property
+    def hideDelisted(self):
+        return self._hideDelisted
+
+    @hideDelisted.setter
+    def hideDelisted(self, value):
+        self._hideDelisted = value
+
+    @property
+    def includeCounts(self):
+        return self._includeCounts
+
+    @includeCounts.setter
+    def includeCounts(self, value):
+        self._includeCounts = value
+
+    @property
+    def ri(self):
+        return self._ri
+
+    @ri.setter
+    def ri(self, value):
+        self._ri = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(SearchDGSGoods, self).run()                           # calls 'BaseGet.run()'

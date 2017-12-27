@@ -45,10 +45,10 @@ class GetDGSTagsLike(Parent):
                 (WP) Wrapper Meta-parameter
 
         """
-        self.tagPrefix = tagPrefix
-        self.inStockOnly = inStockOnly
-        self.ri = ri
-        self.rb = rb
+        self._tagPrefix = tagPrefix
+        self._inStockOnly = inStockOnly
+        self._ri = ri
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -60,6 +60,39 @@ class GetDGSTagsLike(Parent):
             self.data["inStockOnly"] = inStockOnly
 
         super(GetDGSTagsLike, self).__init__(rt = "getDGSTagsLike", data=self.data, ri=self.ri, rb=self.rb)
+
+
+    @property
+    def tagPrefix(self):
+        return self._tagPrefix
+
+    @tagPrefix.setter
+    def tagPrefix(self, value):
+        self._tagPrefix = value
+
+    @property
+    def inStockOnly(self):
+        return self._inStockOnly
+
+    @inStockOnly.setter
+    def inStockOnly(self, value):
+        self._inStockOnly = value
+
+    @property
+    def ri(self):
+        return self._ri
+
+    @ri.setter
+    def ri(self, value):
+        self._ri = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetDGSTagsLike, self).run()                           # calls 'BaseGet.run()'

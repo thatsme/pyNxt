@@ -45,9 +45,9 @@ class GetDGSTags(Parent):
 
         """
 
-        self.inStockOnly = inStockOnly
-        self.ri = ri
-        self.rb = rb
+        self._inStockOnly = inStockOnly
+        self._ri = ri
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -58,6 +58,30 @@ class GetDGSTags(Parent):
             self.data["inStockOnly"] = inStockOnly
 
         super(GetDGSTags, self).__init__(rt = "getDGSTags", data=self.data, ri=self.ri, rb=self.rb)
+
+    @property
+    def inStockOnly(self):
+        return self._inStockOnly
+
+    @inStockOnly.setter
+    def inStockOnly(self, value):
+        self._inStockOnly = value
+
+    @property
+    def ri(self):
+        return self._ri
+
+    @ri.setter
+    def ri(self, value):
+        self._ri = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetDGSTags, self).run()                           # calls 'BaseGet.run()'

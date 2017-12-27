@@ -58,9 +58,9 @@ class GetDGSPurchase(Parent):
 
         """
 
-        self.purchase = purchase
-        self.sharedKey = sharedKey
-        self.rb = rb
+        self._purchase = purchase
+        self._sharedKey = sharedKey
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -72,6 +72,30 @@ class GetDGSPurchase(Parent):
             self.data["sharedKey"] = self.sharedKey
 
         super(GetDGSPurchase, self).__init__(rt = "getDGSPurchase", data=self.data, rb=self.rb)
+
+    @property
+    def purchase(self):
+        return self._purchase
+
+    @purchase.setter
+    def purchase(self, value):
+        self._purchase = value
+
+    @property
+    def sharedKey(self):
+        return self._sharedKey
+
+    @sharedKey.setter
+    def sharedKey(self, value):
+        self._sharedKey = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetDGSPurchase, self).run()                           # calls 'BaseGet.run()'

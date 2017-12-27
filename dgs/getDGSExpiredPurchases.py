@@ -39,9 +39,9 @@ class GetDGSExpiredPurchases(Parent):
 
         """
 
-        self.seller = seller
-        self.ri = ri
-        self.rb = rb
+        self._seller = seller
+        self._ri = ri
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -50,6 +50,30 @@ class GetDGSExpiredPurchases(Parent):
         self.data["seller"] = seller
 
         super(GetDGSExpiredPurchases, self).__init__(rt = "getDGSExpiredPurchases", data=self.data, ri = self.ri, rb=self.rb)
+
+    @property
+    def seller(self):
+        return self._seller
+
+    @seller.setter
+    def seller(self, value):
+        self._seller = value
+
+    @property
+    def ri(self):
+        return self._ri
+
+    @ri.setter
+    def ri(self, value):
+        self._ri = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetDGSExpiredPurchases, self).run()                           # calls 'BaseGet.run()'

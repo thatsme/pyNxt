@@ -66,29 +66,22 @@ class DgsPurchase(Parent):
         """
 
         # Required parameters
-        self.goods = goods
-        self.priceNQT = priceNQT
-        self.quantity = quantity
-        self.deliveryDeadlineTimestamp = deliveryDeadlineTimestamp
-        self.publicKey = publicKey
-        self.secretPhrase = secretPhrase
-        if feeNQT == 0:
-            self.feeNQT = 100000000
-        else:
-            self.feeNQT = feeNQT
+        self._goods = goods
+        self._priceNQT = priceNQT
+        self._quantity = quantity
+        self._deliveryDeadlineTimestamp = deliveryDeadlineTimestamp
+        self._publicKey = publicKey
+        self._secretPhrase = secretPhrase
+        self._feeNQT = feeNQT
+        self._deadline = deadline
 
         # Optional parameters
-        self.referencedTransactionFullHash = referencedTransactionFullHash
-        self.broadcast = broadcast
+        self._referencedTransactionFullHash = referencedTransactionFullHash
+        self._broadcast = broadcast
 
-        if deadline == 0:
-            self.deadline = 60
-        else:
-            self.deadline = deadline
-
-        self.phasing = phasing
-        self.message = message
-        self.rec = rec
+        self._phasing = phasing
+        self._message = message
+        self._rec = rec
 
         # Initialize dictionary
         self.data = {}
@@ -112,6 +105,116 @@ class DgsPurchase(Parent):
             self.data["broadcast"] = self.broadcast
 
         super(DgsPurchase, self).__init__(rt="dgsPurchase", data=self.data, phasing=self.phasing, message=self.message, rec=self.rec)
+
+    @property
+    def goods(self):
+        return self._goods
+
+    @goods.setter
+    def goods(self, value):
+        self._goods = value
+
+    @property
+    def priceNQT(self):
+        return self._priceNQT
+
+    @priceNQT.setter
+    def priceNQT(self, value):
+        self._priceNQT = value
+
+    @property
+    def quantity(self):
+        return self._quantity
+
+    @quantity.setter
+    def quantity(self, value):
+        self._quantity = value
+
+    @property
+    def deliveryDeadlineTimestamp(self):
+        return self._deliveryDeadlineTimestamp
+
+    @deliveryDeadlineTimestamp.setter
+    def deliveryDeadlineTimestamp(self, value):
+        self._deliveryDeadlineTimestamp = value
+
+    @property
+    def publicKey(self):
+        return self._publicKey
+
+    @publicKey.setter
+    def publicKey(self, value):
+        self._publicKey = value
+
+    @property
+    def secretPhrase(self):
+        return self._secretPhrase
+
+    @secretPhrase.setter
+    def secretPhrase(self, value):
+        self._secretPhrase = value
+
+    @property
+    def referencedTransactionFullHash(self):
+        return self._referencedTransactionFullHash
+
+    @referencedTransactionFullHash.setter
+    def referencedTransactionFullHash(self, value):
+        self._referencedTransactionFullHash = value
+
+    @property
+    def broadcast(self):
+        return self._broadcast
+
+    @broadcast.setter
+    def broadcast(self, value):
+        self._broadcast = value
+
+    @property
+    def feeNQT(self):
+        return self._feeNQT
+
+    @feeNQT.setter
+    def feeNQT(self, value):
+        if value == 0:
+            self._feeNQT = 100000000
+        else:
+            self._feeNQT = value
+
+    @property
+    def deadline(self):
+        return self._deadline
+
+    @deadline.setter
+    def deadline(self, value):
+        if value == 0:
+            self._deadline = 60
+        else:
+            self._deadline = value
+
+    @property
+    def phasing(self):
+        return self._phasing
+
+    @phasing.setter
+    def phasing(self, value):
+        self._phasing = value
+
+    @property
+    def message(self):
+        return self._message
+
+    @message.setter
+    def message(self, value):
+        self._message = value
+
+    @property
+    def rec(self):
+        return self._rec
+
+    @rec.setter
+    def rec(self, value):
+        self._rec = value
 
     def run(self):
         super(DgsPurchase, self).run()                           # calls 'BasePost.run()'

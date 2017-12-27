@@ -13,7 +13,7 @@ class GetDGSTagCount(Parent):
             https://nxtwiki.org/wiki/The_Nxt_API#Get_DGS_Tag_Count
 
             REQUEST
-            :param completed : is true if only completed purchase orders are to be included (B) (O)
+            :param inStockOnly : is false if tags with no associated in-stock products are to be included (B)
             :param rb : rb object ( check base/Rb.py) (WP)
 
             Note: If none of the optional parameters are specified, all in-stock products in the blockchain
@@ -41,8 +41,8 @@ class GetDGSTagCount(Parent):
 
         """
 
-        self.inStockOnly = inStockOnly
-        self.rb = rb
+        self._inStockOnly = inStockOnly
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -52,6 +52,22 @@ class GetDGSTagCount(Parent):
             self.data["inStockOnly"] = inStockOnly
 
         super(GetDGSTagCount, self).__init__(rt = "getDGSTagCount", data=self.data, rb=self.rb)
+
+    @property
+    def inStockOnly(self):
+        return self._inStockOnly
+
+    @inStockOnly.setter
+    def inStockOnly(self, value):
+        self._inStockOnly = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetDGSTagCount, self).run()                           # calls 'BaseGet.run()'

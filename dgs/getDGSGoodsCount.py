@@ -43,10 +43,10 @@ class GetDGSGoodsCount(Parent):
 
         """
 
-        self.seller = seller
-        self.inStockOnly = inStockOnly
-        self.ri = ri
-        self.rb = rb
+        self._seller = seller
+        self._inStockOnly = inStockOnly
+        self._ri = ri
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -58,6 +58,38 @@ class GetDGSGoodsCount(Parent):
             self.data["inStockOnly"] = inStockOnly
 
         super(GetDGSGoodsCount, self).__init__(rt = "getDGSGoodsCount", data=self.data, ri=self.ri, rb=self.rb)
+
+    @property
+    def seller(self):
+        return self._seller
+
+    @seller.setter
+    def seller(self, value):
+        self._seller = value
+
+    @property
+    def inStockOnly(self):
+        return self._inStockOnly
+
+    @inStockOnly.setter
+    def inStockOnly(self, value):
+        self._inStockOnly = value
+
+    @property
+    def ri(self):
+        return self._ri
+
+    @ri.setter
+    def ri(self, value):
+        self._ri = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetDGSGoodsCount, self).run()                           # calls 'BaseGet.run()'

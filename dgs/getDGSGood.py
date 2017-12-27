@@ -52,10 +52,10 @@ class GetDGSGood(Parent):
 
         """
 
-        self.goods = goods
-        self.includeCounts = includeCounts
-        self.ri = ri
-        self.rb = rb
+        self._goods = goods
+        self._includeCounts = includeCounts
+        self._ri = ri
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -67,6 +67,38 @@ class GetDGSGood(Parent):
             self.data["includeCounts"] = includeCounts
 
         super(GetDGSGood, self).__init__(rt = "getDGSGood", data=self.data, ri=self.ri, rb=self.rb)
+
+    @property
+    def goods(self):
+        return self._goods
+
+    @goods.setter
+    def goods(self, value):
+        self._goods = value
+
+    @property
+    def includeCounts(self):
+        return self._includeCounts
+
+    @includeCounts.setter
+    def includeCounts(self, value):
+        self._includeCounts = value
+
+    @property
+    def ri(self):
+        return self._ri
+
+    @ri.setter
+    def ri(self, value):
+        self._ri = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetDGSGood, self).run()                           # calls 'BaseGet.run()'
