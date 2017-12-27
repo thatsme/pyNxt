@@ -38,7 +38,7 @@ class GetForging(Parent):
         """
 
         # Required parameters
-        self.secretPhrase = secretPhrase
+        self._secretPhrase = secretPhrase
 
         # Initialize dictionary
         self.data = {}
@@ -49,6 +49,15 @@ class GetForging(Parent):
             self.data["secretPhrase"] = self.secretPhrase
 
         super(GetForging, self).__init__(rt="getForging", data=self.data)
+
+    @property
+    def secretPhrase(self):
+        return self._secretPhrase
+
+    @secretPhrase.setter
+    def secretPhrase(self, value):
+        self._secretPhrase = value
+
 
     def run(self):
         super(GetForging, self).run()                # calls 'BasePost.run()'

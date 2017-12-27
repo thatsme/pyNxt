@@ -50,8 +50,7 @@ class GetNextBlockGenerators(Parent):
 
         """
 
-
-        self.limit = limit
+        self._limit = limit
 
         # Initialize dictionary
         self.data = {}
@@ -59,8 +58,15 @@ class GetNextBlockGenerators(Parent):
         ## Create data dictionary
         self.data["limit"] = limit
 
-
         super(GetNextBlockGenerators, self).__init__(rt = "getNextBlockGenerators", data=self.data)
+
+    @property
+    def limit(self):
+        return self._limit
+
+    @limit.setter
+    def limit(self, value):
+        self._limit = value
 
     def run(self):
         super(GetNextBlockGenerators, self).run()                             # calls 'BaseGet.run()'
