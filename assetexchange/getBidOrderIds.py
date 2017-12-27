@@ -41,9 +41,9 @@ class GetBidOrderIds(Parent):
         """
 
         # Required parameters
-        self.asset = asset
-        self.ri = ri
-        self.rb = rb
+        self._asset = asset
+        self._ri = ri
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -53,6 +53,30 @@ class GetBidOrderIds(Parent):
         self.data["asset"] = self.asset
 
         super(GetBidOrderIds, self).__init__(rt="getBidOrderIds", data=self.data, ri=self.ri, rb=self.rb)
+
+    @property
+    def asset(self):
+        return self._asset
+
+    @asset.setter
+    def asset(self, value):
+        self._asset = value
+
+    @property
+    def ri(self):
+        return self._ri
+
+    @ri.setter
+    def ri(self, value):
+        self._ri = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetBidOrderIds, self).run()                                         # calls 'BaseGet.run()'

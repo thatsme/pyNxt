@@ -60,11 +60,11 @@ class GetOrderTrades(Parent):
         """
 
         # Required parameters
-        self.askOrder = askOrder
-        self.bidOrder = bidOrder
-        self.includeCounts = includeCounts
-        self.ri = ri
-        self.rb = rb
+        self._askOrder = askOrder
+        self._bidOrder = bidOrder
+        self._includeCounts = includeCounts
+        self._ri = ri
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -77,6 +77,46 @@ class GetOrderTrades(Parent):
             self.data["includeCounts"] = self.includeCounts
 
         super(GetOrderTrades, self).__init__(rt="getOrderTrades", data=self.data, ri=self.ri, rb=self.rb)
+
+    @property
+    def askOrder(self):
+        return self._askOrder
+
+    @askOrder.setter
+    def askOrder(self, value):
+        self._askOrder = value
+
+    @property
+    def bidOrder(self):
+        return self._bidOrder
+
+    @bidOrder.setter
+    def bidOrder(self, value):
+        self._bidOrder = value
+
+    @property
+    def includeCounts(self):
+        return self._includeCounts
+
+    @includeCounts.setter
+    def includeCounts(self, value):
+        self._includeCounts = value
+
+    @property
+    def ri(self):
+        return self._ri
+
+    @ri.setter
+    def ri(self, value):
+        self._ri = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetOrderTrades, self).run()                                         # calls 'BaseGet.run()'

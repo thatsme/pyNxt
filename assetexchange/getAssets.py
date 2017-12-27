@@ -3,7 +3,7 @@ from base.BaseGet import BaseGet as Parent
 
 class GetAssets(Parent):
 
-    def __init__(self,asset=None, includeCounts=False, ri=None, rb=None ):
+    def __init__(self,assets=None, includeCounts=False, ri=None, rb=None ):
         """
             Get asset information given multiple asset IDs
 
@@ -14,7 +14,7 @@ class GetAssets(Parent):
             https://nxtwiki.org/wiki/The_Nxt_API#Get_Assets
 
             REQUEST
-            :param accounts : is array (A) of asset ID's (S) / Multiaccount parameters (3)
+            :param assets : is array (A) of asset ID's (S) / Multiaccount parameters (3)
             :param includeCounts : is true if the fields beginning with numberOf... are to be included (B) (O)
             :param ri : ri object ( check base/Ri.py) (WP)
             :param rb : rb object ( check base/Rb.py) (WP)
@@ -41,13 +41,10 @@ class GetAssets(Parent):
 
         """
 
-        self.assets = [None]*3
-        for a in asset[:3]:
-            self.assets.append(a)
-
-        self.includeCounts = includeCounts
-        self.ri = ri
-        self.rb = rb
+        self._assets = assets
+        self._includeCounts = includeCounts
+        self._ri = ri
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -60,6 +57,41 @@ class GetAssets(Parent):
             self.data["includeCounts"] = self.includeCounts
 
         super(GetAssets, self).__init__(rt = "getAssets", data=self.data, ri=self.ri, rb=self.rb)
+
+    @property
+    def assets(self):
+        return self._assets
+
+    @assets.setter
+    def assets(self, value):
+        self._tassets = [None]*3
+        for a in value[:3]:
+            self.tassets.append(a)
+        self._assets = self._tassets
+
+    @property
+    def includeCounts(self):
+        return self._includeCounts
+
+    @includeCounts.setter
+    def includeCounts(self, value):
+        self._includeCounts = value
+
+    @property
+    def ri(self):
+        return self._ri
+
+    @ri.setter
+    def ri(self, value):
+        self._ri = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetAssets, self).run()                                # calls 'BaseGet.run()'

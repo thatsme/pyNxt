@@ -60,29 +60,22 @@ class PlaceAskOrder(Parent):
         """
 
         # Required parameters
-        self.asset = asset
-        self.quantityQNT = quantityQNT
-        self.priceNQT = priceNQT
-        self.publicKey = publicKey
-        self.secretPhrase = secretPhrase
-        if feeNQT == 0:
-            self.feeNQT = 100000000
-        else:
-            self.feeNQT = feeNQT
+        self._asset = asset
+        self._quantityQNT = quantityQNT
+        self._priceNQT = priceNQT
+        self._publicKey = publicKey
+        self._secretPhrase = secretPhrase
+        self._feeNQT = feeNQT
+        self._deadline = deadline
 
         # Optional parameters
-        self.referencedTransactionFullHash = referencedTransactionFullHash
-        self.broadcast = broadcast
+        self._referencedTransactionFullHash = referencedTransactionFullHash
+        self._broadcast = broadcast
 
-        if deadline == 0:
-            self.deadline = 60
-        else:
-            self.deadline = deadline
-
-        self.phasing = phasing
-        self.message = message
-        self.recipientPublicKey = recipientPublicKey
-        self.rec = rec
+        self._phasing = phasing
+        self._message = message
+        self._recipientPublicKey = recipientPublicKey
+        self._rec = rec
 
         # Initialize dictionary
         self.data = {}
@@ -107,6 +100,108 @@ class PlaceAskOrder(Parent):
             self.data["recipientPublicKey"] = self.recipientPublicKey
 
         super(PlaceAskOrder, self).__init__(rt="placeAskOrder", data=self.data, phasing=self.phasing, message=self.message, rec=self.rec)
+
+    @property
+    def assets(self):
+        return self._assets
+
+    @assets.setter
+    def assets(self, value):
+        self._assets = value
+
+    @property
+    def quantityQNT(self):
+        return self._quantityQNT
+
+    @quantityQNT.setter
+    def quantityQNT(self, value):
+        self._quantityQNT = value
+
+    @property
+    def priceNQT(self):
+        return self._priceNQT
+
+    @priceNQT.setter
+    def priceNQT(self, value):
+        self._priceNQT = value
+
+    @property
+    def publicKey(self):
+        return self._publicKey
+
+    @publicKey.setter
+    def publicKey(self, value):
+        self._publicKey = value
+
+    @property
+    def secretPhrase(self):
+        return self._secretPhrase
+
+    @secretPhrase.setter
+    def secretPhrase(self, value):
+        self._secretPhrase = value
+
+    @property
+    def referencedTransactionFullHash(self):
+        return self._referencedTransactionFullHash
+
+    @referencedTransactionFullHash.setter
+    def referencedTransactionFullHash(self, value):
+        self._referencedTransactionFullHash = value
+
+    @property
+    def feeNQT(self):
+        return self._feeNQT
+
+    @feeNQT.setter
+    def feeNQT(self, value):
+        if value == 0:
+            self._feeNQT = 100000000
+        else:
+            self._feeNQT = value
+
+    @property
+    def deadline(self):
+        return self._deadline
+
+    @deadline.setter
+    def deadline(self, value):
+        if value == 0:
+            self._deadline = 60
+        else:
+            self._deadline = value
+
+    @property
+    def phasing(self):
+        return self._phasing
+
+    @phasing.setter
+    def phasing(self, value):
+        self._phasing = value
+
+    @property
+    def message(self):
+        return self._message
+
+    @message.setter
+    def message(self, value):
+        self._message = value
+
+    @property
+    def rec(self):
+        return self._rec
+
+    @rec.setter
+    def rec(self, value):
+        self._rec = value
+
+    @property
+    def recipientPublicKey(self):
+        return self._recipientPublicKey
+
+    @recipientPublicKey.setter
+    def recipientPublicKey(self, value):
+        self._recipientPublicKey = value
 
     def run(self):
         super(PlaceAskOrder, self).run()                # calls 'BasePost.run()'

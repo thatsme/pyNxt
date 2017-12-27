@@ -41,9 +41,9 @@ class GetAskOrderIds(Parent):
         """
 
         # Required parameters
-        self.asset = asset
-        self.ri = ri
-        self.rb = rb
+        self._asset = asset
+        self._ri = ri
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -53,6 +53,30 @@ class GetAskOrderIds(Parent):
         self.data["asset"] = self.asset
 
         super(GetAskOrderIds, self).__init__(rt="getAskOrderIds", data=self.data, ri=self.ri, rb=self.rb)
+
+    @property
+    def asset(self):
+        return self._asset
+
+    @asset.setter
+    def asset(self, value):
+        self._asset = value
+
+    @property
+    def ri(self):
+        return self._ri
+
+    @ri.setter
+    def ri(self, value):
+        self._ri = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetAskOrderIds, self).run()                                         # calls 'BaseGet.run()'

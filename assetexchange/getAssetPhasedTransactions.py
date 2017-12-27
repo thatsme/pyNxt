@@ -78,11 +78,11 @@ class GetAssetPhasedTransactions(Parent):
         """
 
         # Required parameters
-        self.asset = asset
-        self.account = account
-        self.withoutWitelist = withoutWitelist
-        self.ri = ri
-        self.rb = rb
+        self._asset = asset
+        self._account = account
+        self._withoutWitelist = withoutWitelist
+        self._ri = ri
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -95,6 +95,46 @@ class GetAssetPhasedTransactions(Parent):
             self.data["withoutWitelist"] = self.withoutWitelist
 
         super(GetAssetPhasedTransactions, self).__init__(rt="getAssetPhasedTransactions", data=self.data, ri=self.ri, rb=self.rb)
+
+    @property
+    def asset(self):
+        return self._asset
+
+    @asset.setter
+    def asset(self, value):
+        self._asset = value
+
+    @property
+    def account(self):
+        return self._account
+
+    @account.setter
+    def account(self, value):
+        self._account = value
+
+    @property
+    def withoutWitelist(self):
+        return self._withoutWitelist
+
+    @withoutWitelist.setter
+    def withoutWitelist(self, value):
+        self._withoutWitelist = value
+
+    @property
+    def ri(self):
+        return self._ri
+
+    @ri.setter
+    def ri(self, value):
+        self._ri = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetAssetPhasedTransactions, self).run()                                         # calls 'BaseGet.run()'

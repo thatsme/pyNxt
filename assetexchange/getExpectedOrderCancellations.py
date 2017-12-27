@@ -44,12 +44,20 @@ class GetExpectedOrderCancellations(Parent):
         """
 
         # Required parameters
-        self.rb = rb
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
 
         super(GetExpectedOrderCancellations, self).__init__(rt="getExpectedOrderCancellations", data=self.data, rb=self.rb)
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetExpectedOrderCancellations, self).run()                                         # calls 'BaseGet.run()'

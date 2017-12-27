@@ -48,11 +48,11 @@ class GetExpectedAskOrders(Parent):
         """
 
         # Required parameters
-        self.asset = asset
-        self.sortByPrice = sortByPrice
-        self.showExpectedCancellations = showExpectedCancellations
-        self.ri = ri
-        self.rb = rb
+        self._asset = asset
+        self._sortByPrice = sortByPrice
+        self._showExpectedCancellations = showExpectedCancellations
+        self._ri = ri
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -66,6 +66,46 @@ class GetExpectedAskOrders(Parent):
             self.data["showExpectedCancellations"] = self.showExpectedCancellations
 
         super(GetExpectedAskOrders, self).__init__(rt="getExpectedAskOrders", data=self.data, ri=self.ri, rb=self.rb)
+
+    @property
+    def asset(self):
+        return self._asset
+
+    @asset.setter
+    def asset(self, value):
+        self._asset = value
+
+    @property
+    def sortByPrice(self):
+        return self._sortByPrice
+
+    @sortByPrice.setter
+    def sortByPrice(self, value):
+        self._sortByPrice = value
+
+    @property
+    def showExpectedCancellations(self):
+        return self._showExpectedCancellations
+
+    @showExpectedCancellations.setter
+    def showExpectedCancellations(self, value):
+        self._showExpectedCancellations = value
+
+    @property
+    def ri(self):
+        return self._ri
+
+    @ri.setter
+    def ri(self, value):
+        self._ri = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetExpectedAskOrders, self).run()                                         # calls 'BaseGet.run()'

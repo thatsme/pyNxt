@@ -3,7 +3,7 @@ from base.BaseGet import BaseGet as Parent
 
 class SearchAssets(Parent):
 
-    def __init__(self, query=None, ri=None, rb=None ):
+    def __init__(self, query=None, includeCounts=False, ri=None, rb=None ):
         """
             Get assets having a name or description that match a given query in reverse relevance order.
 
@@ -15,7 +15,7 @@ class SearchAssets(Parent):
 
             REQUEST
             :param query : is a full text query on the asset fields name (S) and description (S) in the standard Lucene syntax
-            :param firstIndex : is a zero-based index to the first block ID to retrieve (N) (O)
+            :param includeCounts : is true if the fields beginning with numberOf... are to be included (O)
             :param ri : ri object ( check base/Ri.py) (WP)
             :param rb : rb object ( check base/Rb.py) (WP)
 
@@ -41,9 +41,10 @@ class SearchAssets(Parent):
 
         """
 
-        self.query = query
-        self.ri = ri
-        self.rb = rb
+        self._query = query
+        self._includeCounts = includeCounts
+        self._ri = ri
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -52,6 +53,38 @@ class SearchAssets(Parent):
         self.data["query"] = query
 
         super(SearchAssets, self).__init__(rt = "searchAssets", data=self.data, ri=self.ri, rb=self.rb)
+
+    @property
+    def query(self):
+        return self._query
+
+    @query.setter
+    def query(self, value):
+        self._query = value
+
+    @property
+    def includeCounts(self):
+        return self._includeCounts
+
+    @includeCounts.setter
+    def includeCounts(self, value):
+        self._includeCounts = value
+
+    @property
+    def ri(self):
+        return self._ri
+
+    @ri.setter
+    def ri(self, value):
+        self._ri = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(SearchAssets, self).run()                   # calls 'BaseGet.run()'

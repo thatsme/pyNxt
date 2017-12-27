@@ -40,8 +40,8 @@ class GetAssetIds(Parent):
         """
 
         # Required parameters
-        self.ri = ri
-        self.rb = rb
+        self._ri = ri
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -49,6 +49,22 @@ class GetAssetIds(Parent):
         ## Create data dictionary
 
         super(GetAssetIds, self).__init__(rt="getAssetIds", data=self.data, ri=self.ri, rb=self.rb)
+
+    @property
+    def ri(self):
+        return self._ri
+
+    @ri.setter
+    def ri(self, value):
+        self._ri = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetAssetIds, self).run()                                         # calls 'BaseGet.run()'

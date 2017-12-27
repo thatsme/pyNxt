@@ -2,7 +2,7 @@
 from base.BaseGet import BaseGet as Parent
 
 class GetAssetAccounts(Parent):
-    def __init__(self, asset=None, height=None, rb=None ):
+    def __init__(self, asset=None, height=None, ri=None, rb=None ):
         """
             Get the accounts that own an asset given the asset ID in reverse quantity order.
 
@@ -15,6 +15,7 @@ class GetAssetAccounts(Parent):
             REQUEST
             :param asset : is the asset ID (S)
             :param height : is the height of the blockchain to determine the accounts (N) (O) ( default is last block)
+            :param ri : ri object ( check base/Ri.py) (WP)
             :param rb : rb object ( check base/Rb.py) (WP)
 
             Note: If table trimming is enabled (default), the height must be within 1440 blocks of the last block.
@@ -48,9 +49,10 @@ class GetAssetAccounts(Parent):
         """
 
         # Required parameters
-        self.asset = asset
-        self.height = height
-        self.rb = rb
+        self._asset = asset
+        self._height = height
+        self._ri = ri
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -60,6 +62,38 @@ class GetAssetAccounts(Parent):
         self.data["height"] = self.height
 
         super(GetAssetAccounts, self).__init__(rt="getAssetAccounts", data=self.data, rb=self.rb)
+
+    @property
+    def asset(self):
+        return self._asset
+
+    @asset.setter
+    def asset(self, value):
+        self._asset = value
+
+    @property
+    def height(self):
+        return self._height
+
+    @height.setter
+    def height(self, value):
+        self._height = value
+
+    @property
+    def ri(self):
+        return self._ri
+
+    @ri.setter
+    def ri(self, value):
+        self._ri = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetAssetAccounts, self).run()                                         # calls 'BaseGet.run()'

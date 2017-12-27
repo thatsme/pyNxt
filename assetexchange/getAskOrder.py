@@ -49,8 +49,8 @@ class GetAskOrder(Parent):
         """
 
         # Required parameters
-        self.order = order
-        self.rb = rb
+        self._order = order
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -60,6 +60,22 @@ class GetAskOrder(Parent):
         self.data["order"] = self.order
 
         super(GetAskOrder, self).__init__(rt="getAskOrder", data=self.data, rb=self.rb)
+
+    @property
+    def order(self):
+        return self._order
+
+    @order.setter
+    def order(self, value):
+        self._order = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetAskOrder, self).run()                                         # calls 'BaseGet.run()'

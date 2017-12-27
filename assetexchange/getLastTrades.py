@@ -3,7 +3,7 @@ from base.BaseGet import BaseGet as Parent
 
 class GetLastTrades(Parent):
 
-    def __init__(self,asset=None, rb=None ):
+    def __init__(self,assets=None, rb=None ):
         """
             Get asset information given multiple asset IDs
 
@@ -14,7 +14,7 @@ class GetLastTrades(Parent):
             https://nxtwiki.org/wiki/The_Nxt_API#Get_Last_Trades
 
             REQUEST
-            :param asset : is array (A) of asset ID's (S) / Multiaccount parameters (3)
+            :param assets : is array (A) of asset ID's (S) / Multiaccount parameters (3)
             :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
@@ -38,12 +38,8 @@ class GetLastTrades(Parent):
 
         """
 
-        self.assets = [None]*3
-        for a in asset[:3]:
-            self.assets.append(a)
-
-        self.requireBlock = requireBlock
-        self.requireLastBlock = requireLastBlock
+        self._assets = assets
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -58,6 +54,26 @@ class GetLastTrades(Parent):
             self.data["requireLastBlock"] = self.requireLastBlock
 
         super(GetLastTrades, self).__init__(rt = "getLastTrades", data=self.data)
+
+    @property
+    def assets(self):
+        return self._assets
+
+    @assets.setter
+    def assets(self, value):
+        self._tassets = [None]*3
+        for a in value[:3]:
+            self.tassets.append(a)
+        self._assets = self._tassetss
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
+
 
     def run(self):
         super(GetLastTrades, self).run()                                # calls 'BaseGet.run()'

@@ -50,9 +50,9 @@ class GetAsset(Parent):
         """
 
         # Required parameters
-        self.asset = asset
-        self.includeCounts = includeCounts
-        self.rb = rb
+        self._asset = asset
+        self._includeCounts = includeCounts
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -64,6 +64,30 @@ class GetAsset(Parent):
             self.data["includeCounts"] = self.includeCounts
 
         super(GetAsset, self).__init__(rt="getAsset", data=self.data, rb=self.rb)
+
+    @property
+    def asset(self):
+        return self._asset
+
+    @asset.setter
+    def asset(self, value):
+        self._asset = value
+
+    @property
+    def includeCounts(self):
+        return self._includeCounts
+
+    @includeCounts.setter
+    def includeCounts(self, value):
+        self._includeCounts = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetAsset, self).run()                                         # calls 'BaseGet.run()'

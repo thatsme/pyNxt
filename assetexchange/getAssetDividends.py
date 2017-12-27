@@ -52,11 +52,11 @@ class GetAssetDividends(Parent):
         """
 
         # Required parameters
-        self.asset = asset
-        self.timestamp = timestamp
-        self.adminPassword = adminPassword
-        self.ri = ri
-        self.rb = rb
+        self._asset = asset
+        self._timestamp = timestamp
+        self._adminPassword = adminPassword
+        self._ri = ri
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -69,6 +69,54 @@ class GetAssetDividends(Parent):
             self.data["adminPassword"] = self.adminPassword
 
         super(GetAssetDividends, self).__init__(rt="getAssetDividends", data=self.data, ri=self.ri, rb=self.rb)
+
+    @property
+    def asset(self):
+        return self._asset
+
+    @asset.setter
+    def asset(self, value):
+        self._asset = value
+
+    @property
+    def account(self):
+        return self._account
+
+    @account.setter
+    def account(self, value):
+        self._account = value
+
+    @property
+    def timestamp(self):
+        return self._timestamp
+
+    @timestamp.setter
+    def timestamp(self, value):
+        self._timestamp = value
+
+    @property
+    def adminPassword(self):
+        return self._adminPassword
+
+    @adminPassword.setter
+    def adminPassword(self, value):
+        self._adminPassword = value
+
+    @property
+    def ri(self):
+        return self._ri
+
+    @ri.setter
+    def ri(self, value):
+        self._ri = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetAssetDividends, self).run()                                         # calls 'BaseGet.run()'

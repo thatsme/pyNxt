@@ -2,7 +2,7 @@
 from base.BaseGet import BaseGet as Parent
 
 class GetAssetAccountCount(Parent):
-    def __init__(self, asset=None, includeCounts=False, rb=None ):
+    def __init__(self, asset=None, height=False, rb=None ):
         """
             Get asset information given an asset ID.
 
@@ -13,7 +13,8 @@ class GetAssetAccountCount(Parent):
             https://nxtwiki.org/wiki/The_Nxt_API#Get_Asset_Account_Count
 
             REQUEST
-            :param includeCounts : is true if the fields beginning with numberOf... are to be included (B) (O)
+            :param asset : is the asset ID
+            :param height : height is the height of the blockchain to determine the account count (optional, default is last block)
             :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
@@ -49,9 +50,9 @@ class GetAssetAccountCount(Parent):
         """
 
         # Required parameters
-        self.asset = asset
-        self.includeCounts = includeCounts
-        self.rb = rb
+        self._asset = asset
+        self._height = height
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -63,6 +64,30 @@ class GetAssetAccountCount(Parent):
             self.data["includeCounts"] = self.includeCounts
 
         super(GetAssetAccountCount, self).__init__(rt="getAssetAccountCount", data=self.data, rb=self.rb)
+
+    @property
+    def asset(self):
+        return self._asset
+
+    @asset.setter
+    def asset(self, value):
+        self._asset = value
+
+    @property
+    def height(self):
+        return self._height
+
+    @height.setter
+    def height(self, value):
+        self._height = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetAssetAccountCount, self).run()                                         # calls 'BaseGet.run()'

@@ -53,12 +53,12 @@ class GetAssetDeletes(Parent):
         """
 
         # Required parameters
-        self.asset = asset
-        self.account = account
-        self.timestamp = timestamp
-        self.includeAssetInfo = includeAssetInfo
-        self.ri = ri
-        self.rb = rb
+        self._asset = asset
+        self._account = account
+        self._timestamp = timestamp
+        self._includeAssetInfo = includeAssetInfo
+        self._ri = ri
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -71,6 +71,54 @@ class GetAssetDeletes(Parent):
             self.data["includeAssetInfo"] = self.includeAssetInfo
 
         super(GetAssetDeletes, self).__init__(rt="getAssetDeletes", data=self.data, ri=self.ri, rb=self.rb)
+
+    @property
+    def asset(self):
+        return self._asset
+
+    @asset.setter
+    def asset(self, value):
+        self._asset = value
+
+    @property
+    def account(self):
+        return self._account
+
+    @account.setter
+    def account(self, value):
+        self._account = value
+
+    @property
+    def timestamp(self):
+        return self._timestamp
+
+    @timestamp.setter
+    def timestamp(self, value):
+        self._timestamp = value
+
+    @property
+    def includeAssetInfo(self):
+        return self._includeAssetInfo
+
+    @includeAssetInfo.setter
+    def includeAssetInfo(self, value):
+        self._includeAssetInfo = value
+
+    @property
+    def ri(self):
+        return self._ri
+
+    @ri.setter
+    def ri(self, value):
+        self._ri = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetAssetDeletes, self).run()                                         # calls 'BaseGet.run()'

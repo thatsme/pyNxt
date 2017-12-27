@@ -40,14 +40,31 @@ class GetAllOpenAskOrders(Parent):
         """
 
         # Required parameters
-        self.ri = ri
-        self.rb = rb
+        self._ri = ri
+        self._rb = rb
+
         # Initialize dictionary
         self.data = {}
 
         ## Create data dictionary
 
         super(GetAllOpenAskOrders, self).__init__(rt="getAllOpenAskOrders", data=self.data, ri=self.ri, rb=self.rb)
+
+    @property
+    def ri(self):
+        return self._ri
+
+    @ri.setter
+    def ri(self, value):
+        self._ri = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetAllOpenAskOrders, self).run()                                         # calls 'BaseGet.run()'

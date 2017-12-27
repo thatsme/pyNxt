@@ -56,27 +56,20 @@ class DividendPayment(Parent):
         """
 
         # Required parameters
-        self.asset = asset
-        self.height = height
-        self.amountNQTPerQNT = amountNQTPerQNT
-        self.publicKey = publicKey
-        self.secretPhrase = secretPhrase
-        if feeNQT == 0:
-            self.feeNQT = 100000000
-        else:
-            self.feeNQT = feeNQT
+        self._asset = asset
+        self._height = height
+        self._amountNQTPerQNT = amountNQTPerQNT
+        self._publicKey = publicKey
+        self._secretPhrase = secretPhrase
+        self._feeNQT = feeNQT
+        self._deadline = deadline
 
         # Optional parameters
-        self.referencedTransactionFullHash = referencedTransactionFullHash
-        self.broadcast = broadcast
+        self._referencedTransactionFullHash = referencedTransactionFullHash
+        self._broadcast = broadcast
 
-        if deadline == 0:
-            self.deadline = 60
-        else:
-            self.deadline = deadline
-
-        self.phasing = phasing
-        self.message = message
+        self._phasing = phasing
+        self._message = message
 
         # Initialize dictionary
         self.data = {}
@@ -98,6 +91,92 @@ class DividendPayment(Parent):
             self.data["broadcast"] = self.broadcast
 
         super(DividendPayment, self).__init__(rt="dividendPayment", data=self.data, phasing=self.phasing, message=self.message)
+
+    @property
+    def asset(self):
+        return self._asset
+
+    @asset.setter
+    def asset(self, value):
+        self._asset = value
+
+    @property
+    def height(self):
+        return self._height
+
+    @height.setter
+    def height(self, value):
+        self._height = value
+
+    @property
+    def amountNQTPerQNT(self):
+        return self._amountNQTPerQNT
+
+    @amountNQTPerQNT.setter
+    def amountNQTPerQNT(self, value):
+        self._amountNQTPerQNT = value
+
+    @property
+    def publicKey(self):
+        return self._publicKey
+
+    @publicKey.setter
+    def publicKey(self, value):
+        self._publicKey = value
+
+    @property
+    def secretPhrase(self):
+        return self._secretPhrase
+
+    @secretPhrase.setter
+    def secretPhrase(self, value):
+        self._secretPhrase = value
+
+    @property
+    def referencedTransactionFullHash(self):
+        return self._referencedTransactionFullHash
+
+    @referencedTransactionFullHash.setter
+    def referencedTransactionFullHash(self, value):
+        self._referencedTransactionFullHash = value
+
+    @property
+    def feeNQT(self):
+        return self._feeNQT
+
+    @feeNQT.setter
+    def feeNQT(self, value):
+        if value == 0:
+            self._feeNQT = 100000000
+        else:
+            self._feeNQT = value
+
+    @property
+    def deadline(self):
+        return self._deadline
+
+    @deadline.setter
+    def deadline(self, value):
+        if value == 0:
+            self._deadline = 60
+        else:
+            self._deadline = value
+
+    @property
+    def phasing(self):
+        return self._phasing
+
+    @phasing.setter
+    def phasing(self, value):
+        self._phasing = value
+
+    @property
+    def message(self):
+        return self._message
+
+    @message.setter
+    def message(self, value):
+        self._message = value
 
     def run(self):
         super(DividendPayment, self).run()                # calls 'BasePost.run()'
