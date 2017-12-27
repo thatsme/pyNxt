@@ -120,6 +120,14 @@ class CancelAskOrder(Parent):
         self._referencedTransactionFullHash = value
 
     @property
+    def broadcast(self):
+        return self._broadcast
+
+    @broadcast.setter
+    def broadcast(self, value):
+        self._broadcast = value
+
+    @property
     def feeNQT(self):
         return self._feeNQT
 
