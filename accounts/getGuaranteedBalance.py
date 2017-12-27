@@ -41,9 +41,9 @@ class GetGuaranteedBalance(Parent):
         """
 
 
-        self.account = account
-        self.numberOfConfirmations = numberOfConfirmations
-        self.rb = rb
+        self._account = account
+        self._numberOfConfirmations = numberOfConfirmations
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -55,6 +55,30 @@ class GetGuaranteedBalance(Parent):
             self.data["numberOfConfirmations"] = self.numberOfConfirmations
 
         super(GetGuaranteedBalance, self).__init__(rt = "getGuaranteedBalance", data=self.data, rb=self.rb)
+
+    @property
+    def account(self):
+        return self._account
+
+    @account.setter
+    def account(self, value):
+        self._account = value
+
+    @property
+    def numberOfConfirmations(self):
+        return self._numberOfConfirmations
+
+    @numberOfConfirmations.setter
+    def numberOfConfirmations(self, value):
+        self._numberOfConfirmations = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetGuaranteedBalance, self).run()                             # calls 'BaseGet.run()'

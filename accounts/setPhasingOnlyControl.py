@@ -64,37 +64,25 @@ class SetPhasingOnlyControl(Parent):
         """
 
         # Required parameters
-        self.controlVotingModel = controlVotingModel
-        self.controlQuorum = controlQuorum
-        self.controlMinBalance = controlMinBalance
-        self.controlMinBalanceModel = controlMinBalanceModel
-        self.controlHolding = controlHolding
-        self.controlMaxFee = controlMaxFee
-        self.controlMinDuration = controlMinDuration
-        self.controlMaxDuration = controlMaxDuration
+        self._controlVotingModel = controlVotingModel
+        self._controlQuorum = controlQuorum
+        self._controlMinBalance = controlMinBalance
+        self._controlMinBalanceModel = controlMinBalanceModel
+        self._controlHolding = controlHolding
+        self._controlMaxFee = controlMaxFee
+        self._controlMinDuration = controlMinDuration
+        self._controlMaxDuration = controlMaxDuration
+        self._controlWhiteListed = controlWhiteListed
+        self._publicKey = publicKey
+        self._secretPhrase = secretPhrase
+        self._referencedTransactionFullHash = referencedTransactionFullHash
+        self._broadcast = broadcast
+        self._feeNQT = feeNQT
+        self._deadline = deadline
 
-        self.cvl = [None] * 3
-        for a in controlWhiteListed[:3]:
-            self.cvl.append(a)
-
-        self.publicKey = publicKey
-        self.secretPhrase = secretPhrase
-        self.referencedTransactionFullHash = referencedTransactionFullHash
-        self.broadcast = broadcast
-
-        if feeNQT == 0:
-            self.feeNQT = 100000000
-        else:
-            self.feeNQT = feeNQT
-
-        if deadline == 0:
-            self.deadline = 60
-        else:
-            self.deadline = deadline
-
-        self.phasing = phasing
-        self.message = message
-        self.rec = rec
+        self._phasing = phasing
+        self._message = message
+        self._rec = rec
 
         # Initialize dictionary
         self.data = {}
@@ -135,6 +123,159 @@ class SetPhasingOnlyControl(Parent):
         self.data["broadcast"] = self.broadcast
 
         super(SetPhasingOnlyControl, self).__init__(rt="setPhasingOnlyControl", data=self.data, phasing=self.phasing, message=self.message, rec=self.rec)
+
+    @property
+    def controlVotingModel(self):
+        return self._controlVotingModel
+
+    @controlVotingModel.setter
+    def controlVotingModel(self, value):
+        self._controlVotingModel = value
+
+    @property
+    def controlQuorum(self):
+        return self._controlQuorum
+
+    @controlQuorum.setter
+    def controlQuorum(self, value):
+        self._controlQuorum = value
+
+    @property
+    def controlWhiteListed(self):
+        return self._controlWhiteListed
+
+    @controlWhiteListed.setter
+    def controlWhiteListed(self, value):
+        self._taccounts = [None]*3
+        for a in value[:3]:
+            self.taccounts.append(a)
+        self._controlWhiteListed = self._taccounts
+
+    @property
+    def controlMinBalance(self):
+        return self._controlMinBalance
+
+    @controlMinBalance.setter
+    def controlMinBalance(self, value):
+        self._controlMinBalance = value
+
+    @property
+    def controlMinBalanceModel(self):
+        return self._controlMinBalanceModel
+
+    @controlMinBalanceModel.setter
+    def controlMinBalanceModel(self, value):
+        self._controlMinBalanceModel = value
+
+    @property
+    def controlHolding(self):
+        return self._controlHolding
+
+    @controlHolding.setter
+    def controlHolding(self, value):
+        self._controlHolding = value
+
+    @property
+    def controlMaxFee(self):
+        return self._controlMaxFee
+
+    @controlMaxFee.setter
+    def controlMaxFee(self, value):
+        self._controlMaxFee = value
+
+    @property
+    def controlMinDuration(self):
+        return self._controlMinDuration
+
+    @controlMinDuration.setter
+    def controlMinDuration(self, value):
+        self._controlMinDuration = value
+
+    @property
+    def controlMaxDuration(self):
+        return self._controlMaxDuration
+
+    @controlMaxDuration.setter
+    def controlMaxDuration(self, value):
+        self._controlMaxDuration = value
+
+    @property
+    def publicKey(self):
+        return self._publicKey
+
+    @publicKey.setter
+    def publicKey(self, value):
+        self._publicKey = value
+
+    @property
+    def secretPhrase(self):
+        return self._secretPhrase
+
+    @secretPhrase.setter
+    def secretPhrase(self, value):
+        self._secretPhrase = value
+
+    @property
+    def referencedTransactionFullHash(self):
+        return self._referencedTransactionFullHash
+
+    @referencedTransactionFullHash.setter
+    def referencedTransactionFullHash(self, value):
+        self._referencedTransactionFullHash = value
+
+    @property
+    def broadcast(self):
+        return self._broadcast
+
+    @broadcast.setter
+    def broadcast(self, value):
+        self._broadcast = value
+
+    @property
+    def feeNQT(self):
+        return self._feeNQT
+
+    @feeNQT.setter
+    def feeNQT(self, value):
+        if value == 0:
+            self._feeNQT = 100000000
+        else:
+            self._feeNQT = value
+
+    @property
+    def deadline(self):
+        return self._deadline
+
+    @deadline.setter
+    def deadline(self, value):
+        if value == 0:
+            self._deadline = 60
+        else:
+            self._deadline = value
+
+    @property
+    def phasing(self):
+        return self._phasing
+
+    @phasing.setter
+    def phasing(self, value):
+        self._phasing = value
+
+    @property
+    def message(self):
+        return self._message
+
+    @message.setter
+    def message(self, value):
+        self._message = value
+
+    @property
+    def rec(self):
+        return self._rec
+
+    @rec.setter
+    def rec(self, value):
+        self._rec = value
 
     def run(self):
         super(SetPhasingOnlyControl, self).run()                         # calls 'BasePost.run()'

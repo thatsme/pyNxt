@@ -48,8 +48,8 @@ class GetPhasingOnlyControl(Parent):
                 (WP) Wrapper Meta-parameter
         """
 
-        self.account = account
-        self.rb = rb
+        self._account = account
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -58,6 +58,23 @@ class GetPhasingOnlyControl(Parent):
         self.data["accounts"] = account
 
         super(GetPhasingOnlyControl, self).__init__(rt = "getPhasingOnlyControl", data=self.data, rb=self.rb)
+
+
+    @property
+    def account(self):
+        return self._account
+
+    @account.setter
+    def account(self, value):
+        self._account = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetPhasingOnlyControl, self).run()               # calls 'BaseGet.run()'

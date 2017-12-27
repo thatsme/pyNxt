@@ -57,13 +57,13 @@ class GetFundingMonitor(Parent):
 
         """
 
-        self.secretPhrase = secretPhrase
-        self.adminPassword = adminPassword
-        self.includeMonitoredAccounts = includeMonitoredAccounts
-        self.property = property
-        self.holdingType = holdingType
-        self.holding = holding
-        self.account = account
+        self._secretPhrase = secretPhrase
+        self._adminPassword = adminPassword
+        self._includeMonitoredAccounts = includeMonitoredAccounts
+        self._property = property
+        self._holdingType = holdingType
+        self._holding = holding
+        self._account = account
 
         # Initialize dictionary
         self.data = {}
@@ -82,6 +82,62 @@ class GetFundingMonitor(Parent):
         self.data["account"] = self.account
 
         super(GetFundingMonitor, self).__init__(rt = "getFundingMonitor", data=self.data)
+
+    @property
+    def secretPhrase(self):
+        return self._secretPhrase
+
+    @secretPhrase.setter
+    def secretPhrase(self, value):
+        self._secretPhrase = value
+
+    @property
+    def adminPassword(self):
+        return self._adminPassword
+
+    @adminPassword.setter
+    def adminPassword(self, value):
+        self._adminPassword = value
+
+    @property
+    def includeMonitoredAccounts(self):
+        return self._includeMonitoredAccounts
+
+    @includeMonitoredAccounts.setter
+    def includeMonitoredAccounts(self, value):
+        self._includeMonitoredAccounts = value
+
+    @property
+    def property(self):
+        return self._property
+
+    @property.setter
+    def property(self, value):
+        self._property = value
+
+    @property
+    def holdingType(self):
+        return self._holdingType
+
+    @holdingType.setter
+    def holdingType(self, value):
+        self._holdingType = value
+
+    @property
+    def holding(self):
+        return self._holding
+
+    @holding.setter
+    def holding(self, value):
+        self._holding = value
+
+    @property
+    def account(self):
+        return self._account
+
+    @account.setter
+    def account(self, value):
+        self._account = value
 
     def run(self):
         super(GetFundingMonitor, self).run()                        # calls 'BaseGet.run()'

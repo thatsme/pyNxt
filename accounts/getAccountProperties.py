@@ -51,11 +51,11 @@ class GetAccountProperties(Parent):
 
         """
 
-        self.recipient = recipient
-        self.setter = setter
-        self.property = property
-        self.ri = ri
-        self.rb = rb
+        self._recipient = recipient
+        self._setter = setter
+        self._property = property
+        self._ri = ri
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -68,6 +68,46 @@ class GetAccountProperties(Parent):
             self.data["property"] = self.property
 
         super(GetAccountProperties, self).__init__(rt = "getAccountProperties", data=self.data, ri=self.ri, rb=self.rb)
+
+    @property
+    def recipient(self):
+        return self._recipient
+
+    @recipient.setter
+    def recipient(self, value):
+        self._recipient = value
+
+    @property
+    def setter(self):
+        return self._setter
+
+    @setter.setter
+    def setter(self, value):
+        self._setter = value
+
+    @property
+    def property(self):
+        return self._property
+
+    @property.setter
+    def property(self, value):
+        self._property = value
+
+    @property
+    def ri(self):
+        return self._ri
+
+    @ri.setter
+    def ri(self, value):
+        self._ri = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetAccountProperties, self).run()                               # calls 'BaseGet.run()'

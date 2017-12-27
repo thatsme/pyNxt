@@ -42,12 +42,12 @@ class GetPolls(Parent):
 
         """
 
-        self.account = account
-        self.timestamp = timestamp
-        self.includeFinished = includeFinished
-        self.finishedOnly = finishedOnly
-        self.ri = ri
-        self.rb = rb
+        self._account = account
+        self._timestamp = timestamp
+        self._includeFinished = includeFinished
+        self._finishedOnly = finishedOnly
+        self._ri = ri
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -60,6 +60,54 @@ class GetPolls(Parent):
         self.data["finishedOnly"] = self.finishedOnly
 
         super(GetPolls, self).__init__(rt = "getPolls", data=self.data, ri=self.ri, rb=self.rb)
+
+    @property
+    def account(self):
+        return self._account
+
+    @account.setter
+    def account(self, value):
+        self._account = value
+
+    @property
+    def timestamp(self):
+        return self._timestamp
+
+    @timestamp.setter
+    def timestamp(self, value):
+        self._timestamp = value
+
+    @property
+    def includeFinished(self):
+        return self._includeFinished
+
+    @includeFinished.setter
+    def includeFinished(self, value):
+        self._includeFinished = value
+
+    @property
+    def finishedOnly(self):
+        return self._finishedOnly
+
+    @finishedOnly.setter
+    def finishedOnly(self, value):
+        self._finishedOnly = value
+
+    @property
+    def ri(self):
+        return self._ri
+
+    @ri.setter
+    def ri(self, value):
+        self._r = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetPolls, self).run()               # calls 'BaseGet.run()'

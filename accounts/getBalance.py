@@ -45,10 +45,10 @@ class GetBalance(Parent):
 
         """
 
-        self.account = account
-        self.includeEffectiveBalance = includeEffectiveBalance
-        self.height = height
-        self.rb = rb
+        self._account = account
+        self._includeEffectiveBalance = includeEffectiveBalance
+        self._height = height
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -61,6 +61,38 @@ class GetBalance(Parent):
             self.data["height"] = self.height
 
         super(GetBalance, self).__init__(rt = "getBalance", data=self.data, rb=self.rb)
+
+    @property
+    def account(self):
+        return self._account
+
+    @account.setter
+    def account(self, value):
+        self._account = value
+
+    @property
+    def includeEffectiveBalance(self):
+        return self._includeEffectiveBalance
+
+    @includeEffectiveBalance.setter
+    def includeEffectiveBalance(self, value):
+        self._includeEffectiveBalance = value
+
+    @property
+    def height(self):
+        return self._height
+
+    @height.setter
+    def height(self, value):
+        self._height = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetBalance, self).run()               # calls 'BaseGet.run()'

@@ -43,9 +43,9 @@ class SearchAccounts(Parent):
 
         """
 
-        self.query = query
-        self.ri = ri
-        self.rb = rb
+        self._query = query
+        self._ri = ri
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -54,6 +54,30 @@ class SearchAccounts(Parent):
         self.data["query"] = query
 
         super(SearchAccounts, self).__init__(rt = "searchAccounts", data=self.data, ri=self.ri, rb=self.rb)
+
+    @property
+    def query(self):
+        return self._query
+
+    @query.setter
+    def query(self, value):
+        self._query = value
+
+    @property
+    def ri(self):
+        return self._ri
+
+    @ri.setter
+    def ri(self, value):
+        self._ri = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(SearchAccounts, self).run()                   # calls 'BaseGet.run()'

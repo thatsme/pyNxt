@@ -36,7 +36,7 @@ class GetScheduledTransactions(Parent):
 
         """
 
-        self.account = account
+        self._account = account
 
         # Initialize dictionary
         self.data = {}
@@ -45,6 +45,14 @@ class GetScheduledTransactions(Parent):
         self.data["accounts"] = account
 
         super(GetScheduledTransactions, self).__init__(rt = "getScheduledTransactions", data=self.data)
+
+    @property
+    def account(self):
+        return self._account
+
+    @account.setter
+    def account(self, value):
+        self._account = value
 
     def run(self):
         super(GetScheduledTransactions, self).run()                 # calls 'BaseGet.run()'

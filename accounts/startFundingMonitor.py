@@ -51,13 +51,13 @@ class StartFundingMonitor(Parent):
 
         """
 
-        self.property = property
-        self.amount = amount
-        self.threshold = threshold
-        self.interval = interval
-        self.secretPhrase = secretPhrase
-        self.holdingType = holdingType
-        self.holding = holding
+        self._property = property
+        self._amount = amount
+        self._threshold = threshold
+        self._interval = interval
+        self._secretPhrase = secretPhrase
+        self._holdingType = holdingType
+        self._holding = holding
 
         # Initialize dictionary
         self.data = {}
@@ -75,6 +75,62 @@ class StartFundingMonitor(Parent):
             self.data["holding"] = self.holding
 
         super(StartFundingMonitor, self).__init__(rt = "startFundingMonitor", data=self.data)
+
+    @property
+    def property(self):
+        return self._property
+
+    @property.setter
+    def property(self, value):
+        self._property = value
+
+    @property
+    def amount(self):
+        return self._amount
+
+    @amount.setter
+    def amount(self, value):
+        self._amount = value
+
+    @property
+    def threshold(self):
+        return self._threshold
+
+    @threshold.setter
+    def threshold(self, value):
+        self._threshold = value
+
+    @property
+    def interval(self):
+        return self._interval
+
+    @interval.setter
+    def interval(self, value):
+        self._interval = value
+
+    @property
+    def holding(self):
+        return self._holding
+
+    @holding.setter
+    def holding(self, value):
+        self._holding = value
+
+    @property
+    def holdingType(self):
+        return self._holdingType
+
+    @holdingType.setter
+    def holdingType(self, value):
+        self._holdingType = value
+
+    @property
+    def secretPhrase(self):
+        return self._secretPhrase
+
+    @secretPhrase.setter
+    def secretPhrase(self, value):
+        self._secretPhrase = value
 
     def run(self):
         super(StartFundingMonitor, self).run()                    # calls 'BasePost.run()'

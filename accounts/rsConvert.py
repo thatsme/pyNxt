@@ -13,7 +13,7 @@ class RsConvert(Parent):
             https://nxtwiki.org/wiki/The_Nxt_API#Get_Currencies_By_Issuer
 
             REQUEST
-            :param accounts : is an accounts ID (either RS address or number)
+            :param account : is an accounts ID (either RS address or number)
 
             RESPONSE
             :return accountRS : is the Reed-Solomon address of the accounts (S)
@@ -37,7 +37,7 @@ class RsConvert(Parent):
 
         """
 
-        self.account = account
+        self._account = account
 
         # Initialize dictionary
         self.data = {}
@@ -46,6 +46,14 @@ class RsConvert(Parent):
         self.data["accounts"] = account
 
         super(RsConvert, self).__init__(rt = "rsConvert", data=self.data)
+
+    @property
+    def account(self):
+        return self._account
+
+    @account.setter
+    def account(self, value):
+        self._account = value
 
     def run(self):
         super(RsConvert, self).run()               # calls 'BaseGet.run()'

@@ -43,6 +43,22 @@ class GetAllPhasingOnlyControl(Parent):
 
         super(GetAllPhasingOnlyControl, self).__init__(rt = "getAllPhasingOnlyControl", data=self.data, ri=self.ri, rb=self.rb)
 
+    @property
+    def ri(self):
+        return self._ri
+
+    @ri.setter
+    def ri(self, value):
+        self._ri = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
+
     def run(self):
         super(GetAllPhasingOnlyControl, self).run()                     # calls 'BaseGet.run()'
 

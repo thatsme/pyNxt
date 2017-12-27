@@ -3,7 +3,7 @@ from base.BaseGet import BaseGet as Parent
 
 class GetUnconfirmedTransactionIds(Parent):
 
-    def __init__(self, account=None, ri=None, rb=None):
+    def __init__(self, accounts=None, ri=None, rb=None):
         """
             Get a list of unconfirmed transaction IDs associated with an accounts.
 
@@ -13,7 +13,7 @@ class GetUnconfirmedTransactionIds(Parent):
             https://nxtwiki.org/wiki/The_Nxt_API#Get_Unconfirmed_Transaction_Ids
 
             REQUEST
-            :param accounts : is array (A) of accounts ID's (S) / Multiaccount parameters (3)
+            :param accountlist : is array (A) of accounts ID's (S) / Multiaccount parameters (3)
             :param ri : ri object ( check base/Ri.py) (WP)
             :param rb : rb object ( check base/Rb.py) (WP)
 
@@ -39,12 +39,9 @@ class GetUnconfirmedTransactionIds(Parent):
 
         """
 
-        self.accounts = [None]*3
-        for a in account[:3]:
-            self.accounts.append(a)
-
-        self.ri = ri
-        self.rb = rb
+        self._accounts = accounts
+        self._ri = ri
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -54,6 +51,34 @@ class GetUnconfirmedTransactionIds(Parent):
             self.data["accounts"] = a
 
         super(GetUnconfirmedTransactionIds, self).__init__(rt = "getUnconfirmedTransactionIds", data=self.data, ri=self.ri, rb=self.rb)
+
+    @property
+    def accounts(self):
+        return self._accounts
+
+    @accounts.setter
+    def accounts(self, value):
+        self._taccounts = [None]*3
+        for a in value[:3]:
+            self.taccounts.append(a)
+        self._accounts = self._taccounts
+
+    @property
+    def ri(self):
+        return self._ri
+
+    @ri.setter
+    def ri(self, value):
+        self._ri = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
+
 
     def run(self):
         super(GetUnconfirmedTransactionIds, self).run()               # calls 'BaseGet.run()'

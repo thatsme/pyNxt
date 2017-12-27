@@ -1,9 +1,15 @@
 # -*- coding: utf-8 -*-
 from base.BaseGet import BaseGet as Parent
+from base.Validators import accepts
+from base.Validators import returns
+from base.Ri import Ri
+from base.Rb import Rb
+import json
 
 class GetBlockchainTransactions(Parent):
 
-    def __init__(self,account=None, timestamp=0, type=None, subtype=None, numberOfConfirmations=0, withMessage=False, phasedOnly=False, nonPhasedOnly=False, includeExpiredPrunable=False, includePhasingResult=False, executeOnly=False, ri=None, rb=None ):
+    ## @accepts(self, str, int, str, str, int, bool, bool, bool, bool, bool, bool, Ri, Rb)
+    def __init__(self, account=None, timestamp=0, type=None, subtype=None, numberOfConfirmations=0, withMessage=False, phasedOnly=False, nonPhasedOnly=False, includeExpiredPrunable=False, includePhasingResult=False, executeOnly=False, ri=None, rb=None ):
         """
             Get the transactions associated with an accounts in reverse block timestamp order.
 
@@ -13,7 +19,7 @@ class GetBlockchainTransactions(Parent):
             https://nxtwiki.org/wiki/The_Nxt_API#Get_Blockchain_Transactions
 
             REQUEST
-            :param accounts : is accounts ID (S)
+            :param account : is accounts ID (S)
             :param timestamp : is the earliest block (in seconds since the genesis block) to retrieve (N) (O)
             :param type : is the type of transactions to retrieve (S) (O)
             :param subtype : is the subtype of transactions to retrieve (S) (O)
@@ -32,6 +38,9 @@ class GetBlockchainTransactions(Parent):
             :return lastBlock : is the last block ID on the blockchain (S) (applies if requireBlock is provided but not requireLastBlock)
             :return requestProcessingTime : is the API request processing time (N) (in millisec)
 
+            TRANSACTIONS
+            the istance can be accessed as iterator
+
             Legenda :
                 ° the parameter are interchangeable on
                 * if you use the secretPhrase , the transaction is immediately broadcasted to network
@@ -48,21 +57,23 @@ class GetBlockchainTransactions(Parent):
                 (WP) Wrapper Meta-parameter
 
         """
+        ###
+        self._account = account
+        self._timestamp = timestamp
+        self._type = type
+        self._subtype = subtype
+        self._numberOfConfirmations = numberOfConfirmations
+        self._withMessage = withMessage
+        self._phasedOnly = phasedOnly
+        self._nonPhasedOnly = nonPhasedOnly
+        self._includeExpiredPrunable = includeExpiredPrunable
+        self._includePhasingResult = includePhasingResult
+        self._executeOnly = executeOnly
+        self._ri = ri
+        self._rb = rb
 
-        self.account = account
-        self.timestamp = timestamp
-        self.type = type
-        self.subtype = subtype
-        self.numberOfConfirmations = numberOfConfirmations
-        self.withMessage = withMessage
-        self.phasedOnly = phasedOnly
-        self.nonPhasedOnly = nonPhasedOnly
-        self.includeExpiredPrunable = includeExpiredPrunable
-        self.includePhasingResult = includePhasingResult
-        self.executeOnly = executeOnly
-        self.ri = ri
-        self.rb = rb
-
+        ## For iterator
+        self.index = 0
         # Initialize dictionary
         self.data = {}
 
@@ -90,6 +101,124 @@ class GetBlockchainTransactions(Parent):
 
         super(GetBlockchainTransactions, self).__init__(rt = "getBlockchainTransactions", data=self.data, ri=self.ri, rb=self.rb)
 
+    @property
+    def account(self):
+        return self._account
+
+    @account.setter
+    def account(self, value):
+        self._account = value
+
+    @property
+    def timestamp(self):
+        return self._timestamp
+
+    @timestamp.setter
+    def timestamp(self, value):
+        self._timestamp = value
+
+    @property
+    def type(self):
+        return self._type
+
+    @type.setter
+    def type(self, value):
+        self._type = value
+
+    @property
+    def subtype(self):
+        return self._subtype
+
+    @subtype.setter
+    def subtype(self, value):
+        self._subtype = value
+
+    @property
+    def numberOfConfirmations(self):
+        return self._numberOfConfirmations
+
+    @numberOfConfirmations.setter
+    def numberOfConfirmations(self, value):
+        self._numberOfConfirmations = value
+
+    @property
+    def withMessage(self):
+        return self._withMessage
+
+    @withMessage.setter
+    def withMessage(self, value):
+        self._withMessage = value
+
+    @property
+    def phasedOnly(self):
+        return self._phasedOnly
+
+    @phasedOnly.setter
+    def phasedOnly(self, value):
+        self._phasedOnly = value
+
+    @property
+    def nonPhasedOnly(self):
+        return self._nonPhasedOnly
+
+    @nonPhasedOnly.setter
+    def nonPhasedOnly(self, value):
+        self._nonPhasedOnly = value
+
+    @property
+    def includeExpiredPrunable(self):
+        return self._includeExpiredPrunable
+
+    @includeExpiredPrunable.setter
+    def includeExpiredPrunable(self, value):
+        self._includeExpiredPrunable = value
+
+    @property
+    def includePhasingResult(self):
+        return self._includePhasingResult
+
+    @includePhasingResult.setter
+    def includePhasingResult(self, value):
+        self._includePhasingResult = value
+
+    @property
+    def executeOnly(self):
+        return self._executeOnly
+
+    @executeOnly.setter
+    def executeOnly(self, value):
+        self._executeOnly = value
+
+    @property
+    def ri(self):
+        return self._ri
+
+    @ri.setter
+    def ri(self, value):
+        self._ri = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        try:
+            result = self.dataDict["transactions"][self.index]
+        except IndexError:
+            raise StopIteration
+        self.index += 1
+        return result
+
+    def __reversed__(self):
+        return reversed(self.dataDict["transactions"])
+
     def run(self):
         super(GetBlockchainTransactions, self).run()               # calls 'BaseGet.run()'
 
@@ -99,3 +228,4 @@ class GetBlockchainTransactions(Parent):
         :return: dictionary of data
         """
         return super(GetBlockchainTransactions, self).getData(key)    # calls 'BaseGet.getData()'
+
