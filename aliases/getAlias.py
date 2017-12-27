@@ -47,9 +47,9 @@ class GetAlias(Parent):
         """
 
         # Required parameters
-        self.alias = alias
-        self.aliasName = aliasName
-        self.rb = rb
+        self._alias = alias
+        self._aliasName = aliasName
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -60,6 +60,30 @@ class GetAlias(Parent):
         self.data["aliasName"] = self.aliasName
 
         super(GetAlias, self).__init__(rt="getAlias", data=self.data, rb=self.rb)
+
+    @property
+    def alias(self):
+        return self._alias
+
+    @alias.setter
+    def alias(self, value):
+        self._alias = value
+
+    @property
+    def aliasName(self):
+        return self._aliasName
+
+    @aliasName.setter
+    def aliasName(self, value):
+        self._aliasName = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetAlias, self).run()                                         # calls 'BaseGet.run()'

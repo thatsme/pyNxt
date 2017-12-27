@@ -37,8 +37,8 @@ class GetAliasCount(Parent):
         """
 
         # Required parameters
-        self.account = account
-        self.rb = rb
+        self._account = account
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -48,6 +48,22 @@ class GetAliasCount(Parent):
         self.data["accounts"] = self.account
 
         super(GetAliasCount, self).__init__(rt="getAliasCount", data=self.data, rb=self.rb)
+
+    @property
+    def account(self):
+        return self._account
+
+    @account.setter
+    def account(self, value):
+        self._account = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetAliasCount, self).run()                                         # calls 'BaseGet.run()'

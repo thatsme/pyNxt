@@ -42,10 +42,10 @@ class GetAliases(Parent):
         """
 
         # Required parameters
-        self.account = account
-        self.timestamp = timestamp
-        self.ri = ri
-        self.rb = rb
+        self._account = account
+        self._timestamp = timestamp
+        self._ri = ri
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -56,6 +56,38 @@ class GetAliases(Parent):
         self.data["timestamp"] = self.timestamp
 
         super(GetAliases, self).__init__(rt="getAliases", data=self.data, ri=self.ri, rb=self.rb)
+
+    @property
+    def account(self):
+        return self._account
+
+    @account.setter
+    def account(self, value):
+        self._account = value
+
+    @property
+    def timestamp(self):
+        return self._timestamp
+
+    @timestamp.setter
+    def timestamp(self, value):
+        self._timestamp = value
+
+    @property
+    def ri(self):
+        return self._ri
+
+    @ri.setter
+    def ri(self, value):
+        self._ri = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetAliases, self).run()                                         # calls 'BaseGet.run()'
