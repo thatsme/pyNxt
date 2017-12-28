@@ -40,7 +40,7 @@ class LongConvert(Parent):
 
         """
 
-        self.id = id
+        self._id = id
 
         # Initialize dictionary
         self.data = {}
@@ -50,6 +50,14 @@ class LongConvert(Parent):
 
 
         super(LongConvert, self).__init__(rt = "longConvert", data=self.data)
+
+    @property
+    def id(self):
+        return self._id
+
+    @id.setter
+    def id(self, value):
+        self._id = value
 
     def run(self):
         super(LongConvert, self).run()                             # calls 'BaseGet.run()'

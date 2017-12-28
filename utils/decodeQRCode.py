@@ -35,7 +35,7 @@ class DecodeQRCode(Parent):
         """
 
         # Required parameters
-        self.qrCodeBase64 = qrCodeBase64
+        self._qrCodeBase64 = qrCodeBase64
 
         # Initialize dictionary
         self.data = {}
@@ -44,6 +44,14 @@ class DecodeQRCode(Parent):
         self.data["qrCodeBase64"] = self.qrCodeBase64
 
         super(DecodeQRCode, self).__init__(rt="decodeQRCode", data=self.data)
+
+    @property
+    def qrCodeBase64(self):
+        return self._qrCodeBase64
+
+    @qrCodeBase64.setter
+    def qrCodeBase64(self, value):
+        self._qrCodeBase64 = value
 
     def run(self):
         super(DecodeQRCode, self).run()                # calls 'BasePost.run()'

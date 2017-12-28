@@ -37,9 +37,9 @@ class EncodeQRCode(Parent):
         """
 
         # Required parameters
-        self.qrCodeData = qrCodeData
-        self.width = width
-        self.height = height
+        self._qrCodeData = qrCodeData
+        self._width = width
+        self._height = height
 
         # Initialize dictionary
         self.data = {}
@@ -52,6 +52,30 @@ class EncodeQRCode(Parent):
             self.data["height"] = self.height
 
         super(EncodeQRCode, self).__init__(rt="encodeQRCode", data=self.data)
+
+    @property
+    def qrCodeBase64(self):
+        return self._qrCodeBase64
+
+    @qrCodeBase64.setter
+    def qrCodeBase64(self, value):
+        self._qrCodeBase64 = value
+
+    @property
+    def width(self):
+        return self._width
+
+    @width.setter
+    def width(self, value):
+        self._width = value
+
+    @property
+    def height(self):
+        return self._height
+
+    @height.setter
+    def height(self, value):
+        self._height = value
 
     def run(self):
         super(EncodeQRCode, self).run()                # calls 'BasePost.run()'

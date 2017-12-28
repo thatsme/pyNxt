@@ -37,7 +37,7 @@ class HexConvert(Parent):
 
         """
 
-        self.string = string
+        self._string = string
 
         # Initialize dictionary
         self.data = {}
@@ -45,8 +45,15 @@ class HexConvert(Parent):
         ## Create data dictionary
         self.data["string"] = self.string
 
-
         super(HexConvert, self).__init__(rt = "hexConvert", data=self.data)
+
+    @property
+    def string(self):
+        return self._string
+
+    @string.setter
+    def string(self, value):
+        self._string = value
 
     def run(self):
         super(HexConvert, self).run()                             # calls 'BaseGet.run()'

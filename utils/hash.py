@@ -42,9 +42,9 @@ class Hash(Parent):
 
         """
 
-        self.hashAlgorithm = hashAlgorithm
-        self.secret = secret
-        self.secretIsText = secretIsText
+        self._hashAlgorithm = hashAlgorithm
+        self._secret = secret
+        self._secretIsText = secretIsText
 
         # Initialize dictionary
         self.data = {}
@@ -54,8 +54,31 @@ class Hash(Parent):
         self.data["secret"] = self.secret
         self.data["secretIsText"] = self.secretIsText
 
-
         super(Hash, self).__init__(rt = "hash", data=self.data)
+
+    @property
+    def hashAlgorithm(self):
+        return self._hashAlgorithm
+
+    @hashAlgorithm.setter
+    def hashAlgorithm(self, value):
+        self._hashAlgorithm = value
+
+    @property
+    def secret(self):
+        return self._secret
+
+    @secret.setter
+    def secret(self, value):
+        self._secret = value
+
+    @property
+    def secretIsText(self):
+        return self._secretIsText
+
+    @secretIsText.setter
+    def secretIsText(self, value):
+        self._secretIsText = value
 
     def run(self):
         super(Hash, self).run()                             # calls 'BaseGet.run()'

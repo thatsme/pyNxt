@@ -37,7 +37,7 @@ class FullHashToId(Parent):
 
         """
 
-        self.fullHash = fullHash
+        self._fullHash = fullHash
 
         # Initialize dictionary
         self.data = {}
@@ -46,6 +46,14 @@ class FullHashToId(Parent):
         self.data["fullHash"] = self.fullHash
 
         super(FullHashToId, self).__init__(rt = "fullHashToId", data=self.data)
+
+    @property
+    def fullHash(self):
+        return self._fullHash
+
+    @fullHash.setter
+    def fullHash(self, value):
+        self._fullHash = value
 
     def run(self):
         super(FullHashToId, self).run()                             # calls 'BaseGet.run()'
