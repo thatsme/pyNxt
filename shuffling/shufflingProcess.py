@@ -56,28 +56,21 @@ class ShufflingProcess(Parent):
         """
 
         # Required parameters
-        self.shuffling = shuffling
-        self.recipientSecretPhrase = recipientSecretPhrase
-        self.recipientPublicKey = recipientPublicKey
+        self._shuffling = shuffling
+        self._recipientSecretPhrase = recipientSecretPhrase
+        self._recipientPublicKey = recipientPublicKey
 
-        self.publicKey = publicKey
-        self.secretPhrase = secretPhrase
-        self.referencedTransactionFullHash = referencedTransactionFullHash
-        self.broadcast = broadcast
+        self._publicKey = publicKey
+        self._secretPhrase = secretPhrase
+        self._referencedTransactionFullHash = referencedTransactionFullHash
+        self._broadcast = broadcast
 
-        if feeNQT == 0:
-            self.feeNQT = 100000000
-        else:
-            self.feeNQT = feeNQT
+        self._feeNQT = feeNQT
+        self._deadline = deadline
 
-        if deadline == 0:
-            self.deadline = 60
-        else:
-            self.deadline = deadline
-
-        self.phasing = phasing
-        self.message = message
-        self.rec = rec
+        self._phasing = phasing
+        self._message = message
+        self._rec = rec
 
         # Initialize dictionary
         self.data = {}
@@ -97,6 +90,108 @@ class ShufflingProcess(Parent):
         self.data["deadline"] = self.deadline
 
         super(ShufflingProcess, self).__init__(rt="shufflingProcess", data=self.data, phasing=self.phasing, message=self.message, rec=self.rec)
+
+    @property
+    def shuffling(self):
+        return self._shuffling
+
+    @shuffling.setter
+    def shuffling(self, value):
+        self._shuffling = value
+
+    @property
+    def recipientSecretPhrase(self):
+        return self._recipientSecretPhrase
+
+    @recipientSecretPhrase.setter
+    def recipientSecretPhrase(self, value):
+        self._recipientSecretPhrase = value
+
+    @property
+    def recipientPublicKey(self):
+        return self._recipientPublicKey
+
+    @recipientPublicKey.setter
+    def recipientPublicKey(self, value):
+        self._recipientPublicKey = value
+
+    @property
+    def publicKey(self):
+        return self._publicKey
+
+    @publicKey.setter
+    def publicKey(self, value):
+        self._publicKey = value
+
+    @property
+    def secretPhrase(self):
+        return self._secretPhrase
+
+    @secretPhrase.setter
+    def secretPhrase(self, value):
+        self._secretPhrase = value
+
+    @property
+    def referencedTransactionFullHash(self):
+        return self._referencedTransactionFullHash
+
+    @referencedTransactionFullHash.setter
+    def referencedTransactionFullHash(self, value):
+        self._referencedTransactionFullHash = value
+
+    @property
+    def broadcast(self):
+        return self._broadcast
+
+    @broadcast.setter
+    def broadcast(self, value):
+        self._broadcast = value
+
+    @property
+    def feeNQT(self):
+        return self._feeNQT
+
+    @feeNQT.setter
+    def feeNQT(self, value):
+        if value == 0:
+            self._feeNQT = 100000000
+        else:
+            self._feeNQT = value
+
+    @property
+    def deadline(self):
+        return self._deadline
+
+    @deadline.setter
+    def deadline(self, value):
+        if value == 0:
+            self._deadline = 60
+        else:
+            self._deadline = value
+
+    @property
+    def phasing(self):
+        return self._phasing
+
+    @phasing.setter
+    def phasing(self, value):
+        self._phasing = value
+
+    @property
+    def message(self):
+        return self._message
+
+    @message.setter
+    def message(self, value):
+        self._message = value
+
+    @property
+    def rec(self):
+        return self._rec
+
+    @rec.setter
+    def rec(self, value):
+        self._rec = value
 
     def run(self):
         super(ShufflingProcess, self).run()                # calls 'BasePost.run()'

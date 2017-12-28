@@ -41,12 +41,12 @@ class GetAccountShufflings(Parent):
 
         """
 
-        self.account = account
-        self.includeFinished = includeFinished
-        self.includeHoldingInfo = includeHoldingInfo
-        self.adminPassword = adminPassword
-        self.ri = ri
-        self.rb = rb
+        self._account = account
+        self._includeFinished = includeFinished
+        self._includeHoldingInfo = includeHoldingInfo
+        self._adminPassword = adminPassword
+        self._ri = ri
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -60,6 +60,54 @@ class GetAccountShufflings(Parent):
             self.data["adminPassword"] = self.adminPassword
 
         super(GetAccountShufflings, self).__init__(rt = "getAccountShufflings", data=self.data, ri=self.ri, rb=self.rb)
+
+    @property
+    def account(self):
+        return self._account
+
+    @account.setter
+    def account(self, value):
+        self._account = value
+
+    @property
+    def includeFinished(self):
+        return self._includeFinished
+
+    @includeFinished.setter
+    def includeFinished(self, value):
+        self._includeFinished = value
+
+    @property
+    def includeHoldingInfo(self):
+        return self._includeHoldingInfo
+
+    @includeHoldingInfo.setter
+    def includeHoldingInfo(self, value):
+        self._includeHoldingInfo = value
+
+    @property
+    def adminPassword(self):
+        return self._adminPassword
+
+    @adminPassword.setter
+    def adminPassword(self, value):
+        self._adminPassword = value
+
+    @property
+    def ri(self):
+        return self._ri
+
+    @ri.setter
+    def ri(self, value):
+        self._ri = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetAccountShufflings, self).run()                             # calls 'BaseGet.run()'

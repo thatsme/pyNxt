@@ -40,10 +40,10 @@ class StopShuffler(Parent):
         """
 
         # Required parameters
-        self.account = account
-        self.shufflingFullHash = shufflingFullHash
-        self.adminPassword = adminPassword
-        self.secretPhrase = secretPhrase
+        self._account = account
+        self._shufflingFullHash = shufflingFullHash
+        self._adminPassword = adminPassword
+        self._secretPhrase = secretPhrase
 
         # Initialize dictionary
         self.data = {}
@@ -55,6 +55,39 @@ class StopShuffler(Parent):
         self.data["secretPhrase"] = self.secretPhrase
 
         super(StopShuffler, self).__init__(rt="stopShuffler", data=self.data)
+
+
+    @property
+    def account(self):
+        return self._account
+
+    @account.setter
+    def account(self, value):
+        self._account = value
+
+    @property
+    def shufflingFullHash(self):
+        return self._shufflingFullHash
+
+    @shufflingFullHash.setter
+    def shufflingFullHash(self, value):
+        self._shufflingFullHash = value
+
+    @property
+    def adminPassword(self):
+        return self._adminPassword
+
+    @adminPassword.setter
+    def adminPassword(self, value):
+        self._adminPassword = value
+
+    @property
+    def secretPhrase(self):
+        return self._secretPhrase
+
+    @secretPhrase.setter
+    def secretPhrase(self, value):
+        self._secretPhrase = value
 
     def run(self):
         super(StopShuffler, self).run()                # calls 'BasePost.run()'

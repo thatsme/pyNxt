@@ -53,9 +53,9 @@ class GetShuffling(Parent):
 
         """
 
-        self.shuffling = shuffling
-        self.includeHoldingInfo = includeHoldingInfo
-        self.rb = rb
+        self._shuffling = shuffling
+        self._includeHoldingInfo = includeHoldingInfo
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -65,6 +65,30 @@ class GetShuffling(Parent):
         self.data["includeHoldingInfo"] = self.includeHoldingInfo
 
         super(GetShuffling, self).__init__(rt = "getShuffling", data=self.data, rb=self.rb)
+
+    @property
+    def shuffling(self):
+        return self._shuffling
+
+    @shuffling.setter
+    def shuffling(self, value):
+        self._shuffling = value
+
+    @property
+    def includeHoldingInfo(self):
+        return self._includeHoldingInfo
+
+    @includeHoldingInfo.setter
+    def includeHoldingInfo(self, value):
+        self._includeHoldingInfo = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetShuffling, self).run()                             # calls 'BaseGet.run()'

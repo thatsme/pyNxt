@@ -3,7 +3,7 @@ from base.BaseGet import BaseGet as Parent
 
 class GetShufflingPartecipants(Parent):
 
-    def __init__(self, shuffling=None, includeHoldingInfo=False, rb=None ):
+    def __init__(self, shuffling=None, rb=None ):
         """
             Retrieves info about a shuffling.
 
@@ -44,8 +44,8 @@ class GetShufflingPartecipants(Parent):
 
         """
 
-        self.shuffling = shuffling
-        self.rb = rb
+        self._shuffling = shuffling
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -54,6 +54,22 @@ class GetShufflingPartecipants(Parent):
         self.data["shuffling"] = self.shuffling
 
         super(GetShufflingPartecipants, self).__init__(rt = "getShufflingPartecipants", data=self.data, rb=self.rb)
+
+    @property
+    def shuffling(self):
+        return self._shuffling
+
+    @shuffling.setter
+    def shuffling(self, value):
+        self._shuffling = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetShufflingPartecipants, self).run()                             # calls 'BaseGet.run()'

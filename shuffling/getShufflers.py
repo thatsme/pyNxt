@@ -47,11 +47,11 @@ class GetShufflers(Parent):
 
         """
 
-        self.account = account
-        self.shufflingFullHash = shufflingFullHash
-        self.secretPhrase = secretPhrase
-        self.adminPassword = adminPassword
-        self.includeParticipantState = includeParticipantState
+        self._account = account
+        self._shufflingFullHash = shufflingFullHash
+        self._secretPhrase = secretPhrase
+        self._adminPassword = adminPassword
+        self._includeParticipantState = includeParticipantState
 
         # Initialize dictionary
         self.data = {}
@@ -67,6 +67,46 @@ class GetShufflers(Parent):
             self.data["adminPassword"] = self.adminPassword
 
         super(GetShufflers, self).__init__(rt = "getShufflers", data=self.data)
+
+    @property
+    def account(self):
+        return self._account
+
+    @account.setter
+    def account(self, value):
+        self._account = value
+
+    @property
+    def shufflingFullHash(self):
+        return self._shufflingFullHash
+
+    @shufflingFullHash.setter
+    def shufflingFullHash(self, value):
+        self._shufflingFullHash = value
+
+    @property
+    def secretPhrase(self):
+        return self._secretPhrase
+
+    @secretPhrase.setter
+    def secretPhrase(self, value):
+        self._secretPhrase = value
+
+    @property
+    def adminPassword(self):
+        return self._adminPassword
+
+    @adminPassword.setter
+    def adminPassword(self, value):
+        self._adminPassword = value
+
+    @property
+    def includeParticipantState(self):
+        return self._includeParticipantState
+
+    @includeParticipantState.setter
+    def includeParticipantState(self, value):
+        self._includeParticipantState = value
 
     def run(self):
         super(GetShufflers, self).run()                             # calls 'BaseGet.run()'

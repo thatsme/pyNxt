@@ -41,12 +41,12 @@ class GetHoldingShufflings(Parent):
 
         """
 
-        self.holding = holding
-        self.stage = stage
-        self.includeFinished = includeFinished
-        self.adminPassword = adminPassword
-        self.ri = ri
-        self.rb = rb
+        self._holding = holding
+        self._stage = stage
+        self._includeFinished = includeFinished
+        self._adminPassword = adminPassword
+        self._ri = ri
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -60,6 +60,54 @@ class GetHoldingShufflings(Parent):
             self.data["adminPassword"] = self.adminPassword
 
         super(GetHoldingShufflings, self).__init__(rt = "getHoldingShufflings", data=self.data, ri=self.ri, rb=self.rb)
+
+    @property
+    def holding(self):
+        return self._holding
+
+    @holding.setter
+    def holding(self, value):
+        self._holding = value
+
+    @property
+    def stage(self):
+        return self._stage
+
+    @stage.setter
+    def stage(self, value):
+        self._stage = value
+
+    @property
+    def includeFinished(self):
+        return self._includeFinished
+
+    @includeFinished.setter
+    def includeFinished(self, value):
+        self._includeFinished = value
+
+    @property
+    def adminPassword(self):
+        return self._adminPassword
+
+    @adminPassword.setter
+    def adminPassword(self, value):
+        self._adminPassword = value
+
+    @property
+    def ri(self):
+        return self._ri
+
+    @ri.setter
+    def ri(self, value):
+        self._ri = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetHoldingShufflings, self).run()                             # calls 'BaseGet.run()'

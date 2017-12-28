@@ -44,10 +44,10 @@ class StartShuffler(Parent):
         """
 
         # Required parameters
-        self.secretPhrase = secretPhrase
-        self.shufflingFullHash = shufflingFullHash
-        self.recipientSecretPhrase = recipientSecretPhrase
-        self.recipientPublicKey = recipientPublicKey
+        self._secretPhrase = secretPhrase
+        self._shufflingFullHash = shufflingFullHash
+        self._recipientSecretPhrase = recipientSecretPhrase
+        self._recipientPublicKey = recipientPublicKey
 
         # Initialize dictionary
         self.data = {}
@@ -59,6 +59,38 @@ class StartShuffler(Parent):
         self.data["secretPhrase"] = self.secretPhrase
 
         super(StartShuffler, self).__init__(rt="startShuffler", data=self.data)
+
+    @property
+    def secretPhrase(self):
+        return self._secretPhrase
+
+    @secretPhrase.setter
+    def secretPhrase(self, value):
+        self._secretPhrase = value
+
+    @property
+    def shufflingFullHash(self):
+        return self._shufflingFullHash
+
+    @shufflingFullHash.setter
+    def shufflingFullHash(self, value):
+        self._shufflingFullHash = value
+
+    @property
+    def recipientSecretPhrase(self):
+        return self._recipientSecretPhrase
+
+    @recipientSecretPhrase.setter
+    def recipientSecretPhrase(self, value):
+        self._recipientSecretPhrase = value
+
+    @property
+    def recipientPublicKey(self):
+        return self._recipientPublicKey
+
+    @recipientPublicKey.setter
+    def recipientPublicKey(self, value):
+        self._recipientPublicKey = value
 
     def run(self):
         super(StartShuffler, self).run()                # calls 'BasePost.run()'

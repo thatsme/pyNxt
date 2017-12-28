@@ -57,31 +57,22 @@ class ShufflingCreate(Parent):
         """
 
         # Required parameters
-        self.holding = holding
-        self.holdingType = holdingType
-        self.amount = amount
+        self._holding = holding
+        self._holdingType = holdingType
+        self._amount = amount
+        self._participantCount = participantCount
+        self._registrationPeriod = registrationPeriod
 
-        self.participantCount = participantCount
-        self.registrationPeriod = registrationPeriod
+        self._publicKey = publicKey
+        self._secretPhrase = secretPhrase
+        self._referencedTransactionFullHash = referencedTransactionFullHash
+        self._broadcast = broadcast
+        self._feeNQT = feeNQT
+        self._deadline = deadline
 
-        self.publicKey = publicKey
-        self.secretPhrase = secretPhrase
-        self.referencedTransactionFullHash = referencedTransactionFullHash
-        self.broadcast = broadcast
-
-        if feeNQT == 0:
-            self.feeNQT = 100000000
-        else:
-            self.feeNQT = feeNQT
-
-        if deadline == 0:
-            self.deadline = 60
-        else:
-            self.deadline = deadline
-
-        self.phasing = phasing
-        self.message = message
-        self.rec = rec
+        self._phasing = phasing
+        self._message = message
+        self._rec = rec
 
         # Initialize dictionary
         self.data = {}
@@ -101,6 +92,124 @@ class ShufflingCreate(Parent):
         self.data["deadline"] = self.deadline
 
         super(ShufflingCreate, self).__init__(rt="shufflingCreate", data=self.data, phasing=self.phasing, message=self.message, rec=self.rec)
+
+    @property
+    def holding(self):
+        return self._holding
+
+    @holding.setter
+    def holding(self, value):
+        self._holding = value
+
+    @property
+    def holdingType(self):
+        return self._holdingType
+
+    @holdingType.setter
+    def holdingType(self, value):
+        self._holdingType = value
+
+    @property
+    def amount(self):
+        return self._amount
+
+    @amount.setter
+    def amount(self, value):
+        self._amount = value
+
+    @property
+    def participantCount(self):
+        return self._participantCount
+
+    @participantCount.setter
+    def participantCount(self, value):
+        self._participantCount = value
+
+    @property
+    def registrationPeriod(self):
+        return self._registrationPeriod
+
+    @registrationPeriod.setter
+    def registrationPeriod(self, value):
+        self._registrationPeriod = value
+
+    @property
+    def publicKey(self):
+        return self._publicKey
+
+    @publicKey.setter
+    def publicKey(self, value):
+        self._publicKey = value
+
+    @property
+    def secretPhrase(self):
+        return self._secretPhrase
+
+    @secretPhrase.setter
+    def secretPhrase(self, value):
+        self._secretPhrase = value
+
+    @property
+    def referencedTransactionFullHash(self):
+        return self._referencedTransactionFullHash
+
+    @referencedTransactionFullHash.setter
+    def referencedTransactionFullHash(self, value):
+        self._referencedTransactionFullHash = value
+
+    @property
+    def broadcast(self):
+        return self._broadcast
+
+    @broadcast.setter
+    def broadcast(self, value):
+        self._broadcast = value
+
+    @property
+    def feeNQT(self):
+        return self._feeNQT
+
+    @feeNQT.setter
+    def feeNQT(self, value):
+        if value == 0:
+            self._feeNQT = 100000000
+        else:
+            self._feeNQT = value
+
+    @property
+    def deadline(self):
+        return self._deadline
+
+    @deadline.setter
+    def deadline(self, value):
+        if value == 0:
+            self._deadline = 60
+        else:
+            self._deadline = value
+
+    @property
+    def phasing(self):
+        return self._phasing
+
+    @phasing.setter
+    def phasing(self, value):
+        self._phasing = value
+
+    @property
+    def message(self):
+        return self._message
+
+    @message.setter
+    def message(self, value):
+        self._message = value
+
+    @property
+    def rec(self):
+        return self._rec
+
+    @rec.setter
+    def rec(self, value):
+        self._rec = value
 
     def run(self):
         super(ShufflingCreate, self).run()                # calls 'BasePost.run()'
