@@ -42,8 +42,8 @@ class DecodeFileToken(Parent):
         """
 
         # Required parameters
-        self.token = token
-        self.file = file
+        self._token = token
+        self._file = file
 
         # Initialize dictionary
         self.data = {}
@@ -53,6 +53,22 @@ class DecodeFileToken(Parent):
         self.data["token"] = self.token
 
         super(DecodeFileToken, self).__init__(rt="decodeFileToken", data=self.data)
+
+    @property
+    def token(self):
+        return self._token
+
+    @token.setter
+    def token(self, value):
+        self._token = value
+
+    @property
+    def file(self):
+        return self._file
+
+    @file.setter
+    def file(self, value):
+        self._file = value
 
     def run(self):
         super(DecodeFileToken, self).run()                # calls 'BasePost.run()'

@@ -43,8 +43,8 @@ class GenerateToken(Parent):
         """
 
         # Required parameters
-        self.secretPhrase = secretPhrase
-        self.website = website
+        self._secretPhrase = secretPhrase
+        self._website = website
 
         # Initialize dictionary
         self.data = {}
@@ -54,6 +54,22 @@ class GenerateToken(Parent):
         self.data["secretPhrase"] = self.secretPhrase
 
         super(GenerateToken, self).__init__(rt="generateToken", data=self.data)
+
+    @property
+    def secretPhrase(self):
+        return self._secretPhrase
+
+    @secretPhrase.setter
+    def secretPhrase(self, value):
+        self._secretPhrase = value
+
+    @property
+    def website(self):
+        return self._website
+
+    @website.setter
+    def website(self, value):
+        self._website = value
 
     def run(self):
         super(GenerateToken, self).run()                # calls 'BasePost.run()'

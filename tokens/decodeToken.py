@@ -40,8 +40,8 @@ class DecodeToken(Parent):
 
         """
 
-        self.website = website
-        self.token = token
+        self._website = website
+        self._token = token
 
         # Initialize dictionary
         self.data = {}
@@ -51,6 +51,22 @@ class DecodeToken(Parent):
         self.data["token"] = self.token
 
         super(DecodeToken, self).__init__(rt = "decodeToken", data=self.data)
+
+    @property
+    def website(self):
+        return self._website
+
+    @website.setter
+    def website(self, value):
+        self._website = value
+
+    @property
+    def token(self):
+        return self._token
+
+    @token.setter
+    def token(self, value):
+        self._token = value
 
     def run(self):
         super(DecodeToken, self).run()                             # calls 'BaseGet.run()'

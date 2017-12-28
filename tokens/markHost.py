@@ -42,10 +42,10 @@ class MarkHost(Parent):
         """
 
         # Required parameters
-        self.secretPhrase = secretPhrase
-        self.host = host
-        self.weight = weight
-        self.date = date
+        self._secretPhrase = secretPhrase
+        self._host = host
+        self._weight = weight
+        self._date = date
 
         # Initialize dictionary
         self.data = {}
@@ -57,6 +57,22 @@ class MarkHost(Parent):
         self.data["secretPhrase"] = self.secretPhrase
 
         super(MarkHost, self).__init__(rt="markHost", data=self.data)
+
+    @property
+    def secretPhrase(self):
+        return self._secretPhrase
+
+    @secretPhrase.setter
+    def secretPhrase(self, value):
+        self._secretPhrase = value
+
+    @property
+    def host(self):
+        return self._host
+
+    @host.setter
+    def host(self, value):
+        self._host = value
 
     def run(self):
         super(MarkHost, self).run()                # calls 'BasePost.run()'

@@ -41,7 +41,7 @@ class DecodeHallmark(Parent):
 
         """
 
-        self.hallmark = hallmark
+        self._hallmark = hallmark
 
         # Initialize dictionary
         self.data = {}
@@ -50,6 +50,14 @@ class DecodeHallmark(Parent):
         self.data["hallmark"] = self.hallmark
 
         super(DecodeHallmark, self).__init__(rt = "decodeHallmark", data=self.data)
+
+    @property
+    def hallmark(self):
+        return self._hallmark
+
+    @hallmark.setter
+    def hallmark(self, value):
+        self._hallmark = value
 
     def run(self):
         super(DecodeHallmark, self).run()                             # calls 'BaseGet.run()'

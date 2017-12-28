@@ -43,8 +43,8 @@ class GenerateFileToken(Parent):
         """
 
         # Required parameters
-        self.secretPhrase = secretPhrase
-        self.file = file
+        self._secretPhrase = secretPhrase
+        self._file = file
 
         # Initialize dictionary
         self.data = {}
@@ -54,6 +54,22 @@ class GenerateFileToken(Parent):
         self.data["secretPhrase"] = self.secretPhrase
 
         super(GenerateFileToken, self).__init__(rt="generateFileToken", data=self.data)
+
+    @property
+    def secretPhrase(self):
+        return self._secretPhrase
+
+    @secretPhrase.setter
+    def secretPhrase(self, value):
+        self._secretPhrase = value
+
+    @property
+    def file(self):
+        return self._file
+
+    @file.setter
+    def file(self, value):
+        self._file = value
 
     def run(self):
         super(GenerateFileToken, self).run()                # calls 'BasePost.run()'
