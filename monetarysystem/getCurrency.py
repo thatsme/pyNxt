@@ -68,10 +68,10 @@ class GetCurrency(Parent):
         """
 
         # Required parameters
-        self.currency  = currency
-        self.code = code
-        self.includeCounts = includeCounts
-        self.rb = rb
+        self._currency  = currency
+        self._code = code
+        self._includeCounts = includeCounts
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -82,6 +82,38 @@ class GetCurrency(Parent):
         self.data["includeCounts"] = self.includeCounts
 
         super(GetCurrency, self).__init__(rt="getCurrency", data=self.data, rb=self.rb)
+
+    @property
+    def currency(self):
+        return self._currency
+
+    @currency.setter
+    def currency(self, value):
+        self._currency = value
+
+    @property
+    def code(self):
+        return self._code
+
+    @code.setter
+    def code(self, value):
+        self._code = value
+
+    @property
+    def includeCounts(self):
+        return self._includeCounts
+
+    @includeCounts.setter
+    def includeCounts(self, value):
+        self._includeCounts = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetCurrency, self).run()                                         # calls 'BaseGet.run()'

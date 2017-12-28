@@ -41,9 +41,9 @@ class GetAvailableToSell(Parent):
         """
 
         # Required parameters
-        self.currency = currency
-        self.unit = unit
-        self.rb = rb
+        self._currency = currency
+        self._unit = unit
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -54,6 +54,30 @@ class GetAvailableToSell(Parent):
         self.data["unit"] = self.unit
 
         super(GetAvailableToSell, self).__init__(rt="getAvailableToSell", data=self.data, rb=self.rb)
+
+    @property
+    def currency(self):
+        return self._currency
+
+    @currency.setter
+    def currency(self, value):
+        self._currency = value
+
+    @property
+    def unit(self):
+        return self._unit
+
+    @unit.setter
+    def unit(self, value):
+        self._unit = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetAvailableToSell, self).run()                                         # calls 'BaseGet.run()'

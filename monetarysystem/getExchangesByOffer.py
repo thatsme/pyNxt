@@ -60,10 +60,10 @@ class GetExchangesByOffer(Parent):
         """
 
         # Required parameters
-        self.offer  = offer
-        self.includeCurrencyInfo = includeCurrencyInfo
-        self.ri = ri
-        self.rb = rb
+        self._offer  = offer
+        self._includeCurrencyInfo = includeCurrencyInfo
+        self._ri = ri
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -73,6 +73,38 @@ class GetExchangesByOffer(Parent):
         self.data["includeCurrencyInfo"] = self.includeCurrencyInfo
 
         super(GetExchangesByOffer, self).__init__(rt="getExchangesByOffer", data=self.data, ri=self.ri, rb=self.rb)
+
+    @property
+    def offer(self):
+        return self._offer
+
+    @offer.setter
+    def offer(self, value):
+        self._offer = value
+
+    @property
+    def includeCurrencyInfo(self):
+        return self._includeCurrencyInfo
+
+    @includeCurrencyInfo.setter
+    def includeCurrencyInfo(self, value):
+        self._includeCurrencyInfo = value
+
+    @property
+    def ri(self):
+        return self._ri
+
+    @ri.setter
+    def ri(self, value):
+        self._ri = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetExchangesByOffer, self).run()                                         # calls 'BaseGet.run()'

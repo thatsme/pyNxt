@@ -78,11 +78,11 @@ class GetCurrencyPhasedTransactions(Parent):
         """
 
         # Required parameters
-        self.currency = currency
-        self.account = account
-        self.withoutWitelist = withoutWitelist
-        self.ri = ri
-        self.rb = rb
+        self._currency = currency
+        self._account = account
+        self._withoutWitelist = withoutWitelist
+        self._ri = ri
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -95,6 +95,46 @@ class GetCurrencyPhasedTransactions(Parent):
             self.data["withoutWitelist"] = self.withoutWitelist
 
         super(GetCurrencyPhasedTransactions, self).__init__(rt="getCurrencyPhasedTransactions", data=self.data, ri=self.ri, rb=self.rb)
+
+    @property
+    def currency(self):
+        return self._currency
+
+    @currency.setter
+    def currency(self, value):
+        self._currency = value
+
+    @property
+    def account(self):
+        return self._account
+
+    @account.setter
+    def account(self, value):
+        self._account = value
+
+    @property
+    def withoutWitelist(self):
+        return self._withoutWitelist
+
+    @withoutWitelist.setter
+    def withoutWitelist(self, value):
+        self._withoutWitelist = value
+
+    @property
+    def ri(self):
+        return self._ri
+
+    @ri.setter
+    def ri(self, value):
+        self._ri = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetCurrencyPhasedTransactions, self).run()                                         # calls 'BaseGet.run()'

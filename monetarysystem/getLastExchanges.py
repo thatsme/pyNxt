@@ -40,11 +40,8 @@ class GetLastExchanges(Parent):
         """
 
         # Required parameters
-        self.currencies = [None]*3
-        for a in currencies[:3]:
-            self.currencies.append(a)
-
-        self.rb = rb
+        self._currencies = currencies
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -54,6 +51,25 @@ class GetLastExchanges(Parent):
         self.data["currencies"] = self.currencies
 
         super(GetLastExchanges, self).__init__(rt="getLastExchanges", data=self.data, rb=self.rb)
+
+    @property
+    def currencies(self):
+        return self._currencies
+
+    @currencies.setter
+    def currencies(self, value):
+        self._tcurries = [None]*3
+        for a in value[:3]:
+            self.tcurries.append(a)
+        self._currencies = self._tcurries
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetLastExchanges, self).run()                                         # calls 'BaseGet.run()'

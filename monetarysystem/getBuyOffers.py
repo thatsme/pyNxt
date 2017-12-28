@@ -48,12 +48,12 @@ class GetBuyOffers(Parent):
         """
 
         # Required parameters
-        self.currency = currency
-        self.account = account
-        self.availableOny = availableOny
-        self.sortByRate = sortByRate
-        self.ri = ri
-        self.rb = rb
+        self._currency = currency
+        self._account = account
+        self._availableOny = availableOny
+        self._sortByRate = sortByRate
+        self._ri = ri
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -66,6 +66,54 @@ class GetBuyOffers(Parent):
         self.data["sortByRate"] = self.sortByRate
 
         super(GetBuyOffers, self).__init__(rt="getBuyOffers", data=self.data, ri=self.ri, rb=self.rb)
+
+    @property
+    def currency(self):
+        return self._currency
+
+    @currency.setter
+    def currency(self, value):
+        self._currency = value
+
+    @property
+    def account(self):
+        return self._account
+
+    @account.setter
+    def account(self, value):
+        self._account = value
+
+    @property
+    def availableOny(self):
+        return self._availableOny
+
+    @availableOny.setter
+    def availableOny(self, value):
+        self._availableOny = value
+
+    @property
+    def sortByRate(self):
+        return self._sortByRate
+
+    @sortByRate.setter
+    def sortByRate(self, value):
+        self._sortByRate = value
+
+    @property
+    def ri(self):
+        return self._ri
+
+    @ri.setter
+    def ri(self, value):
+        self._ri = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetBuyOffers, self).run()                                         # calls 'BaseGet.run()'

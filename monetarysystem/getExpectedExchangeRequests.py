@@ -14,15 +14,13 @@ class GetExpectedExchangeRequests(Parent):
             https://nxtwiki.org/wiki/The_Nxt_API#Get_Expected_Exchange_Requests
 
             REQUEST
-            :param accounts : is the id of accounts (S) (R)
+            :param account : is the id of account (S) (R)
             :param currency : is the currency ID (optional for expected requests if accounts provided)
             :param includeCurrencyInfo : is true to include the response fields
                                     code, decimals, name, issuanceHeight, type, timestamp,
                                     issuerAccountRS and issuerAccount (optional, applies only to expected requests)
-            :param firstIndex : is a zero-based index to the first order ID to retrieve (N) (O)
-            :param lastIndex : is a zero-based index to the last order ID to retrieve (N) (O)
-            :param requireBlock : is the block ID of a block that must be present in the blockchain during execution (O)
-            :param requireLastBlock : is the block ID of a block that must be last in the blockchain during execution (O)
+            :param ri : ri object ( check base/Ri.py) (WP)
+            :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
             :return exchangeRequests : is an array (A) of requests with the following fields for each request:
@@ -59,11 +57,11 @@ class GetExpectedExchangeRequests(Parent):
 
         """
 
-        self.account = account
-        self.currency = currency
-        self.includeCurrencyInfo = includeCurrencyInfo
-        self.ri = ri
-        self.rb = rb
+        self._account = account
+        self._currency = currency
+        self._includeCurrencyInfo = includeCurrencyInfo
+        self._ri = ri
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -76,6 +74,46 @@ class GetExpectedExchangeRequests(Parent):
             self.data["includeCurrencyInfo"] = self.includeCurrencyInfo
 
         super(GetExpectedExchangeRequests, self).__init__(rt = "getExpectedExchangeRequests", data=self.data, ri=self.ri, rb=self.rb)
+
+    @property
+    def currency(self):
+        return self._currency
+
+    @currency.setter
+    def currency(self, value):
+        self._currency = value
+
+    @property
+    def account(self):
+        return self._account
+
+    @account.setter
+    def account(self, value):
+        self._account = value
+
+    @property
+    def includeCurrencyInfo(self):
+        return self._includeCurrencyInfo
+
+    @includeCurrencyInfo.setter
+    def includeCurrencyInfo(self, value):
+        self._includeCurrencyInfo = value
+
+    @property
+    def ri(self):
+        return self._ri
+
+    @ri.setter
+    def ri(self, value):
+        self._ri = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetExpectedExchangeRequests, self).run()               # calls 'BaseGet.run()'

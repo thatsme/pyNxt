@@ -13,9 +13,7 @@ class GetOffer(Parent):
             https://nxtwiki.org/wiki/The_Nxt_API#Get_Offer
 
             REQUEST
-            :param currency : is the mintable currency ID (S)
-            :param account is the minting account ID
-            :param units is the amount (in QNT) of currency to mint
+            :param offer : is the offer ID (S)
             :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
@@ -50,8 +48,8 @@ class GetOffer(Parent):
         """
 
         # Required parameters
-        self.offer = offer
-        self.rb = rb
+        self._offer = offer
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -60,6 +58,22 @@ class GetOffer(Parent):
         self.data["offer"] = self.offer
 
         super(GetOffer, self).__init__(rt="getOffer", data=self.data, rb=self.rb)
+
+    @property
+    def offer(self):
+        return self._offer
+
+    @offer.setter
+    def offer(self, value):
+        self._offer = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetOffer, self).run()                                         # calls 'BaseGet.run()'

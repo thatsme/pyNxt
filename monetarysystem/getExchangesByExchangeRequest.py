@@ -59,9 +59,9 @@ class GetExchangesByExchangeRequest(Parent):
         """
 
         # Required parameters
-        self.transaction  = transaction
-        self.includeCurrencyInfo = includeCurrencyInfo
-        self.rb = rb
+        self._transaction  = transaction
+        self._includeCurrencyInfo = includeCurrencyInfo
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -71,6 +71,30 @@ class GetExchangesByExchangeRequest(Parent):
         self.data["includeCurrencyInfo"] = self.includeCurrencyInfo
 
         super(GetExchangesByExchangeRequest, self).__init__(rt="getExchangesByExchangeRequest", data=self.data, rb=self.rb)
+
+    @property
+    def transaction(self):
+        return self._transaction
+
+    @transaction.setter
+    def transaction(self, value):
+        self._transaction = value
+
+    @property
+    def includeCurrencyInfo(self):
+        return self._includeCurrencyInfo
+
+    @includeCurrencyInfo.setter
+    def includeCurrencyInfo(self, value):
+        self._includeCurrencyInfo = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetExchangesByExchangeRequest, self).run()                                         # calls 'BaseGet.run()'

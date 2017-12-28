@@ -2,7 +2,7 @@
 from base.BasePost import BasePost as Parent
 
 class ScheduleCurrencyBuy(Parent):
-    def __init__(self, currency=None, buyRateNQT=None, sellRateNQT=None, totalBuyLimit=0, totalSellLimit=0, initialBuySupply=0, initialSellSupply=0, expirationHeight=None, publicKey = None, secretPhrase=None, feeNQT = None, deadline = 0, referencedTransactionFullHash = None, broadcast=True, phasing = None, message=None, rec=None ):
+    def __init__(self, currency=None, rateNQT=None, units=None, offerIssuer=None, transactionJSON=None, transactionBytes=None, prunableAttachmentJSON=None, adminPassword=None, publicKey = None, secretPhrase=None, feeNQT = None, deadline = 0, referencedTransactionFullHash = None, broadcast=True, phasing = None, message=None, rec=None ):
         """
             Publish an exchange offer for an exchangeable currency. POST only.
 
@@ -12,13 +12,12 @@ class ScheduleCurrencyBuy(Parent):
 
             REQUEST
             :param currency : is the currency ID (S)
-            :param buyRateNQT : is the offered buy rate (in NQT per QNT) (N)
-            :param sellRateNQT : is the offered sell rate (in NQT per QNT) (N)
-            :param totalBuyLimit : is the cumulative limit (in QNT) of currency buys (N)
-            :param totalSellLimit : is the cumulative limit (in QNT) of currency sells (N)
-            :param initialBuySupply : is the initial amount (in QNT) of currency offered to buy, cannot exceed totalBuyLimit
-            :param initialSellSupply : is the initial amount (in QNT) of currency offered to sell, cannot exceed totalSellLimit
-            :param expirationHeight : is the blockchain height for expiration of the offer
+            :param rateNQT :
+            :param units :
+            :param offerIssuer :
+            :param transactionJSON :
+            :param transactionBytes :
+            :param prunableAttachmentJSON :
 
             :param publicKey *: publicKey of sender accounts ( does not get in broadcast )
             :param secretPhrase **: secret Phrase of sender accounts
@@ -30,12 +29,6 @@ class ScheduleCurrencyBuy(Parent):
             :param phasing : phasing object ( check base/Phasing.py ) (O) (WP)
             :param message : message object ( check base/message.py ) (O) (WP)
             :param rec : rec object ( check base/Rec.py) (WP)
-
-            Notes: Each time currency is bought in response to an exchange request to sell currency (refer to Currency Sell),
-            totalBuyLimit is reduced and the supply of currency offered to sell increases by the amount bought.
-            When totalBuyLimit becomes zero, the buy offer is withdrawn. These same notes apply if buy and sell are interchanged.
-            Only the most recent offer associated with an account is valid, even if an earlier offer by that account has not yet
-            expired or reached its limits.
 
             Response: Refer to Create Transaction Response. The transaction ID is also the offer ID.
 
@@ -68,46 +61,38 @@ class ScheduleCurrencyBuy(Parent):
         """
 
         # Required parameters
-        self.currency = currency
-        self.buyRateNQT = buyRateNQT
-        self.sellRateNQT = sellRateNQT
-        self.totalBuyLimit = totalBuyLimit
-        self.totalSellLimit = totalSellLimit
-        self.initialBuySupply = initialBuySupply
-        self.initialSellSupply = initialSellSupply
-        self.expirationHeight = expirationHeight
+        self._currency = currency
+        self._rateNQT = rateNQT
+        self._units = units
+        self._offerIssuer = offerIssuer
+        self._transactionJSON = transactionJSON
+        self._transactionBytes = transactionBytes
+        self._prunableAttachmentJSON = prunableAttachmentJSON
+        self._adminPassword = adminPassword
 
-        self.publicKey = publicKey
-        self.secretPhrase = secretPhrase
-        self.referencedTransactionFullHash = referencedTransactionFullHash
-        self.broadcast = broadcast
+        self._publicKey = publicKey
+        self._secretPhrase = secretPhrase
+        self._referencedTransactionFullHash = referencedTransactionFullHash
+        self._broadcast = broadcast
 
-        if feeNQT == 0:
-            self.feeNQT = 100000000
-        else:
-            self.feeNQT = feeNQT
-
-        if deadline == 0:
-            self.deadline = 60
-        else:
-            self.deadline = deadline
-
-        self.phasing = phasing
-        self.message = message
-        self.rec = rec
+        self._feeNQT = feeNQT
+        self._deadline = deadline
+        self._phasing = phasing
+        self._message = message
+        self._rec = rec
 
         # Initialize dictionary
         self.data = {}
 
         ## Create data dictionary
         self.data["currency"] = self.currency
-        self.data["buyRateNQT"] = self.buyRateNQT
-        self.data["sellRateNQT"] = self.sellRateNQT
-        self.data["totalBuyLimit"] = self.totalBuyLimit
-        self.data["totalSellLimit"] = self.totalSellLimit
-        self.data["initialBuySupply"] = self.initialBuySupply
-        self.data["initialSellSupply"] = self.initialSellSupply
-        self.data["expirationHeight"] = self.expirationHeight
+        self.data["rateNQT"] = self.rateNQT
+        self.data["units"] = self.units
+        self.data["offerIssuer"] = self.offerIssuer
+        self.data["transactionJSON"] = self.transactionJSON
+        self.data["transactionBytes"] = self.transactionBytes
+        self.data["prunableAttachmentJSON"] = self.prunableAttachmentJSON
+        self.data["adminPassword"] = self.adminPassword
 
         if self.publicKey:
             self.data["publicKey"] = self.publicKey
@@ -123,6 +108,148 @@ class ScheduleCurrencyBuy(Parent):
         self.data["deadline"] = self.deadline
 
         super(ScheduleCurrencyBuy, self).__init__(rt="scheduleCurrencyBuy", data=self.data, rec=self.rec)
+
+    @property
+    def currency(self):
+        return self._currency
+
+    @currency.setter
+    def currency(self, value):
+        self._currency = value
+
+    @property
+    def rateNQT(self):
+        return self._rateNQT
+
+    @rateNQT.setter
+    def rateNQT(self, value):
+        self._rateNQT = value
+
+    @property
+    def units(self):
+        return self._units
+
+    @units.setter
+    def units(self, value):
+        self._units = value
+
+    @property
+    def offerIssuer(self):
+        return self._offerIssuer
+
+    @offerIssuer.setter
+    def offerIssuer(self, value):
+        self._offerIssuer = value
+
+    @property
+    def transactionJSON(self):
+        return self._transactionJSON
+
+    @transactionJSON.setter
+    def transactionJSON(self, value):
+        self._transactionJSON = value
+
+    @property
+    def transactionBytes(self):
+        return self._transactionBytes
+
+    @transactionBytes.setter
+    def transactionBytes(self, value):
+        self._transactionBytes = value
+
+    @property
+    def prunableAttachmentJSON(self):
+        return self._prunableAttachmentJSON
+
+    @prunableAttachmentJSON.setter
+    def prunableAttachmentJSON(self, value):
+        self._prunableAttachmentJSON = value
+
+    @property
+    def adminPassword(self):
+        return self._adminPassword
+
+    @adminPassword.setter
+    def adminPassword(self, value):
+        self._adminPassword = value
+
+    @property
+    def publicKey(self):
+        return self._publicKey
+
+    @publicKey.setter
+    def publicKey(self, value):
+        self._publicKey = value
+
+    @property
+    def secretPhrase(self):
+        return self._secretPhrase
+
+    @secretPhrase.setter
+    def secretPhrase(self, value):
+        self._secretPhrase = value
+
+    @property
+    def referencedTransactionFullHash(self):
+        return self._referencedTransactionFullHash
+
+    @referencedTransactionFullHash.setter
+    def referencedTransactionFullHash(self, value):
+        self._referencedTransactionFullHash = value
+
+    @property
+    def broadcast(self):
+        return self._broadcast
+
+    @broadcast.setter
+    def broadcast(self, value):
+        self._broadcast = value
+
+    @property
+    def feeNQT(self):
+        return self._feeNQT
+
+    @feeNQT.setter
+    def feeNQT(self, value):
+        if value == 0:
+            self._feeNQT = 100000000
+        else:
+            self._feeNQT = value
+
+    @property
+    def deadline(self):
+        return self._deadline
+
+    @deadline.setter
+    def deadline(self, value):
+        if value == 0:
+            self._deadline = 60
+        else:
+            self._deadline = value
+
+    @property
+    def phasing(self):
+        return self._phasing
+
+    @phasing.setter
+    def phasing(self, value):
+        self._phasing = value
+
+    @property
+    def message(self):
+        return self._message
+
+    @message.setter
+    def message(self, value):
+        self._message = value
+
+    @property
+    def rec(self):
+        return self._rec
+
+    @rec.setter
+    def rec(self, value):
+        self._rec = value
 
     def run(self):
         super(ScheduleCurrencyBuy, self).run()                # calls 'BasePost.run()'

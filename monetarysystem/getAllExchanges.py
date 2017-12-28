@@ -42,10 +42,10 @@ class GetAllExchanges(Parent):
         """
 
         # Required parameters
-        self.timestamp = timestamp
-        self.includeCurrencyInfo = includeCurrencyInfo
-        self.ri = ri
-        self.rb = rb
+        self._timestamp = timestamp
+        self._includeCurrencyInfo = includeCurrencyInfo
+        self._ri = ri
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -58,6 +58,38 @@ class GetAllExchanges(Parent):
 
 
         super(GetAllExchanges, self).__init__(rt="getAllExchanges", data=self.data, ri=self.ri, rb=self.rb)
+
+    @property
+    def timestamp(self):
+        return self._timestamp
+
+    @timestamp.setter
+    def timestamp(self, value):
+        self._timestamp = value
+
+    @property
+    def includeCurrencyInfo(self):
+        return self._includeCurrencyInfo
+
+    @includeCurrencyInfo.setter
+    def includeCurrencyInfo(self, value):
+        self._includeCurrencyInfo = value
+
+    @property
+    def ri(self):
+        return self._ri
+
+    @ri.setter
+    def ri(self, value):
+        self._ri = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetAllExchanges, self).run()                                         # calls 'BaseGet.run()'

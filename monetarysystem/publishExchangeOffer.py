@@ -68,33 +68,24 @@ class PublishExchangeOffer(Parent):
         """
 
         # Required parameters
-        self.currency = currency
-        self.buyRateNQT = buyRateNQT
-        self.sellRateNQT = sellRateNQT
-        self.totalBuyLimit = totalBuyLimit
-        self.totalSellLimit = totalSellLimit
-        self.initialBuySupply = initialBuySupply
-        self.initialSellSupply = initialSellSupply
-        self.expirationHeight = expirationHeight
+        self._currency = currency
+        self._buyRateNQT = buyRateNQT
+        self._sellRateNQT = sellRateNQT
+        self._totalBuyLimit = totalBuyLimit
+        self._totalSellLimit = totalSellLimit
+        self._initialBuySupply = initialBuySupply
+        self._initialSellSupply = initialSellSupply
+        self._expirationHeight = expirationHeight
 
-        self.publicKey = publicKey
-        self.secretPhrase = secretPhrase
-        self.referencedTransactionFullHash = referencedTransactionFullHash
-        self.broadcast = broadcast
-
-        if feeNQT == 0:
-            self.feeNQT = 100000000
-        else:
-            self.feeNQT = feeNQT
-
-        if deadline == 0:
-            self.deadline = 60
-        else:
-            self.deadline = deadline
-
-        self.phasing = phasing
-        self.message = message
-        self.rec = rec
+        self._publicKey = publicKey
+        self._secretPhrase = secretPhrase
+        self._referencedTransactionFullHash = referencedTransactionFullHash
+        self._broadcast = broadcast
+        self._feeNQT = feeNQT
+        self._deadline = deadline
+        self._phasing = phasing
+        self._message = message
+        self._rec = rec
 
         # Initialize dictionary
         self.data = {}
@@ -123,6 +114,148 @@ class PublishExchangeOffer(Parent):
         self.data["deadline"] = self.deadline
 
         super(PublishExchangeOffer, self).__init__(rt="publishExchangeOffer", data=self.data, rec=self.rec)
+
+    @property
+    def currency(self):
+        return self._currency
+
+    @currency.setter
+    def currency(self, value):
+        self._currency = value
+
+    @property
+    def buyRateNQT(self):
+        return self._buyRateNQT
+
+    @buyRateNQT.setter
+    def buyRateNQT(self, value):
+        self._buyRateNQT = value
+
+    @property
+    def sellRateNQT(self):
+        return self._sellRateNQT
+
+    @sellRateNQT.setter
+    def sellRateNQT(self, value):
+        self._sellRateNQT = value
+
+    @property
+    def totalBuyLimit(self):
+        return self._totalBuyLimit
+
+    @totalBuyLimit.setter
+    def totalBuyLimit(self, value):
+        self._totalBuyLimit = value
+
+    @property
+    def totalSellLimit(self):
+        return self._totalSellLimit
+
+    @totalSellLimit.setter
+    def totalSellLimit(self, value):
+        self._totalSellLimit = value
+
+    @property
+    def initialBuySupply(self):
+        return self._initialBuySupply
+
+    @initialBuySupply.setter
+    def initialBuySupply(self, value):
+        self._initialBuySupply = value
+
+    @property
+    def initialSellSupply(self):
+        return self._initialSellSupply
+
+    @initialSellSupply.setter
+    def initialSellSupply(self, value):
+        self._initialSellSupply = value
+
+    @property
+    def expirationHeight(self):
+        return self._expirationHeight
+
+    @expirationHeight.setter
+    def expirationHeight(self, value):
+        self._expirationHeight = value
+
+    @property
+    def publicKey(self):
+        return self._publicKey
+
+    @publicKey.setter
+    def publicKey(self, value):
+        self._publicKey = value
+
+    @property
+    def secretPhrase(self):
+        return self._secretPhrase
+
+    @secretPhrase.setter
+    def secretPhrase(self, value):
+        self._secretPhrase = value
+
+    @property
+    def referencedTransactionFullHash(self):
+        return self._referencedTransactionFullHash
+
+    @referencedTransactionFullHash.setter
+    def referencedTransactionFullHash(self, value):
+        self._referencedTransactionFullHash = value
+
+    @property
+    def broadcast(self):
+        return self._broadcast
+
+    @broadcast.setter
+    def broadcast(self, value):
+        self._broadcast = value
+
+    @property
+    def feeNQT(self):
+        return self._feeNQT
+
+    @feeNQT.setter
+    def feeNQT(self, value):
+        if value == 0:
+            self._feeNQT = 100000000
+        else:
+            self._feeNQT = value
+
+    @property
+    def deadline(self):
+        return self._deadline
+
+    @deadline.setter
+    def deadline(self, value):
+        if value == 0:
+            self._deadline = 60
+        else:
+            self._deadline = value
+
+    @property
+    def phasing(self):
+        return self._phasing
+
+    @phasing.setter
+    def phasing(self, value):
+        self._phasing = value
+
+    @property
+    def message(self):
+        return self._message
+
+    @message.setter
+    def message(self, value):
+        self._message = value
+
+    @property
+    def rec(self):
+        return self._rec
+
+    @rec.setter
+    def rec(self, value):
+        self._rec = value
 
     def run(self):
         super(PublishExchangeOffer, self).run()                # calls 'BasePost.run()'

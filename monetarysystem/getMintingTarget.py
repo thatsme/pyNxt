@@ -53,10 +53,10 @@ class GetMintingTarget(Parent):
         """
 
         # Required parameters
-        self.currency = currency
-        self.account = account
-        self.units = units
-        self.rb = rb
+        self._currency = currency
+        self._account = account
+        self._units = units
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -67,6 +67,38 @@ class GetMintingTarget(Parent):
         self.data["units"] = self.units
 
         super(GetMintingTarget, self).__init__(rt="getMintingTarget", data=self.data, rb=self.rb)
+
+    @property
+    def currency(self):
+        return self._currency
+
+    @currency.setter
+    def currency(self, value):
+        self._currency = value
+
+    @property
+    def account(self):
+        return self._account
+
+    @account.setter
+    def account(self, value):
+        self._account = value
+
+    @property
+    def units(self):
+        return self._units
+
+    @units.setter
+    def units(self, value):
+        self._units = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetMintingTarget, self).run()                                         # calls 'BaseGet.run()'

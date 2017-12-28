@@ -13,8 +13,6 @@ class GetAllCurrencies(Parent):
             https://nxtwiki.org/wiki/The_Nxt_API#Get_All_Currencies
 
             REQUEST
-            :param firstIndex : is a zero-based index to the first alias to retrieve (O)
-            :param lastIndex : is a zero-based index to the last alias to retrieve (O)
             :param includeCounts : is true to include numberOf... fields (B) (O)
             :param ri : ri object ( check base/Ri.py) (WP)
             :param rb : rb object ( check base/Rb.py) (WP)
@@ -43,9 +41,9 @@ class GetAllCurrencies(Parent):
         """
 
         # Required parameters
-        self.includeCounts = includeCounts
-        self.ri = ri
-        self.rb = rb
+        self._includeCounts = includeCounts
+        self._ri = ri
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -56,6 +54,30 @@ class GetAllCurrencies(Parent):
             self.data["includeCounts"] = self.includeCounts
 
         super(GetAllCurrencies, self).__init__(rt="getAllCurrencies", data=self.data, ri=self.ri, rb=self.rb)
+
+    @property
+    def includeCounts(self):
+        return self._includeCounts
+
+    @includeCounts.setter
+    def includeCounts(self, value):
+        self._includeCounts = value
+
+    @property
+    def ri(self):
+        return self._ri
+
+    @ri.setter
+    def ri(self, value):
+        self._ri = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetAllCurrencies, self).run()                                         # calls 'BaseGet.run()'
