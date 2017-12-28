@@ -16,7 +16,7 @@ class GetLinkedPhasedTransactions(Parent):
             https://nxtwiki.org/wiki/The_Nxt_API#Get_Linked_Phased_Transactions
 
             REQUEST
-            linkedFullHash : is the full hash of the transaction transaction
+            :param linkedFullHash : is the full hash of the transaction transaction
             :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
@@ -78,8 +78,8 @@ class GetLinkedPhasedTransactions(Parent):
         """
 
         # Required parameters
-        self.linkedFullHash = linkedFullHash
-        self.rb = rb
+        self._linkedFullHash = linkedFullHash
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -88,6 +88,22 @@ class GetLinkedPhasedTransactions(Parent):
         self.data["linkedFullHash"] = self.linkedFullHash
 
         super(GetLinkedPhasedTransactions, self).__init__(rt="getLinkedPhasedTransactions", data=self.data, rb=self.rb)
+
+    @property
+    def linkedFullHash(self):
+        return self._linkedFullHash
+
+    @linkedFullHash.setter
+    def linkedFullHash(self, value):
+        self._linkedFullHash = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetLinkedPhasedTransactions, self).run()                                         # calls 'BaseGet.run()'

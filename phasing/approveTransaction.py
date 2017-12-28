@@ -56,28 +56,20 @@ class ApproveTransaction(Parent):
         """
 
         # Required parameters
-        self.transactionFullHash = transactionFullHash
-        self.revealedSecret = revealedSecret
-        self.revealedSecretIsText = revealedSecretIsText
+        self._transactionFullHash = transactionFullHash
+        self._revealedSecret = revealedSecret
+        self._revealedSecretIsText = revealedSecretIsText
 
-        self.publicKey = publicKey
-        self.secretPhrase = secretPhrase
-        self.referencedTransactionFullHash = referencedTransactionFullHash
-        self.broadcast = broadcast
+        self._publicKey = publicKey
+        self._secretPhrase = secretPhrase
+        self._referencedTransactionFullHash = referencedTransactionFullHash
+        self._broadcast = broadcast
+        self._feeNQT = feeNQT
+        self._deadline = deadline
 
-        if feeNQT == 0:
-            self.feeNQT = 100000000
-        else:
-            self.feeNQT = feeNQT
-
-        if deadline == 0:
-            self.deadline = 60
-        else:
-            self.deadline = deadline
-
-        self.phasing = phasing
-        self.message = message
-        self.rec = rec
+        self._phasing = phasing
+        self._message = message
+        self._rec = rec
 
         # Initialize dictionary
         self.data = {}
@@ -96,6 +88,108 @@ class ApproveTransaction(Parent):
 
 
         super(ApproveTransaction, self).__init__(rt="approveTransaction", data=self.data, phasing=self.phasing, message=self.message, rec=self.rec)
+
+    @property
+    def transactionFullHash(self):
+        return self._transactionFullHash
+
+    @transactionFullHash.setter
+    def transactionFullHash(self, value):
+        self._transactionFullHash = value
+
+    @property
+    def revealedSecret(self):
+        return self._revealedSecret
+
+    @revealedSecret.setter
+    def revealedSecret(self, value):
+        self._revealedSecret = value
+
+    @property
+    def revealedSecretIsText(self):
+        return self._revealedSecretIsText
+
+    @revealedSecretIsText.setter
+    def revealedSecretIsText(self, value):
+        self._revealedSecretIsText = value
+
+    @property
+    def publicKey(self):
+        return self._publicKey
+
+    @publicKey.setter
+    def publicKey(self, value):
+        self._publicKey = value
+
+    @property
+    def secretPhrase(self):
+        return self._secretPhrase
+
+    @secretPhrase.setter
+    def secretPhrase(self, value):
+        self._secretPhrase = value
+
+    @property
+    def referencedTransactionFullHash(self):
+        return self._referencedTransactionFullHash
+
+    @referencedTransactionFullHash.setter
+    def referencedTransactionFullHash(self, value):
+        self._referencedTransactionFullHash = value
+
+    @property
+    def broadcast(self):
+        return self._broadcast
+
+    @broadcast.setter
+    def broadcast(self, value):
+        self._broadcast = value
+
+    @property
+    def feeNQT(self):
+        return self._feeNQT
+
+    @feeNQT.setter
+    def feeNQT(self, value):
+        if value == 0:
+            self._feeNQT = 100000000
+        else:
+            self._feeNQT = value
+
+    @property
+    def deadline(self):
+        return self._deadline
+
+    @deadline.setter
+    def deadline(self, value):
+        if value == 0:
+            self._deadline = 60
+        else:
+            self._deadline = value
+
+    @property
+    def phasing(self):
+        return self._phasing
+
+    @phasing.setter
+    def phasing(self, value):
+        self._phasing = value
+
+    @property
+    def message(self):
+        return self._message
+
+    @message.setter
+    def message(self, value):
+        self._message = value
+
+    @property
+    def rec(self):
+        return self._rec
+
+    @rec.setter
+    def rec(self, value):
+        self._rec = value
 
     def run(self):
         super(ApproveTransaction, self).run()                # calls 'BasePost.run()'

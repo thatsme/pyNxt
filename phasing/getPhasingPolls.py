@@ -13,7 +13,7 @@ class GetPhasingPolls(Parent):
             https://nxtwiki.org/wiki/The_Nxt_API#Get_Phasing_Polls
 
             REQUEST
-            :param transactions : is one of multiple currency IDs (WP) (S)
+            :param transactions : is one of multiple phased transaction IDs (WP) (S)
             :param countVotes is true to (B) compute the poll result while the votes are still available (O)
             :param rb : rb object ( check base/Rb.py) (WP)
 
@@ -56,12 +56,9 @@ class GetPhasingPolls(Parent):
         """
 
         # Required parameters
-        self.transactions = [None]*3
-        for a in transactions[:3]:
-            self.transactions.append(a)
-
-        self.countVotes = countVotes
-        self.rb = rb
+        self._transactions = transactions
+        self._countVotes = countVotes
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -72,6 +69,33 @@ class GetPhasingPolls(Parent):
         self.data["countVotes"] = self.countVotes
 
         super(GetPhasingPolls, self).__init__(rt="getPhasingPolls", data=self.data, rb=self.rb)
+
+    @property
+    def transactions(self):
+        return self._transactions
+
+    @transactions.setter
+    def transactions(self, value):
+        self._ttrans = [None]*3
+        for a in value[:3]:
+            self.ttrans.append(a)
+        self.transactions = self._ttrans
+
+    @property
+    def countVotes(self):
+        return self._countVotes
+
+    @countVotes.setter
+    def countVotes(self, value):
+        self._countVotes = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetPhasingPolls, self).run()                                         # calls 'BaseGet.run()'

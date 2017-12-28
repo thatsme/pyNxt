@@ -57,9 +57,9 @@ class GetPhasingPoll(Parent):
         """
 
         # Required parameters
-        self.transaction = transaction
-        self.countVotes = countVotes
-        self.rb = rb
+        self._transaction = transaction
+        self._countVotes = countVotes
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -69,6 +69,30 @@ class GetPhasingPoll(Parent):
         self.data["countVotes"] = self.countVotes
 
         super(GetPhasingPoll, self).__init__(rt="getPhasingPoll", data=self.data, rb=self.rb)
+
+    @property
+    def transaction(self):
+        return self._transaction
+
+    @transaction.setter
+    def transaction(self, value):
+        self._transaction = value
+
+    @property
+    def countVotes(self):
+        return self._countVotes
+
+    @countVotes.setter
+    def countVotes(self, value):
+        self._countVotes = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetPhasingPoll, self).run()                                         # calls 'BaseGet.run()'
