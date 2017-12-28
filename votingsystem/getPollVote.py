@@ -44,10 +44,10 @@ class GetPollVote(Parent):
 
         """
 
-        self.poll = poll
-        self.account = account
-        self.includeWeights = includeWeights
-        self.rb = rb
+        self._poll = poll
+        self._account = account
+        self._includeWeights = includeWeights
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -58,6 +58,38 @@ class GetPollVote(Parent):
         self.data["includeWeights"] = self.includeWeights
 
         super(GetPollVote, self).__init__(rt = "getPollVote", data=self.data)
+
+    @property
+    def poll(self):
+        return self._poll
+
+    @poll.setter
+    def poll(self, value):
+        self._poll = value
+
+    @property
+    def account(self):
+        return self._account
+
+    @account.setter
+    def account(self, value):
+        self._account = value
+
+    @property
+    def includeWeights(self):
+        return self._includeWeights
+
+    @includeWeights.setter
+    def includeWeights(self, value):
+        self._includeWeights = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetPollVote, self).run()                             # calls 'BaseGet.run()'

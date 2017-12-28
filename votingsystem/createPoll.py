@@ -77,39 +77,31 @@ class CreatePoll(Parent):
         """
 
         # Required parameters
-        self.name = name
-        self.description = description
-        self.finishHeight = finishHeight
-        self.votingModel = votingModel
-        self.minNumberOfOptions = minNumberOfOptions
-        self.maxNumberOfOptions = maxNumberOfOptions
-        self.minRangeValue = minRangeValue
-        self.maxRangeValue = maxRangeValue
-        self.minBalance = minBalance
-        self.minBalanceModel = minBalanceModel
-        self.holding = holding
-        self.options00 = option00
-        self.options01 = option01
-        self.options02 = option02
+        self._name = name
+        self._description = description
+        self._finishHeight = finishHeight
+        self._votingModel = votingModel
+        self._minNumberOfOptions = minNumberOfOptions
+        self._maxNumberOfOptions = maxNumberOfOptions
+        self._minRangeValue = minRangeValue
+        self._maxRangeValue = maxRangeValue
+        self._minBalance = minBalance
+        self._minBalanceModel = minBalanceModel
+        self._holding = holding
+        self._options00 = option00
+        self._options01 = option01
+        self._options02 = option02
 
-        self.publicKey = publicKey
-        self.secretPhrase = secretPhrase
-        self.referencedTransactionFullHash = referencedTransactionFullHash
-        self.broadcast = broadcast
+        self._publicKey = publicKey
+        self._secretPhrase = secretPhrase
+        self._referencedTransactionFullHash = referencedTransactionFullHash
+        self._broadcast = broadcast
+        self._feeNQT = feeNQT
+        self._deadline = deadline
 
-        if feeNQT == 0:
-            self.feeNQT = 100000000
-        else:
-            self.feeNQT = feeNQT
-
-        if deadline == 0:
-            self.deadline = 60
-        else:
-            self.deadline = deadline
-
-        self.phasing = phasing
-        self.message = message
-        self.rec = rec
+        self._phasing = phasing
+        self._message = message
+        self._rec = rec
 
         # Initialize dictionary
         self.data = {}
@@ -139,6 +131,196 @@ class CreatePoll(Parent):
 
 
         super(CreatePoll, self).__init__(rt="createPoll", data=self.data, phasing=self.phasing, message=self.message, rec=self.rec)
+
+    @property
+    def name(self):
+        return self._name
+
+    @name.setter
+    def name(self, value):
+        self._name = value
+
+    @property
+    def description(self):
+        return self._description
+
+    @description.setter
+    def description(self, value):
+        self._description = value
+
+    @property
+    def finishHeight(self):
+        return self._finishHeight
+
+    @finishHeight.setter
+    def finishHeight(self, value):
+        self._finishHeight = value
+
+    @property
+    def votingModel(self):
+        return self._votingModel
+
+    @votingModel.setter
+    def votingModel(self, value):
+        self._votingModel = value
+
+    @property
+    def minNumberOfOptions(self):
+        return self._minNumberOfOptions
+
+    @minNumberOfOptions.setter
+    def minNumberOfOptions(self, value):
+        self._minNumberOfOptions = value
+
+    @property
+    def maxNumberOfOptions(self):
+        return self._maxNumberOfOptions
+
+    @maxNumberOfOptions.setter
+    def maxNumberOfOptions(self, value):
+        self._maxNumberOfOptions = value
+
+    @property
+    def minRangeValue(self):
+        return self._minRangeValue
+
+    @minRangeValue.setter
+    def minRangeValue(self, value):
+        self._minRangeValue = value
+
+    @property
+    def maxRangeValue(self):
+        return self._maxRangeValue
+
+    @maxRangeValue.setter
+    def maxRangeValue(self, value):
+        self._maxRangeValue = value
+
+    @property
+    def minBalance(self):
+        return self._minBalance
+
+    @minBalance.setter
+    def minBalance(self, value):
+        self._minBalance = value
+
+    @property
+    def minBalanceModel(self):
+        return self._minBalanceModel
+
+    @minBalanceModel.setter
+    def minBalanceModel(self, value):
+        self._minBalanceModel = value
+
+    @property
+    def holding(self):
+        return self._holding
+
+    @holding.setter
+    def holding(self, value):
+        self._holding = value
+
+    @property
+    def options00(self):
+        return self._options00
+
+    @options00.setter
+    def options00(self, value):
+        self._options00 = value
+
+    @property
+    def options01(self):
+        return self._options01
+
+    @options01.setter
+    def options01(self, value):
+        self._options01 = value
+
+    @property
+    def options02(self):
+        return self._options02
+
+    @options02.setter
+    def options02(self, value):
+        self._options02 = value
+
+    @property
+    def publicKey(self):
+        return self._publicKey
+
+    @publicKey.setter
+    def publicKey(self, value):
+        self._publicKey = value
+
+    @property
+    def secretPhrase(self):
+        return self._secretPhrase
+
+    @secretPhrase.setter
+    def secretPhrase(self, value):
+        self._secretPhrase = value
+
+    @property
+    def referencedTransactionFullHash(self):
+        return self._referencedTransactionFullHash
+
+    @referencedTransactionFullHash.setter
+    def referencedTransactionFullHash(self, value):
+        self._referencedTransactionFullHash = value
+
+    @property
+    def broadcast(self):
+        return self._broadcast
+
+    @broadcast.setter
+    def broadcast(self, value):
+        self._broadcast = value
+
+    @property
+    def feeNQT(self):
+        return self._feeNQT
+
+    @feeNQT.setter
+    def feeNQT(self, value):
+        if value == 0:
+            self._feeNQT = 100000000
+        else:
+            self._feeNQT = value
+
+    @property
+    def deadline(self):
+        return self._deadline
+
+    @deadline.setter
+    def deadline(self, value):
+        if value == 0:
+            self._deadline = 60
+        else:
+            self._deadline = value
+
+    @property
+    def phasing(self):
+        return self._phasing
+
+    @phasing.setter
+    def phasing(self, value):
+        self._phasing = value
+
+    @property
+    def message(self):
+        return self._message
+
+    @message.setter
+    def message(self, value):
+        self._message = value
+
+    @property
+    def rec(self):
+        return self._rec
+
+    @rec.setter
+    def rec(self, value):
+        self._rec = value
 
     def run(self):
         super(CreatePoll, self).run()                # calls 'BasePost.run()'

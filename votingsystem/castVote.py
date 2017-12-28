@@ -2,7 +2,7 @@
 from base.BasePost import BasePost as Parent
 
 class CastVote(Parent):
-    def __init__(self, transactionFullHash=None, revealedSecret = None, revealedSecretIsText=None, publicKey = None, secretPhrase=None, feeNQT = None, deadline = 0, referencedTransactionFullHash = None, broadcast=True, phasing = None, message=None, rec=None ):
+    def __init__(self, poll=None, vote00=None, vote01=None, vote02=None, publicKey = None, secretPhrase=None, feeNQT = None, deadline = 0, referencedTransactionFullHash = None, broadcast=True, phasing = None, message=None, rec=None ):
         """
             Cast a vote on a poll. POST only.
 
@@ -60,36 +60,31 @@ class CastVote(Parent):
         """
 
         # Required parameters
-        self.transactionFullHash = transactionFullHash
-        self.revealedSecret = revealedSecret
-        self.revealedSecretIsText = revealedSecretIsText
+        self._poll = poll
+        self._vote00 = vote00
+        self._vote01 = vote01
+        self._vote02 = vote02
 
-        self.publicKey = publicKey
-        self.secretPhrase = secretPhrase
-        self.referencedTransactionFullHash = referencedTransactionFullHash
-        self.broadcast = broadcast
+        self._publicKey = publicKey
+        self._secretPhrase = secretPhrase
+        self._referencedTransactionFullHash = referencedTransactionFullHash
+        self._broadcast = broadcast
 
-        if feeNQT == 0:
-            self.feeNQT = 100000000
-        else:
-            self.feeNQT = feeNQT
+        self._feeNQT = feeNQT
+        self._deadline = deadline
 
-        if deadline == 0:
-            self.deadline = 60
-        else:
-            self.deadline = deadline
-
-        self.phasing = phasing
-        self.message = message
-        self.rec = rec
+        self._phasing = phasing
+        self._message = message
+        self._rec = rec
 
         # Initialize dictionary
         self.data = {}
 
         ## Create data dictionary
-        self.data["transactionFullHash"] = self.transactionFullHash
-        self.data["revealedSecret"] = self.revealedSecret
-        self.data["revealedSecretIsText"] = self.revealedSecretIsText
+        self.data["poll"] = self.poll
+        self.data["vote00"] = self.vote00
+        self.data["vote01"] = self.vote01
+        self.data["vote02"] = self.vote02
 
         self.data["publicKey"] = self.publicKey
         self.data["secretPhrase"] = self.secretPhrase
@@ -98,8 +93,117 @@ class CastVote(Parent):
         self.data["feeNQT"] = self.feeNQT
         self.data["deadline"] = self.deadline
 
-
         super(CastVote, self).__init__(rt="castVote", data=self.data, phasing=self.phasing, message=self.message, rec=self.rec)
+
+    @property
+    def poll(self):
+        return self._poll
+
+    @poll.setter
+    def poll(self, value):
+        self._poll = value
+
+    @property
+    def vote00(self):
+        return self._vote00
+
+    @vote00.setter
+    def vote00(self, value):
+        self._vote00 = value
+
+    @property
+    def vote01(self):
+        return self._vote01
+
+    @vote01.setter
+    def vote01(self, value):
+        self._vote01 = value
+
+    @property
+    def vote02(self):
+        return self._vote02
+
+    @vote02.setter
+    def vote02(self, value):
+        self._vote02 = value
+
+    @property
+    def publicKey(self):
+        return self._publicKey
+
+    @publicKey.setter
+    def publicKey(self, value):
+        self._publicKey = value
+
+    @property
+    def secretPhrase(self):
+        return self._secretPhrase
+
+    @secretPhrase.setter
+    def secretPhrase(self, value):
+        self._secretPhrase = value
+
+    @property
+    def referencedTransactionFullHash(self):
+        return self._referencedTransactionFullHash
+
+    @referencedTransactionFullHash.setter
+    def referencedTransactionFullHash(self, value):
+        self._referencedTransactionFullHash = value
+
+    @property
+    def broadcast(self):
+        return self._broadcast
+
+    @broadcast.setter
+    def broadcast(self, value):
+        self._broadcast = value
+
+    @property
+    def feeNQT(self):
+        return self._feeNQT
+
+    @feeNQT.setter
+    def feeNQT(self, value):
+        if value == 0:
+            self._feeNQT = 100000000
+        else:
+            self._feeNQT = value
+
+    @property
+    def deadline(self):
+        return self._deadline
+
+    @deadline.setter
+    def deadline(self, value):
+        if value == 0:
+            self._deadline = 60
+        else:
+            self._deadline = value
+
+    @property
+    def phasing(self):
+        return self._phasing
+
+    @phasing.setter
+    def phasing(self, value):
+        self._phasing = value
+
+    @property
+    def message(self):
+        return self._message
+
+    @message.setter
+    def message(self, value):
+        self._message = value
+
+    @property
+    def rec(self):
+        return self._rec
+
+    @rec.setter
+    def rec(self, value):
+        self._rec = value
 
     def run(self):
         super(CastVote, self).run()                # calls 'BasePost.run()'

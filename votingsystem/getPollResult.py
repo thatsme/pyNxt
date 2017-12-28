@@ -57,12 +57,11 @@ class GetPollResult(Parent):
 
         """
 
-        self.poll = poll
-        self.votingModel = votingModel
-        self.holding = holding
-        self.minBalance = minBalance
-        self.minBalanceModel = minBalanceModel
-
+        self._poll = poll
+        self._votingModel = votingModel
+        self._holding = holding
+        self._minBalance = minBalance
+        self._minBalanceModel = minBalanceModel
         self.rb = rb
 
         # Initialize dictionary
@@ -76,6 +75,54 @@ class GetPollResult(Parent):
         self.data["minBalanceModel"] = self.minBalanceModel
 
         super(GetPollResult, self).__init__(rt = "getPollResult", data=self.data, rb=self.rb)
+
+    @property
+    def poll(self):
+        return self._poll
+
+    @poll.setter
+    def poll(self, value):
+        self._poll = value
+
+    @property
+    def votingModel(self):
+        return self._votingModel
+
+    @votingModel.setter
+    def votingModel(self, value):
+        self._votingModel = value
+
+    @property
+    def holding(self):
+        return self._holding
+
+    @holding.setter
+    def holding(self, value):
+        self._holding = value
+
+    @property
+    def minBalance(self):
+        return self._minBalance
+
+    @minBalance.setter
+    def minBalance(self, value):
+        self._minBalance = value
+
+    @property
+    def minBalanceModel(self):
+        return self._minBalanceModel
+
+    @minBalanceModel.setter
+    def minBalanceModel(self, value):
+        self._minBalanceModel = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetPollResult, self).run()                             # calls 'BaseGet.run()'

@@ -54,8 +54,8 @@ class GetPoll(Parent):
 
         """
 
-        self.poll = poll
-        self.rb = rb
+        self._poll = poll
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -64,6 +64,22 @@ class GetPoll(Parent):
         self.data["poll"] = self.poll
 
         super(GetPoll, self).__init__(rt = "getPoll", data=self.data, rb=self.rb)
+
+    @property
+    def poll(self):
+        return self._poll
+
+    @poll.setter
+    def poll(self, value):
+        self._poll = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetPoll, self).run()                             # calls 'BaseGet.run()'

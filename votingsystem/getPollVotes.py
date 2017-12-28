@@ -3,7 +3,7 @@ from base.BaseGet import BaseGet as Parent
 
 class GetPollVotes(Parent):
 
-    def __init__(self, poll=None, account=None, includeWeights=False, ri=None, rb=None):
+    def __init__(self, poll=None, includeWeights=False, ri=None, rb=None):
         """
             Get all votes on a poll in reverse chronological order.
 
@@ -43,11 +43,10 @@ class GetPollVotes(Parent):
 
         """
 
-        self.poll = poll
-        self.account = account
-        self.includeWeights = includeWeights
-        self.ri = ri
-        self.rb = rb
+        self._poll = poll
+        self._includeWeights = includeWeights
+        self._ri = ri
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -58,6 +57,38 @@ class GetPollVotes(Parent):
         self.data["includeWeights"] = self.includeWeights
 
         super(GetPollVotes, self).__init__(rt = "getPollVotes", data=self.data, ri=self.ri, rb=self.rb)
+
+    @property
+    def poll(self):
+        return self._poll
+
+    @poll.setter
+    def poll(self, value):
+        self._poll = value
+
+    @property
+    def includeWeights(self):
+        return self._includeWeights
+
+    @includeWeights.setter
+    def includeWeights(self, value):
+        self._includeWeights = value
+
+    @property
+    def ri(self):
+        return self._ri
+
+    @ri.setter
+    def ri(self, value):
+        self._ri = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetPollVotes, self).run()                             # calls 'BaseGet.run()'
