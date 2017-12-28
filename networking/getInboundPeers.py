@@ -29,13 +29,13 @@ class GetInboundPeers(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
                 (WP) Wrapper Meta-parameter
 
         """
 
-        self.includePeerInfo = includePeerInfo
+        self._includePeerInfo = includePeerInfo
 
         # Initialize dictionary
         self.data = {}
@@ -45,6 +45,14 @@ class GetInboundPeers(Parent):
             self.data["includePeerInfo"] = self.includePeerInfo
 
         super(GetInboundPeers, self).__init__(rt = "getInboundPeers", data=self.data)
+
+    @property
+    def includePeerInfo(self):
+        return self._includePeerInfo
+
+    @includePeerInfo.setter
+    def includePeerInfo(self, value):
+        self._includePeerInfo = value
 
     def run(self):
         super(GetInboundPeers, self).run()                                 # calls 'BaseGet.run()'

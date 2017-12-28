@@ -28,7 +28,7 @@ class GetMyInfo(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
                 (WP) Wrapper Meta-parameter
 
@@ -36,7 +36,6 @@ class GetMyInfo(Parent):
 
         # Initialize dictionary
         self.data = {}
-
 
         super(GetMyInfo, self).__init__(rt = "getMyInfo", data=self.data)
 

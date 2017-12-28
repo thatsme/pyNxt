@@ -50,7 +50,7 @@ class SetAPIProxyPeer(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
                 (WP) Wrapper Meta-parameter
 
@@ -58,17 +58,36 @@ class SetAPIProxyPeer(Parent):
         """
 
         # Required parameters
-        self.peer = peer
+        self._peer = peer
+        self._adminPassword = adminPassword
 
         # Initialize dictionary
         self.data = {}
 
         ## Create data dictionary
 
-        if peer:
+        if self.peer:
             self.data["peer"] = self.peer
+        if self.adminPassword:
+            self.data["adminPassword"] = self.adminPassword
 
         super(SetAPIProxyPeer, self).__init__(rt="setAPIProxyPeer", data=self.data)
+
+    @property
+    def peer(self):
+        return self._peer
+
+    @peer.setter
+    def peer(self, value):
+        self._peer = value
+
+    @property
+    def adminPassword(self):
+        return self._adminPassword
+
+    @adminPassword.setter
+    def adminPassword(self, value):
+        self._adminPassword = value
 
     def run(self):
         super(SetAPIProxyPeer, self).run()                # calls 'BasePost.run()'

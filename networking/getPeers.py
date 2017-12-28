@@ -31,16 +31,16 @@ class GetPeers(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
                 (WP) Wrapper Meta-parameter
 
         """
 
-        self.active = active
-        self.state = state
-        self.includePeerInfo = includePeerInfo
-        self.service = service
+        self._active = active
+        self._state = state
+        self._includePeerInfo = includePeerInfo
+        self._service = service
 
         # Initialize dictionary
         self.data = {}
@@ -53,6 +53,38 @@ class GetPeers(Parent):
             self.data["service"] = self.service
 
         super(GetPeers, self).__init__(rt = "getPeers", data=self.data)
+
+    @property
+    def active(self):
+        return self._active
+
+    @active.setter
+    def active(self, value):
+        self._active = value
+
+    @property
+    def state(self):
+        return self._state
+
+    @state.setter
+    def state(self, value):
+        self._state = value
+
+    @property
+    def includePeerInfo(self):
+        return self._includePeerInfo
+
+    @includePeerInfo.setter
+    def includePeerInfo(self, value):
+        self._includePeerInfo = value
+
+    @property
+    def service(self):
+        return self._service
+
+    @service.setter
+    def service(self, value):
+        self._service = value
 
     def run(self):
         super(GetPeers, self).run()                                 # calls 'BaseGet.run()'

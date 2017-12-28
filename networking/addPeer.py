@@ -50,7 +50,7 @@ class AddPeer(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
                 (WP) Wrapper Meta-parameter
 
@@ -58,17 +58,25 @@ class AddPeer(Parent):
         """
 
         # Required parameters
-        self.peer = peer
+        self._peer = peer
 
         # Initialize dictionary
         self.data = {}
 
         ## Create data dictionary
 
-        if peer:
+        if self.peer:
             self.data["peer"] = self.peer
 
         super(AddPeer, self).__init__(rt="addPeer", data=self.data)
+
+    @property
+    def peer(self):
+        return self._peer
+
+    @peer.setter
+    def peer(self, value):
+        self._peer = value
 
     def run(self):
         super(AddPeer, self).run()                # calls 'BasePost.run()'

@@ -48,13 +48,13 @@ class GetPeer(Parent):
                 (S) String
                 (B) Boolean
                 (A) Array
-                (O) Object
+                (OB) Object
                 >   Array Element
                 (WP) Wrapper Meta-parameter
 
         """
 
-        self.peer = peer
+        self._peer = peer
 
         # Initialize dictionary
         self.data = {}
@@ -63,6 +63,14 @@ class GetPeer(Parent):
             self.data["peer"] = self.peer
 
         super(GetPeer, self).__init__(rt = "getPeer", data=self.data)
+
+    @property
+    def peer(self):
+        return self._peer
+
+    @peer.setter
+    def peer(self, value):
+        self._peer = value
 
     def run(self):
         super(GetPeer, self).run()                                 # calls 'BaseGet.run()'
