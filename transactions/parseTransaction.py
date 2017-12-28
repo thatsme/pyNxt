@@ -43,9 +43,9 @@ class ParseTransaction(Parent):
 
         # is the block ID of a block that must be present in the blockchain during execution (optional)
 
-        self.transactionBytes = transactionBytes
-        self.transactionJSON = transactionJSON
-        self.rb = rb
+        self._transactionBytes = transactionBytes
+        self._transactionJSON = transactionJSON
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -55,6 +55,30 @@ class ParseTransaction(Parent):
         self.data["transactionJSON"] = self.transactionJSON
 
         super(ParseTransaction, self).__init__(rt = "parseTransaction", data=self.data, rb=self.rb)
+
+    @property
+    def transactionBytes(self):
+        return self._transactionBytes
+
+    @transactionBytes.setter
+    def transactionBytes(self, value):
+        self._transactionBytes = value
+
+    @property
+    def transactionJSON(self):
+        return self._transactionJSON
+
+    @transactionJSON.setter
+    def transactionJSON(self, value):
+        self._transactionJSON = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         """

@@ -9,8 +9,9 @@ import codecs
 class SignTransactionOffline(object):
 
     def __init__(self, secretPhrase=None, transaction = None):
-        self.secretPhrase = secretPhrase
-        self.transaction = ParseHexString(transaction).getData()
+        self._secretPhrase = secretPhrase
+        #self._transaction = ParseHexString(transaction).getData()
+        self._transaction = transaction
         self.P = [0] * 32
         self.h = [0] * 32
         self.m = [0] * 32
@@ -24,6 +25,22 @@ class SignTransactionOffline(object):
         self.hash_h = sha256()
         self.hash_x = sha256()
         self.MDEBUG = False
+
+    @property
+    def secretPhrase(self):
+        return self._secretPhrase
+
+    @secretPhrase.setter
+    def secretPhrase(self, value):
+        self._secretPhrase = value
+
+    @property
+    def transaction(self):
+        return self.__transaction
+
+    @transaction.setter
+    def transaction(self, value):
+        self._transaction = ParseHexString(value).getData()
 
     def bytesToList(self, b):
         return list(struct.unpack('=32b', b))

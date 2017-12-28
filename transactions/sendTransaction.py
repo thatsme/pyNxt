@@ -44,10 +44,10 @@ class SendTransaction(Parent):
         """
 
         # Required parameters
-        self.transactionBytes = transactionBytes
-        self.transactionJSON = transactionJSON
-        self.prunableAttachmentJSON = prunableAttachementsJSON
-        self.adminPassword = adminPassword
+        self._transactionBytes = transactionBytes
+        self._transactionJSON = transactionJSON
+        self._prunableAttachmentJSON = prunableAttachementsJSON
+        self._adminPassword = adminPassword
 
         # Initialize dictionary
         self.data = {}
@@ -60,6 +60,38 @@ class SendTransaction(Parent):
         self.data["adminPassword"] = self.adminPassword
 
         super(SendTransaction, self).__init__(rt="sendTransaction", data=self.data, phasing=self.phasing, message=self.message)
+
+    @property
+    def transactionBytes(self):
+        return self._transactionBytes
+
+    @transactionBytes.setter
+    def transactionBytes(self, value):
+        self._transactionBytes = value
+
+    @property
+    def transactionJSON(self):
+        return self._transactionJSON
+
+    @transactionJSON.setter
+    def transactionJSON(self, value):
+        self._transactionJSON = value
+
+    @property
+    def adminPassword(self):
+        return self._adminPassword
+
+    @adminPassword.setter
+    def adminPassword(self, value):
+        self._adminPassword = value
+
+    @property
+    def prunableAttachmentJSON(self):
+        return self._prunableAttachmentJSON
+
+    @prunableAttachmentJSON.setter
+    def prunableAttachmentJSON(self, value):
+        self._prunableAttachmentJSON = value
 
     def run(self):
         super(SendTransaction, self).run()                # calls 'BasePost.run()'

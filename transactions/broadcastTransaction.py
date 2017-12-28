@@ -40,9 +40,9 @@ class BroadcastTransaction(Parent):
         """
 
         # Required parameters
-        self.transactionBytes = transactionBytes
-        self.transactionJSON = transactionJSON
-        self.prunableAttachmentJSON = prunableAttachmentJSON
+        self._transactionBytes = transactionBytes
+        self._transactionJSON = transactionJSON
+        self._prunableAttachmentJSON = prunableAttachmentJSON
 
         # Initialize dictionary
         self.data = {}
@@ -57,6 +57,30 @@ class BroadcastTransaction(Parent):
 
 
         super(BroadcastTransaction, self).__init__(rt="broadcastTransaction", data=self.data)
+
+    @property
+    def transactionBytes(self):
+        return self._transactionBytes
+
+    @transactionBytes.setter
+    def transactionBytes(self, value):
+        self._transactionBytes = value
+
+    @property
+    def transactionJSON(self):
+        return self._transactionJSON
+
+    @transactionJSON.setter
+    def transactionJSON(self, value):
+        self._transactionJSON = value
+
+    @property
+    def prunableAttachmentJSON(self):
+        return self._prunableAttachmentJSON
+
+    @prunableAttachmentJSON.setter
+    def prunableAttachmentJSON(self, value):
+        self._prunableAttachmentJSON = value
 
     def run(self):
         super(BroadcastTransaction, self).run()                # calls 'BasePost.run()'

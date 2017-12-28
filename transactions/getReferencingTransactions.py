@@ -38,9 +38,9 @@ class GetReferencingTransactions(Parent):
 
         """
 
-        self.transaction = transaction
-        self.ri = ri
-        self.rb = rb
+        self._transaction = transaction
+        self._ri = ri
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -49,6 +49,30 @@ class GetReferencingTransactions(Parent):
         self.data["transaction"]  = self.transaction
 
         super(GetReferencingTransactions, self).__init__(rt = "getReferencingTransactions", data=self.data, ri=self.ri, rb=self.rb)
+
+    @property
+    def transaction(self):
+        return self._transaction
+
+    @transaction.setter
+    def transaction(self, value):
+        self._transaction = value
+
+    @property
+    def ri(self):
+        return self._ri
+
+    @ri.setter
+    def ri(self, value):
+        self._ri = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetReferencingTransactions, self).run()               # calls 'BaseGet.run()'

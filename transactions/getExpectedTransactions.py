@@ -3,7 +3,7 @@ from base.BaseGet import BaseGet as Parent
 
 class GetExpectedTransactions(Parent):
 
-    def __init__(self,account=None, rb=None ):
+    def __init__(self,accounts=None, rb=None ):
         """
             Returns the non-phased unconfirmed transactions expected to be included in the next block (only),
             plus the phased transactions scheduled to finish in that block (whether approved or not).
@@ -14,7 +14,7 @@ class GetExpectedTransactions(Parent):
             https://nxtwiki.org/wiki/The_Nxt_API#Get_Expected_Transactions
 
             REQUEST
-            :param account : is array (A) of accounts ID's (S) / Multiaccount parameters (3)
+            :param accounts : is array (A) of accounts ID's (S) / Multiaccount parameters (3)
             :param rb : rb object ( check base/Rb.py) (WP)
 
             RESPONSE
@@ -38,11 +38,8 @@ class GetExpectedTransactions(Parent):
 
         """
 
-        self.accounts = [None]*3
-        for a in account[:3]:
-            self.accounts.append(a)
-
-        self.rb = rb
+        self._accounts = accounts
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -52,6 +49,25 @@ class GetExpectedTransactions(Parent):
             self.data["accounts"] = a
 
         super(GetExpectedTransactions, self).__init__(rt = "getExpectedTransactions", data=self.data, rb=self.rb)
+
+    @property
+    def accounts(self):
+        return self._accounts
+
+    @accounts.setter
+    def accounts(self, value):
+        self._taccounts = [None]*3
+        for a in value[:3]:
+            self.taccounts.append(a)
+        self._accounts = self._taccounts
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetExpectedTransactions, self).run()               # calls 'BaseGet.run()'

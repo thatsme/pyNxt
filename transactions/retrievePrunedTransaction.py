@@ -67,7 +67,7 @@ class RetrievePrunedTransaction(Parent):
         """
 
         # Required parameters
-        self.transaction = transaction
+        self._transaction = transaction
 
         # Initialize dictionary
         self.data = {}
@@ -77,6 +77,14 @@ class RetrievePrunedTransaction(Parent):
         self.data["transaction"] = self.transaction
 
         super(RetrievePrunedTransaction, self).__init__(rt="retrievePrunedTransaction", data=self.data)
+
+    @property
+    def transaction(self):
+        return self._transaction
+
+    @transaction.setter
+    def transaction(self, value):
+        self._transaction = value
 
     def run(self):
         super(RetrievePrunedTransaction, self).run()                # calls 'BasePost.run()'

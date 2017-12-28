@@ -41,8 +41,8 @@ class GetTransactionBytes(Parent):
 
         """
 
-        self.transaction = transaction
-        self.rb = rb
+        self._transaction = transaction
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -51,6 +51,22 @@ class GetTransactionBytes(Parent):
         self.data["transaction"]  = self.transaction
    
         super(GetTransactionBytes, self).__init__(rt = "getTransactionBytes", data=self.data, rb=self.rb)
+
+    @property
+    def transaction(self):
+        return self._transaction
+
+    @transaction.setter
+    def transaction(self, value):
+        self._transaction = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetTransactionBytes, self).run()               # calls 'BaseGet.run()'

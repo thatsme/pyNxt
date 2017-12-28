@@ -16,8 +16,8 @@ class CalculateFullHash(Parent):
 
             REQUEST
             :param unsignedTransactionJSON : is the unsigned transaction JSON object (O)
-            :param unsignedTransactionBytes are the unsigned bytes of a transaction (optional if unsignedTransactionJSON is provided)
-            :param signatureHash is a SHA-256 hash of the transaction signature (S)
+            :param unsignedTransactionBytes : are the unsigned bytes of a transaction (optional if unsignedTransactionJSON is provided)
+            :param signatureHash : is a SHA-256 hash of the transaction signature (S)
 
             RESPONSE
             :return requestProcessingTime : (N) is the API request processing time (in millisec)
@@ -44,9 +44,9 @@ class CalculateFullHash(Parent):
 
         # is the block ID of a block that must be present in the blockchain during execution (optional)
 
-        self.unsignedTransactionJSON = unsignedTransactionJSON
-        self.unsignedTransactionBytes = unsignedTransactionBytes
-        self.signatureHash = signatureHash
+        self._unsignedTransactionJSON = unsignedTransactionJSON
+        self._unsignedTransactionBytes = unsignedTransactionBytes
+        self._signatureHash = signatureHash
 
         # Initialize dictionary
         self.data = {}
@@ -60,6 +60,30 @@ class CalculateFullHash(Parent):
             self.data["unsignedTransactionBytes"] = self.unsignedTransactionBytes
 
         super(CalculateFullHash, self).__init__(rt = "calculateFullHash", data=self.data)
+
+    @property
+    def unsignedTransactionJSON(self):
+        return self._unsignedTransactionJSON
+
+    @unsignedTransactionJSON.setter
+    def unsignedTransactionJSON(self, value):
+        self._unsignedTransactionJSON = value
+
+    @property
+    def unsignedTransactionBytes(self):
+        return self._unsignedTransactionBytes
+
+    @unsignedTransactionBytes.setter
+    def unsignedTransactionBytes(self, value):
+        self._unsignedTransactionBytes = value
+
+    @property
+    def signatureHash(self):
+        return self._signatureHash
+
+    @signatureHash.setter
+    def signatureHash(self, value):
+        self._signatureHash = value
 
     def run(self):
         """

@@ -53,12 +53,12 @@ class SignTransaction(Parent):
 
         # is the block ID of a block that must be present in the blockchain during execution (optional)
 
-        self.unsignedTransactionJSON = unsignedTransactionJSON
-        self.unsignedTransactionBytes = unsignedTransactionBytes
-        self.prunableAttachmentJSON = prunableAttachmentJSON
-        self.secretPhrase = secretPhrase
-        self.validate = validate
-        self.rb = rb
+        self._unsignedTransactionJSON = unsignedTransactionJSON
+        self._unsignedTransactionBytes = unsignedTransactionBytes
+        self._prunableAttachmentJSON = prunableAttachmentJSON
+        self._secretPhrase = secretPhrase
+        self._validate = validate
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -75,6 +75,54 @@ class SignTransaction(Parent):
             self.data["prunableAttachmentJSON"] = self.prunableAttachmentJSON
 
         super(SignTransaction, self).__init__(rt = "signTransaction", data=self.data, rb=self.rb)
+
+    @property
+    def unsignedTransactionJSON(self):
+        return self._unsignedTransactionJSON
+
+    @unsignedTransactionJSON.setter
+    def unsignedTransactionJSON(self, value):
+        self._unsignedTransactionJSON = value
+
+    @property
+    def unsignedTransactionBytes(self):
+        return self._unsignedTransactionBytes
+
+    @unsignedTransactionBytes.setter
+    def unsignedTransactionBytes(self, value):
+        self._unsignedTransactionBytes = value
+
+    @property
+    def prunableAttachmentJSON(self):
+        return self._prunableAttachmentJSON
+
+    @prunableAttachmentJSON.setter
+    def prunableAttachmentJSON(self, value):
+        self._prunableAttachmentJSON = value
+
+    @property
+    def secretPhrase(self):
+        return self._secretPhrase
+
+    @secretPhrase.setter
+    def secretPhrase(self, value):
+        self._secretPhrase = value
+
+    @property
+    def validate(self):
+        return self._validate
+
+    @validate.setter
+    def validate(self, value):
+        self._validate = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         """

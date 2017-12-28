@@ -71,10 +71,10 @@ class GetTransaction(Parent):
 
         """
 
-        self.transaction = transaction
-        self.fullHash = fullHash
-        self.includePhasingResult = includePhasingResult
-        self.rb = rb
+        self._transaction = transaction
+        self._fullHash = fullHash
+        self._includePhasingResult = includePhasingResult
+        self._rb = rb
 
         # Initialize dictionary
         self.data = {}
@@ -85,6 +85,38 @@ class GetTransaction(Parent):
         self.data["includePhasingResult"] = self.includePhasingResult
 
         super(GetTransaction, self).__init__(rt = "getTransaction", data=self.data, rb=self.rb)
+
+    @property
+    def transaction(self):
+        return self._transaction
+
+    @transaction.setter
+    def transaction(self, value):
+        self._transaction = value
+
+    @property
+    def fullHash(self):
+        return self._fullHash
+
+    @fullHash.setter
+    def fullHash(self, value):
+        self._fullHash = value
+
+    @property
+    def includePhasingResult(self):
+        return self._includePhasingResult
+
+    @includePhasingResult.setter
+    def includePhasingResult(self, value):
+        self._includePhasingResult = value
+
+    @property
+    def rb(self):
+        return self._rb
+
+    @rb.setter
+    def rb(self, value):
+        self._rb = value
 
     def run(self):
         super(GetTransaction, self).run()               # calls 'BaseGet.run()'
