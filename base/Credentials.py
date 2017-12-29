@@ -15,6 +15,6 @@ class Credentials(object):
 
     def __getattribute__(self, attr):
         try:
-            return self.__dict__[attr]
+            return object.__getattribute__(self, attr)
         except KeyError:
             return None
