@@ -3,7 +3,7 @@ from base.BasePost import BasePost as Parent
 import base.Validators
 
 class DeleteAccountProperty(Parent):
-    def __init__(self, recipient = None, property=None, setter=None, secretPhrase=None,  publicKey = None, feeNQT = None, deadline = 0, referencedTransactionFullHash = None, broadcast=False, phasing = None, message=None, rec=None ):
+    def __init__(self, recipient=None, pproperty=None, setter=None, secretPhrase=None,  publicKey=None, feeNQT=None, deadline=0, referencedTransactionFullHash = None, broadcast=False, phasing = None, message=None, rec=None ):
         """
             DeleteAccountProperty take a default 5 parameter as explained in NXT API Documentation
 
@@ -13,7 +13,7 @@ class DeleteAccountProperty(Parent):
 
             REQUEST
             :param recipient : is the accounts where a property should be removed (S) (O)
-            :param property : is the name of the property (S) (R)
+            :param pproperty : is the name of the property (S) (R)
             :param setter : is the accounts who did set the property (S) (O)
             :param secretPhrase * : secret Phrase of accounts where we want remove a property ( required or at least ** )
             :param publicKey ** : publicKey of accounts where we want remove a property ( does not get in broadcast ) ( required or at least *)
@@ -56,7 +56,7 @@ class DeleteAccountProperty(Parent):
 
         # Required parameters
         self._recipient = recipient
-        self._property = property
+        self._pproperty = pproperty
         self._publicKey = publicKey
         self._secretPhrase = secretPhrase
         self._feeNQT = feeNQT
@@ -76,7 +76,7 @@ class DeleteAccountProperty(Parent):
         ## Create data dictionary
         self.data["recipient"] = self.recipient
         self.data["setter"] = self.setter
-        self.data["property"] = self.property
+        self.data["property"] = self.pproperty
         if publicKey:
             self.data["publicKey"] = self.publicKey
         if secretPhrase:
@@ -99,12 +99,12 @@ class DeleteAccountProperty(Parent):
         self._recipient = value
 
     @property
-    def property(self):
-        return self._property
+    def pproperty(self):
+        return self._pproperty
 
-    @property.setter
-    def property(self, value):
-        self._property = value
+    @pproperty.setter
+    def pproperty(self, value):
+        self._pproperty = value
 
     @property
     def publicKey(self):
@@ -113,6 +113,14 @@ class DeleteAccountProperty(Parent):
     @publicKey.setter
     def publicKey(self, value):
         self._publicKey = value
+
+    @property
+    def secretPhrase(self):
+        return self._secretPhrase
+
+    @secretPhrase.setter
+    def secretPhrase(self, value):
+        self._secretPhrase = value
 
     @property
     def feeNQT(self):
