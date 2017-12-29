@@ -5,9 +5,7 @@ from base import Phasing
 from base import Message
 from base import Rb
 from base import Ri
-from base.CnvtData import json2obj
 from base.TnkMap import tokenMap
-from base.TimeIt import time_all_class_methods
 
 
 #@time_all_class_methods
@@ -15,14 +13,12 @@ class BaseGet(object):
 
     def __init__(self, rt, data, phasing = None, message=None, rb = None, ri = None):
 
-        # self.accounts = "NXT-XWQY-C2MJ-JPL8-F4BW2"
         self.url = "http://localhost:6876/nxt"
         self.headers = {"Accept": "application/json"}
         self.dataDict = []
         self.response = None
         self.requestType = rt
         self.credentials = None
-        #self.data = {"requestType": self.requestType, "accounts": self.accounts}
 
         self.data = data
         self.phasing = phasing
@@ -30,7 +26,6 @@ class BaseGet(object):
         self.rb = rb
         self.ri = ri
 
-        # print(self.data)
         self._mergeRequestType()
         self._mergePhasingParams()
         self._mergeMessageParams()
@@ -40,6 +35,7 @@ class BaseGet(object):
         self.errorCode = None
         self.errorDescription = None
         self.mObj = object
+        self.DEBUG = False
 
     def setCredentials(self, credentials):
         self.credentials = credentials
@@ -54,11 +50,11 @@ class BaseGet(object):
                 self.data["requestType"] = self.requestType
 
     def _mergePhasingParams(self):
-        if self.phasing and isinstance(self.phasing, Phasing):
+        if self.phasing and isinstance(self.phasing, type(Phasing)):
             self.data = {**self.data, **self.phasing}
 
     def _mergeMessageParams(self):
-        if self.message and isinstance(self.message, Message):
+        if self.message and isinstance(self.message, type(Message)):
             self.data = {**self.data, **self.message}
 
     def _mergeRbParams(self):
