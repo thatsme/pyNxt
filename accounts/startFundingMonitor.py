@@ -2,7 +2,7 @@
 from base.BasePost import BasePost as Parent
 
 class StartFundingMonitor(Parent):
-    def __init__(self, property=None, amount=None, threshold=None, interval=0, secretPhrase=None, holdingType=None, holding=None ):
+    def __init__(self, pproperty=None, amount=None, threshold=None, interval=0, secretPhrase=None, holdingType=None, holding=None ):
         """
             Starts a funding monitor that will transfer NXT, ASSET or CURRENCY from the funding accounts to a recipient accounts
             when the amount held by the recipient accounts drops below the threshold.
@@ -21,7 +21,7 @@ class StartFundingMonitor(Parent):
             https://nxtwiki.org/wiki/The_Nxt_API#Start_Founding_Monitor
 
             REQUEST
-            :param property : is the name of the accounts property (R)
+            :param pproperty : is the name of the accounts property (R)
             :param amount : is the amount to fund the recipient accounts with (in NQT or QNT) (N)
             :param threshold : is the threshold (N)
             :param interval : is the the number of blocks to wait after before funding the recipient (N)
@@ -51,7 +51,7 @@ class StartFundingMonitor(Parent):
 
         """
 
-        self._property = property
+        self._pproperty = pproperty
         self._amount = amount
         self._threshold = threshold
         self._interval = interval
@@ -63,7 +63,7 @@ class StartFundingMonitor(Parent):
         self.data = {}
 
         ## Create data dictionary
-        self.data["property"] = self.property
+        self.data["property"] = self.pproperty
         self.data["amount"] = self.amount
         self.data["threshold"] = self.threshold
         self.data["interval"] = self.interval
@@ -77,12 +77,12 @@ class StartFundingMonitor(Parent):
         super(StartFundingMonitor, self).__init__(rt = "startFundingMonitor", data=self.data)
 
     @property
-    def property(self):
-        return self._property
+    def pproperty(self):
+        return self._pproperty
 
-    @property.setter
-    def property(self, value):
-        self._property = value
+    @pproperty.setter
+    def pproperty(self, value):
+        self._pproperty = value
 
     @property
     def amount(self):
