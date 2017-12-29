@@ -4,7 +4,7 @@ from base.BaseGet import BaseGet as Parent
 class GetAccountProperties(Parent):
 
 
-    def __init__(self, recipient=None, setter=None, property=None, ri=None, rb=None):
+    def __init__(self, recipient=None, setter=None, pproperty=None, ri=None, rb=None):
         """
             Get the Account properties for a specific accounts or setter
 
@@ -16,7 +16,7 @@ class GetAccountProperties(Parent):
             REQUEST
             :param recipient : is the accounts ID to which the property is attached to (S)
             :param setter : is the accounts ID who set the property (S) (optional if recipient provided)
-            :param property : is the property key (S) (O)
+            :param pproperty : is the property key (S) (O)
             :param ri : ri object ( check base/Ri.py) (WP)
             :param rb : rb object ( check base/Rb.py) (WP)
 
@@ -53,7 +53,7 @@ class GetAccountProperties(Parent):
 
         self._recipient = recipient
         self._setter = setter
-        self._property = property
+        self._pproperty = pproperty
         self._ri = ri
         self._rb = rb
 
@@ -64,8 +64,8 @@ class GetAccountProperties(Parent):
         self.data["recipient"] = self.recipient
         if self.setter:
             self.data["setter"] = self.setter
-        if self.property:
-            self.data["property"] = self.property
+        if self.pproperty:
+            self.data["property"] = self.pproperty
 
         super(GetAccountProperties, self).__init__(rt = "getAccountProperties", data=self.data, ri=self.ri, rb=self.rb)
 
@@ -86,12 +86,12 @@ class GetAccountProperties(Parent):
         self._setter = value
 
     @property
-    def property(self):
-        return self._property
+    def pproperty(self):
+        return self._pproperty
 
-    @property.setter
-    def property(self, value):
-        self._property = value
+    @pproperty.setter
+    def pproperty(self, value):
+        self._pproperty = value
 
     @property
     def ri(self):
