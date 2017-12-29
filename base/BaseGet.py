@@ -5,7 +5,12 @@ from base import Phasing
 from base import Message
 from base import Rb
 from base import Ri
+from base.CnvtData import json2obj
+from base.TnkMap import tokenMap
+from base.TimeIt import time_all_class_methods
 
+
+#@time_all_class_methods
 class BaseGet(object):
 
     def __init__(self, rt, data, phasing = None, message=None, rb = None, ri = None):
@@ -16,6 +21,7 @@ class BaseGet(object):
         self.dataDict = []
         self.response = None
         self.requestType = rt
+        self.credentials = None
         #self.data = {"requestType": self.requestType, "accounts": self.accounts}
 
         self.data = data
@@ -33,9 +39,10 @@ class BaseGet(object):
 
         self.errorCode = None
         self.errorDescription = None
+        self.mObj = object
 
-    def param(self):
-        pass
+    def setCredentials(self, credentials):
+        self.credentials = credentials
 
     def _checkAccountFormat(self, value):
         if value[:4] == "NXT-" and value[8:9] == "-" and  value[13:14] == "-" and value[18:19] == "-":
@@ -63,8 +70,14 @@ class BaseGet(object):
             self.data = {**self.data, **self.ri}
 
     def run(self):
-        self.response = requests.get(self.url, params=self.data, headers=self.headers)
+        if self.credentials is not None:
+            self.response = requests.get(self.credentials.url, params=self.data, headers=self.headers)
+        else:
+            self.response = requests.get(self.url, params=self.data, headers=self.headers)
+
         self.dataDict = json.loads(self.response.text)
+        self.mObj = tokenMap(**self.dataDict)
+
         if "errorCode" in self.dataDict:
             self.errorCode = self.dataDict["errorCode"]
             self.errorDescription = self.dataDict["errorDescription"]
@@ -81,6 +94,12 @@ class BaseGet(object):
                 return self.dataDict
             else:
                 return None
+
+    def getObject(self):
+        """
+        :return: OBJECT OF RESPONSE
+        """
+        return self.mObj
 
     def getKeysValues(self):
         for key, value in self.dataDict.items():
