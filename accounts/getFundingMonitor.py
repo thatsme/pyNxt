@@ -3,7 +3,7 @@ from base.BaseGet import BaseGet as Parent
 
 class GetFundingMonitor(Parent):
 
-    def __init__(self, secretPhrase=None, adminPassword=None, includeMonitoredAccounts=False, property=None, holdingType=None, holding=None, account=None):
+    def __init__(self, secretPhrase=None, adminPassword=None, includeMonitoredAccounts=False, pproperty=None, holdingType=None, holding=None, account=None):
         """
             Get a funding monitor.
 
@@ -16,7 +16,7 @@ class GetFundingMonitor(Parent):
             :param secretPhrase is the secret phrase of the funding account, used to get a single monitor. (optional)
             :param adminPassword is the admin password, used to get a single monitor or all monitors (optional if secretPhrase is provided)
             :param includeMonitoredAccounts is true to include account info of the monitored accounts (optional)
-            :param property is the name of the account property (optional)
+            :param pproperty is the name of the account property (optional)
             :param holdingType is a string representing the holding type (optional)
             :param holding is the holding ID (optional)
             :param account is the account ID (optional)
@@ -60,7 +60,7 @@ class GetFundingMonitor(Parent):
         self._secretPhrase = secretPhrase
         self._adminPassword = adminPassword
         self._includeMonitoredAccounts = includeMonitoredAccounts
-        self._property = property
+        self._pproperty = pproperty
         self._holdingType = holdingType
         self._holding = holding
         self._account = account
@@ -76,7 +76,7 @@ class GetFundingMonitor(Parent):
             self.data["adminPassword"] = self.adminPassword
 
         self.data["includeMonitoredAccounts"] = self.includeMonitoredAccounts
-        self.data["property"] = self.property
+        self.data["property"] = self.pproperty
         self.data["holdingType"] = self.holdingType
         self.data["holding"] = self.holding
         self.data["account"] = self.account
@@ -108,12 +108,12 @@ class GetFundingMonitor(Parent):
         self._includeMonitoredAccounts = value
 
     @property
-    def property(self):
-        return self._property
+    def pproperty(self):
+        return self._pproperty
 
-    @property.setter
-    def property(self, value):
-        self._property = value
+    @pproperty.setter
+    def pproperty(self, value):
+        self._pproperty = value
 
     @property
     def holdingType(self):
