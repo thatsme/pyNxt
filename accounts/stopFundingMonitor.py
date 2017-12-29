@@ -2,7 +2,7 @@
 from base.BasePost import BasePost as Parent
 
 class StopFundingMonitor(Parent):
-    def __init__(self, property=None, account=None, adminPassword=None, secretPhrase=None, holdingType=None, holding=None ):
+    def __init__(self, pproperty=None, account=None, adminPassword=None, secretPhrase=None, holdingType=None, holding=None ):
         """
             Stop a funding monitor. When the secret phrase is specified, a single monitor will be stopped.
             The monitor is identified by the secret phrase, holding and accounts property.
@@ -22,7 +22,7 @@ class StopFundingMonitor(Parent):
             https://nxtwiki.org/wiki/The_Nxt_API#Stop_Founding_Monitor
 
             REQUEST
-            :param property : is the name of the accounts property (S) (O)
+            :param pproperty : is the name of the accounts property (S) (O)
             :param adminPassword : is the admin password, used to stop a single monitor or all monitors (optional if secretPhrase is provided)
             :param secretPhrase : is the secret phrase of the funding accounts (S)
             :param account : is the account ID (S) (O)
@@ -51,7 +51,7 @@ class StopFundingMonitor(Parent):
 
         """
 
-        self.property = property
+        self.pproperty = pproperty
         self.account = account
         self.adminPassword = adminPassword
         self.secretPhrase = secretPhrase
@@ -62,7 +62,7 @@ class StopFundingMonitor(Parent):
         self.data = {}
 
         ## Create data dictionary
-        self.data["property"] = self.property
+        self.data["property"] = self.pproperty
         self.data["account"] = self.account
         self.data["secretPhrase"] = self.secretPhrase
 
@@ -78,12 +78,12 @@ class StopFundingMonitor(Parent):
         super(StopFundingMonitor, self).__init__(rt = "stopFundingMonitor", data=self.data)
 
     @property
-    def property(self):
-        return self._property
+    def pproperty(self):
+        return self._pproperty
 
-    @property.setter
-    def property(self, value):
-        self._property = value
+    @pproperty.setter
+    def pproperty(self, value):
+        self._pproperty = value
 
     @property
     def account(self):
