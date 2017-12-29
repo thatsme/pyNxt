@@ -2,7 +2,7 @@
 from base.BasePost import BasePost as Parent
 
 class SetAccountProperty(Parent):
-    def __init__(self, recipient = None, property=None, value=None, secretPhrase=None,  publicKey = None, feeNQT = None, deadline = 0, referencedTransactionFullHash = None, broadcast=False, phasing = None, message=None, rec=None ):
+    def __init__(self, recipient = None, pproperty=None, value=None, secretPhrase=None,  publicKey = None, feeNQT = None, deadline = 0, referencedTransactionFullHash = None, broadcast=False, phasing = None, message=None, rec=None ):
         """
             Set accounts property.
 
@@ -15,7 +15,7 @@ class SetAccountProperty(Parent):
 
             REQUEST
             :param recipient : is the accounts where a property should be set (S) (O)
-            :param property : is the name of the property (S) (R)
+            :param pproperty : is the name of the property (S) (R)
             :param setter : is the accounts who did set the property (S) (S)
             :param secretPhrase *: secret Phrase of accounts where we want remove a property ( required or at lease ** )
             :param publicKey **: publicKey of accounts where we want remove a property ( does not get in broadcast ) ( required or at least *)
@@ -55,7 +55,7 @@ class SetAccountProperty(Parent):
 
         # Required parameters
         self._recipient = recipient
-        self._property = property
+        self._pproperty = pproperty
         self._publicKey = publicKey
         self._secretPhrase = secretPhrase
         self._feeNQT = feeNQT
@@ -77,7 +77,7 @@ class SetAccountProperty(Parent):
 
         self.data["recipient"] = self.recipient
         self.data["value"] = self.value
-        self.data["property"] = self.property
+        self.data["property"] = self.pproperty
         self.data["broadcast"] = self.broadcast
 
         if publicKey:
@@ -100,12 +100,12 @@ class SetAccountProperty(Parent):
         self._recipient = value
 
     @property
-    def property(self):
-        return self._property
+    def pproperty(self):
+        return self._pproperty
 
-    @property.setter
-    def property(self, value):
-        self._property = value
+    @pproperty.setter
+    def pproperty(self, value):
+        self._pproperty = value
 
     @property
     def value(self):
