@@ -14,8 +14,13 @@ Reference : https://nxtwiki.org/wiki/Main_Page
 Get Account API
 
     import account.getAccount as ga
-
+    me = <my RS address>
+    
+    ## Testnet 
+    cr = credentials.Credentials("http://localhost:6876/nxt", me, None)
+    
     Ga = ga.GetAccount(account=<NXTADDRESS>, includeLessors=True, includeAssets=True, includeCurrencies=True, includeEffectiveBalance=True)
+    Ga.setCredentials(cr)
     Ga.run()
     print(myGa.getData("name"))
     print(myGa.getData())
