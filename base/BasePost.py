@@ -32,6 +32,7 @@ class BasePost(object):
         self.errorDescription = None
         self.mObj = object
         self.DEBUG = False
+        self.session = requests.Session()
 
     def setCredentials(self, credentials):
         self.credentials = credentials
@@ -59,9 +60,20 @@ class BasePost(object):
 
     def run(self):
         if self.credentials is not None:
-            self.response = requests.post(self.credentials.url, data=self.data, headers=self.headers)
+            try:
+                self.response = self.session.post(self.credentials.url, data=self.data, headers=self.headers)
+                if self.response.status_code == 503:
+                    self.response.raise_for_status()
+            except requests.exceptions.HTTPError:
+                print("oops something unexpected happened!")
+
         else:
-            self.response = requests.post(self.url, data=self.data, headers=self.headers)
+            try:
+                self.response = self.session.post(self.url, data=self.data, headers=self.headers)
+                if self.response.status_code == 503:
+                    self.response.raise_for_status()
+            except requests.exceptions.HTTPError:
+                print("oops something unexpected happened!")
 
         self.dataDict = json.loads(self.response.text)
         self.mObj = tokenMap(**self.dataDict)

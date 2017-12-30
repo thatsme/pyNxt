@@ -36,6 +36,7 @@ class BaseGet(object):
         self.errorDescription = None
         self.mObj = object
         self.DEBUG = False
+        self.session = requests.Session()
 
     def setCredentials(self, credentials):
         self.credentials = credentials
@@ -66,10 +67,29 @@ class BaseGet(object):
             self.data = {**self.data, **self.ri}
 
     def run(self):
+        try:
+
+            response = requests.get('http://mycustomserver.org/download')
+            if response.status_code == 503:
+                response.raise_for_status()
+        except requests.exceptions.HTTPError:
+            print
+            "oops something unexpected happened!"
+
         if self.credentials is not None:
-            self.response = requests.get(self.credentials.url, params=self.data, headers=self.headers)
+            try:
+                self.response = self.session.get(self.credentials.url, params=self.data, headers=self.headers)
+                if self.response.status_code == 503:
+                    self.response.raise_for_status()
+            except requests.exceptions.HTTPError:
+                print("oops something unexpected happened!")
         else:
-            self.response = requests.get(self.url, params=self.data, headers=self.headers)
+            try:
+                self.response = self.session.get(self.url, params=self.data, headers=self.headers)
+                if self.response.status_code == 503:
+                    self.response.raise_for_status()
+            except requests.exceptions.HTTPError:
+                print("oops something unexpected happened!")
 
         self.dataDict = json.loads(self.response.text)
         self.mObj = tokenMap(**self.dataDict)
