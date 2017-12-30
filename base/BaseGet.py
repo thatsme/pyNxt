@@ -67,15 +67,6 @@ class BaseGet(object):
             self.data = {**self.data, **self.ri}
 
     def run(self):
-        try:
-
-            response = requests.get('http://mycustomserver.org/download')
-            if response.status_code == 503:
-                response.raise_for_status()
-        except requests.exceptions.HTTPError:
-            print
-            "oops something unexpected happened!"
-
         if self.credentials is not None:
             try:
                 self.response = self.session.get(self.credentials.url, params=self.data, headers=self.headers)
