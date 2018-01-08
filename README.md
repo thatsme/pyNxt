@@ -25,6 +25,33 @@ Get Account API
     print(myGa.getData("name"))
     print(myGa.getData())
 
+Get Constants API 
+
+    import serverinfo.getConstants as gc
+    me = <my RS address>
+    
+    ## Testnet 
+    cr = credentials.Credentials("http://localhost:6876/nxt", me, None)
+
+    GC = gc.getConstants()
+    GC.setCredentials(cr)
+    GC.run()
+    
+    ## Object access
+    myObject = GC.getObject()
+    
+    print(print(myObject.apiTags.ACCOUNTS.name)
+    print(print(myObject.apiTags.ACCOUNTS.enabled)
+    print(print(myObject.genesisBlockId)
+    
+    ....
+    ## For list of all constants, check this page : 
+    ## https://nxtwiki.org/wiki/The_Nxt_API_Examples#Get_Constants
+    
+    ## Dictionary access
+    gcDict = GC.getData()
+    
+
 Get PublicKey ( offline )
     
     from curve25519.Keygen import Keygen as ki
